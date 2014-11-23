@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies-GES.Web", "Movies-GE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies-GES.Domain", "Movies-GES.Domain\Movies-GES.Domain.csproj", "{2D73C2F8-15C3-411D-B8D0-B8EA2B6B8F31}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies_GES.Domain.Tests", "Movies_GES.Domain.Tests\Movies_GES.Domain.Tests.csproj", "{CEB57D31-824F-4BB0-B2FF-9A0EEA8C770F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2D73C2F8-15C3-411D-B8D0-B8EA2B6B8F31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D73C2F8-15C3-411D-B8D0-B8EA2B6B8F31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D73C2F8-15C3-411D-B8D0-B8EA2B6B8F31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEB57D31-824F-4BB0-B2FF-9A0EEA8C770F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEB57D31-824F-4BB0-B2FF-9A0EEA8C770F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEB57D31-824F-4BB0-B2FF-9A0EEA8C770F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEB57D31-824F-4BB0-B2FF-9A0EEA8C770F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
