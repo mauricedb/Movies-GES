@@ -51,6 +51,7 @@
     <Compile Include="Domain\Movie.cs" />
     <Compile Include="Domain\MovieTitled.cs" />
     <Compile Include="Handlers\MovieHandlers.cs" />
+    <Compile Include="Infrastructure\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
