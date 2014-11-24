@@ -46,9 +46,11 @@
   <ItemGroup>
     <Compile Include="Base\AggregateRoot.cs" />
     <Compile Include="Base\DomainEvent.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="Base\IHandles.cs" />
+    <Compile Include="Commands\TitleMovie.cs" />
     <Compile Include="Domain\Movie.cs" />
     <Compile Include="Domain\MovieTitled.cs" />
+    <Compile Include="Handlers\MovieHandlers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

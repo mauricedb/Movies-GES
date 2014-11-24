@@ -15,7 +15,7 @@ namespace Movies_GES.Domain.Domain
 
         public void Apply(MovieTitled movieTitled)
         {
-            _id = movieTitled.Id;
+            _id = movieTitled.MovieId;
             _title = movieTitled.Title;
         }
     }
