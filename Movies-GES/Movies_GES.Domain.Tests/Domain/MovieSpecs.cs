@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Movies_GES.Domain.Domain;
 using Xunit;
@@ -19,5 +15,14 @@ namespace Movies_GES.Domain.Tests.Domain
             movie.Should().NotBeNull();
         }
 
+        [Fact]
+        public void Creating_a_new_movie_should_raise_event()
+        {
+            var id = Guid.NewGuid();
+            var movie = new Movie(id, "Some movie");
+
+            var uncommittedChanges = movie.GetUncommittedChanges();
+            uncommittedChanges.Should().BeEquivalentTo(new MovieTitled(id, "Some movie"));
+        }
     }
 }

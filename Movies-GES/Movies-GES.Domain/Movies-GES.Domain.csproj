@@ -39,8 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\AggregateRoot.cs" />
+    <Compile Include="Base\DomainEvent.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Domain\Movie.cs" />
+    <Compile Include="Domain\MovieTitled.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
