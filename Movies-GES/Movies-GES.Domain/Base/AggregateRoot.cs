@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ReflectionMagic;
 
 namespace Movies_GES.Domain.Base
 {
@@ -18,6 +19,9 @@ namespace Movies_GES.Domain.Base
 
         protected void ApplyChanges(DomainEvent domainEvent)
         {
+            var dhis = this.AsDynamic();
+            dhis.Apply(domainEvent);
+
             _changes.Add(domainEvent);
         }
     }
