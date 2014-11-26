@@ -1,16 +1,18 @@
-﻿(function() {
+﻿(function () {
     'use strict';
 
     var mod = angular.module('movie-management-app', ['ui.bootstrap']);
 
     mod.controller('movie-list-controller', MovieListController);
 
-    function MovieListController($modal) {
+    function MovieListController($modal, $http) {
         this.$modal = $modal;
+        this.$http = $http;
     }
 
 
-    MovieListController.prototype.addMovie = function() {
+    MovieListController.prototype.addMovie = function () {
+        var self = this;
 
         var modalInstance = this.$modal.open({
             templateUrl: '/app/movie-management/add-movie.html',
@@ -18,8 +20,16 @@
             controllerAs: 'ctrl'
         });
 
-        modalInstance.result.then(function(newMovie) {
-            alert(newMovie.title);
+        modalInstance.result.then(function (newMovie) {
+            self.$http.put(
+                '/api/commands/1',
+                newMovie,
+            {
+                headers: {
+                    'x-command-name': 'TitleMovie'
+                }
+            });
+            //alert(newMovie.title);
         });
     };
 
@@ -32,7 +42,7 @@
         $scope.newMovie = { title: '' };
     }
 
-    AddMovieController.prototype.ok = function() {
+    AddMovieController.prototype.ok = function () {
         this.$modalInstance.close(this.$scope.newMovie);
     };
 
