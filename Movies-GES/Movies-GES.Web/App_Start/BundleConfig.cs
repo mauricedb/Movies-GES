@@ -27,9 +27,15 @@ namespace Movies_GES.Web
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
+            bundles.Add(new ScriptBundle("~/bundles/movie-management").Include(
+                        "~/Scripts/angular.js",
+                        "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
+                        "~/app/movie-management/app.js"
+                        ));
+
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
-            BundleTable.EnableOptimizations = true;
+            //BundleTable.EnableOptimizations = true;
         }
     }
 }
