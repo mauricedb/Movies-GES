@@ -12,9 +12,9 @@ namespace Movies_GES.Web.Api
     {
         private readonly MovieHandlers _handler;
 
-        public CommandsController()
+        public CommandsController(MovieHandlers handler)
         {
-            _handler = new MovieHandlers(null);
+            _handler = handler;
         }
 
         public async Task<IHttpActionResult> Put(string id)

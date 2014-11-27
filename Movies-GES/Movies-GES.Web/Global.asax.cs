@@ -9,6 +9,7 @@ namespace Movies_GES.Web
     {
         protected void Application_Start()
         {
+            TinyIocConfig.Register();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
+using Movies_GES.Web.Infrastructure;
+using TinyIoC;
 
 namespace Movies_GES.Web
 {
@@ -9,6 +8,8 @@ namespace Movies_GES.Web
     {
         public static void Register(HttpConfiguration config)
         {
+            config.DependencyResolver = new TinyIoCDependencyResolver(TinyIoCContainer.Current);
+
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
