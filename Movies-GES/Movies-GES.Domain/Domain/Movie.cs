@@ -13,6 +13,8 @@ namespace Movies_GES.Domain.Domain
             ApplyChanges(new MovieTitled(id, title));
         }
 
+        public Guid Id { get { return _id; } }
+
         public void Apply(MovieTitled movieTitled)
         {
             _id = movieTitled.MovieId;

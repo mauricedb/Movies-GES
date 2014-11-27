@@ -1,6 +1,7 @@
 ﻿using Movies_GES.Domain.Domain;
 using Movies_GES.Domain.Handlers;
 using Movies_GES.Domain.Infrastructure;
+using Movies_GES.Web.Infrastructure;
 using TinyIoC;
 
 namespace Movies_GES.Web
@@ -11,10 +12,9 @@ namespace Movies_GES.Web
         {
             var container = TinyIoCContainer.Current;
 
-            container.Register<MovieHandlers>();
+            container.Register<MovieHandlers>().AsMultiInstance();
 
-            container.Register<IRepository<Movie>>((cContainer, overloads) => null);
-
+            container.Register<IRepository<Movie>, MemoryMovieRepository>().AsSingleton();
         }
     }
 }
