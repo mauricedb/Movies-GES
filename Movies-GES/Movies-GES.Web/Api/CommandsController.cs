@@ -30,6 +30,8 @@ namespace Movies_GES.Web.Api
                     cmd.Id = Guid.NewGuid();
 
                     _handler.Handle(cmd);
+
+                    return Ok();
                 }
             }
             catch (Exception ex)

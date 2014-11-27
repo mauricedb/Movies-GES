@@ -5,15 +5,12 @@
 
     mod.controller('movie-list-controller', MovieListController);
 
-    function MovieListController($modal, $http) {
+    function MovieListController($modal) {
         this.$modal = $modal;
-        this.$http = $http;
     }
 
 
     MovieListController.prototype.addMovie = function () {
-        var self = this;
-
         var modalInstance = this.$modal.open({
             templateUrl: '/app/movie-management/add-movie.html',
             controller: 'add-movie-controller',
@@ -21,29 +18,34 @@
         });
 
         modalInstance.result.then(function (newMovie) {
-            self.$http.put(
-                '/api/commands/1',
-                newMovie,
-            {
-                headers: {
-                    'x-command-name': 'TitleMovie'
-                }
-            });
-            //alert(newMovie.title);
         });
     };
 
     mod.controller('add-movie-controller', AddMovieController);
 
-    function AddMovieController($scope, $modalInstance) {
+    function AddMovieController($scope, $modalInstance, $http) {
         this.$scope = $scope;
         this.$modalInstance = $modalInstance;
+        this.$http = $http;
 
         $scope.newMovie = { title: '' };
     }
 
     AddMovieController.prototype.ok = function () {
-        this.$modalInstance.close(this.$scope.newMovie);
+        var self = this;
+
+        self.$http.put(
+            '/api/commands/1',
+            this.$scope.newMovie,
+            {
+                headers: {
+                    'x-command-name': 'TitleMovie'
+                }
+            }).then(function (e) {
+                self.$modalInstance.close(self.$scope.newMovie);
+            }, function (e) {
+                console.log(e.data.exceptionMessage);
+            });
     };
 
     AddMovieController.prototype.cancel = function () {

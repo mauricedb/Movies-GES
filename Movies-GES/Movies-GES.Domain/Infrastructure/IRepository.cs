@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace Movies_GES.Domain.Infrastructure
 {
@@ -6,5 +7,16 @@ namespace Movies_GES.Domain.Infrastructure
     {
         T GetById(Guid id);
         void Save(T aggregate, Guid commitId);
+    }
+
+    public static class Guard
+    {
+        public static void Requires<T>(bool condition, params object[] args) where T : Exception, new()
+        {
+            if (!condition)
+            {
+                throw (T)Activator.CreateInstance(typeof(T), args);
+            }
+        }
     }
 }
