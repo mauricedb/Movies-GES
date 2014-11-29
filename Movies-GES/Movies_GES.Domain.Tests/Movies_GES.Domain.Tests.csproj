@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\DirectorSpecs.cs" />
     <Compile Include="Domain\MovieSpecs.cs" />
     <Compile Include="Handlers\DummyMovieRepository.cs" />
     <Compile Include="Handlers\MovieHandlersSpecs.cs" />

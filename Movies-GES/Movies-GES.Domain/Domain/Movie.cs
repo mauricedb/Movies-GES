@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using Movies_GES.Domain.Base;
 using Movies_GES.Domain.Infrastructure;
 
