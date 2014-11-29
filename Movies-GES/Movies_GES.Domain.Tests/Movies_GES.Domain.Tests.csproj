@@ -52,6 +52,8 @@
   <ItemGroup>
     <Compile Include="Domain\DirectorSpecs.cs" />
     <Compile Include="Domain\MovieSpecs.cs" />
+    <Compile Include="Handlers\DirectorHandlersSpecs.cs" />
+    <Compile Include="Handlers\DummyDirectorRepository.cs" />
     <Compile Include="Handlers\DummyMovieRepository.cs" />
     <Compile Include="Handlers\MovieHandlersSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

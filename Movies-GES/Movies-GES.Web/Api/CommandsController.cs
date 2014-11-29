@@ -26,8 +26,6 @@ namespace Movies_GES.Web.Api
                 if (type != null)
                 {
                     dynamic cmd = await Request.Content.ReadAsAsync(type);
-                    cmd.MovieId = Guid.NewGuid();
-                    cmd.Id = Guid.NewGuid();
 
                     _handler.Handle(cmd);
 

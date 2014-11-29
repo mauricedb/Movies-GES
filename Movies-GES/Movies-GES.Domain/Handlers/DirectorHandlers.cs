@@ -6,22 +6,22 @@ using Movies_GES.Domain.Infrastructure;
 
 namespace Movies_GES.Domain.Handlers
 {
-    public class MovieHandlers:
-        IHandles<TitleMovie>
+    public class DirectorHandlers:
+        IHandles<NameDirector>
     {
-        private readonly IRepository<Movie> _repository;
+        private readonly IRepository<Director> _repository;
 
-        public MovieHandlers(IRepository<Movie> repository)
+        public DirectorHandlers(IRepository<Director> repository)
         {
             _repository = repository;
         }
 
-        public void Handle(TitleMovie command)
+        public void Handle(NameDirector command)
         {
-            command.MovieId = Guid.NewGuid();
+            command.DirectorId = Guid.NewGuid();
             command.Id = Guid.NewGuid();
 
-            var movie = new Movie(command.MovieId, command.Title);
+            var movie = new Director(command.DirectorId, command.Name);
             _repository.Save(movie, command.Id);
         }
     }

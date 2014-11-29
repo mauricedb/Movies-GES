@@ -128,6 +128,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\TinyIocConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DirectorManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MovieManagementController.cs" />
     <Compile Include="Global.asax.cs">
@@ -139,6 +140,8 @@
     <Compile Include="TinyIoC.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\director-management\add-director.html" />
+    <Content Include="app\director-management\app.js" />
     <Content Include="app\movie-management\add-movie.html" />
     <Content Include="app\movie-management\app.js" />
     <Content Include="Content\bootstrap.css" />
@@ -187,6 +190,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\MovieManagement\Index.cshtml" />
+    <Content Include="Views\DirectorManagement\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
