@@ -21,8 +21,8 @@ namespace Movies_GES.Domain.Handlers
             command.DirectorId = Guid.NewGuid();
             command.Id = Guid.NewGuid();
 
-            var movie = new Director(command.DirectorId, command.Name);
-            _repository.Save(movie, command.Id);
+            var director = new Director(command.DirectorId, command.Name);
+            _repository.Save(director, command.Id);
         }
     }
 }

@@ -7,16 +7,16 @@ namespace Movies_GES.Web.Infrastructure
 {
     public class InMemoryRepository<T> : IRepository<T> where T: AggregateRoot
     {
-        private Dictionary<Guid, T> _movies = new Dictionary<Guid, T>();
+        private readonly Dictionary<Guid, T> _data = new Dictionary<Guid, T>();
 
         public T GetById(Guid id)
         {
-            return _movies[id];
+            return _data[id];
         }
 
         public void Save(T aggregate, Guid commitId)
         {
-            _movies[aggregate.Id] = aggregate;
+            _data[aggregate.Id] = aggregate;
         }
     }
 }

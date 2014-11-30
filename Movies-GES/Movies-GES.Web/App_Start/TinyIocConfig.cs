@@ -20,15 +20,20 @@ namespace Movies_GES.Web
         private static void RegisterTypes(TinyIoCContainer container)
         {
             container.Register<MovieHandlers>().AsSingleton();
+            container.Register<DirectorHandlers>().AsSingleton();
+
             container.Register<IRepository<Movie>, InMemoryMovieRepository>().AsSingleton();
+            container.Register<IRepository<Director>, InMemoryDirectorRepository>().AsSingleton();
         }
 
         private static void RegisterMessageSubscribers(TinyIoCContainer container)
         {
             var messengerHub = container.Resolve<ITinyMessengerHub>();
             var movieHandlers = container.Resolve<MovieHandlers>();
+            var directorHandlers = container.Resolve<DirectorHandlers>();
 
             messengerHub.Subscribe<TitleMovie>(cmd => WrappedHandler(movieHandlers, cmd));
+            messengerHub.Subscribe<NameDirector>(cmd => WrappedHandler(directorHandlers, cmd));
         }
 
         private static void WrappedHandler(dynamic handler, dynamic cmd)

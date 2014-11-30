@@ -28,7 +28,7 @@
         this.$modalInstance = $modalInstance;
         this.$http = $http;
 
-        $scope.newMovie = { title: '' };
+        $scope.newDirector = { name: '' };
     }
 
     AddDirectorController.prototype.ok = function () {
@@ -36,13 +36,13 @@
 
         self.$http.put(
             '/api/commands/1',
-            this.$scope.newMovie,
+            this.$scope.newDirector,
             {
                 headers: {
                     'x-command-name': 'NameDirector'
                 }
             }).then(function (e) {
-                self.$modalInstance.close(self.$scope.newMovie);
+                self.$modalInstance.close(self.$scope.newDirector);
             }, function (e) {
                 console.log(e.data.exceptionMessage);
             });
