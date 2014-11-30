@@ -14,6 +14,7 @@ namespace Movies_GES.Domain.Domain
             Guard.Requires<ArgumentException>(id != Guid.Empty);
             Guard.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(title), "Please enter a title");
 
+            
             ApplyChanges(new MovieTitled(id, title));
         }
 

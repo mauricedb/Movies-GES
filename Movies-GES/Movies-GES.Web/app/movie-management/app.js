@@ -44,8 +44,10 @@
             }).then(function (e) {
                 self.$modalInstance.close(self.$scope.newMovie);
             }, function (e) {
-                console.log(e.data.exceptionMessage);
-            });
+                console.log(e.data.modelState.exception[0]);
+
+            //console.log(e.data.exceptionMessage || e.data);
+        });
     };
 
     AddMovieController.prototype.cancel = function () {

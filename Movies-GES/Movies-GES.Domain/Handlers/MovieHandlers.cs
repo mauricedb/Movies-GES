@@ -6,7 +6,7 @@ using Movies_GES.Domain.Infrastructure;
 
 namespace Movies_GES.Domain.Handlers
 {
-    public class MovieHandlers:
+    public class MovieHandlers :
         IHandles<TitleMovie>
     {
         private readonly IRepository<Movie> _repository;
@@ -18,18 +18,11 @@ namespace Movies_GES.Domain.Handlers
 
         public void Handle(TitleMovie command)
         {
-            try
-            {
-                command.MovieId = Guid.NewGuid();
-                command.Id = Guid.NewGuid();
+            command.MovieId = Guid.NewGuid();
+            command.Id = Guid.NewGuid();
 
-                var movie = new Movie(command.MovieId, command.Title);
-                _repository.Save(movie, command.Id);
-            }
-            catch (Exception ex)
-            {
-                command.Exception = ex;
-            }
+            var movie = new Movie(command.MovieId, command.Title);
+            _repository.Save(movie, command.Id);
         }
     }
 }

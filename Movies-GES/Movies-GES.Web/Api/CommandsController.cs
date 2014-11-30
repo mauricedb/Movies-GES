@@ -31,6 +31,12 @@ namespace Movies_GES.Web.Api
 
                     if (cmd.Exception != null)
                     {
+                        if (cmd.Exception is ArgumentException)
+                        {
+                            ModelState.AddModelError("Exception", cmd.Exception);
+                            return BadRequest(ModelState);
+                        }
+
                         return InternalServerError(cmd.Exception);
                     }
 

@@ -1,4 +1,5 @@
-﻿using Movies_GES.Domain.Commands;
+﻿using System;
+using Movies_GES.Domain.Commands;
 using Movies_GES.Domain.Domain;
 using Movies_GES.Domain.Handlers;
 using Movies_GES.Domain.Infrastructure;
@@ -27,7 +28,19 @@ namespace Movies_GES.Web
             var messengerHub = container.Resolve<ITinyMessengerHub>();
             var movieHandlers = container.Resolve<MovieHandlers>();
 
-            messengerHub.Subscribe<TitleMovie>(movieHandlers.Handle);
+            messengerHub.Subscribe<TitleMovie>(cmd => WrappedHandler(movieHandlers, cmd));
+        }
+
+        private static void WrappedHandler(dynamic handler, dynamic cmd)
+        {
+            try
+            {
+                handler.Handle(cmd);
+            }
+            catch (Exception ex)
+            {
+                cmd.Exception = ex;
+            }
         }
     }
 }
