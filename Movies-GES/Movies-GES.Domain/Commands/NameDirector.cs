@@ -2,11 +2,9 @@
 
 namespace Movies_GES.Domain.Commands
 {
-    public class NameDirector
+    public class NameDirector : MessageBase
     {
-        public Guid Id { get; set; }
         public Guid DirectorId { get; set; }
         public string Name { get; set; }
-        
     }
 }

@@ -47,6 +47,7 @@
     <Compile Include="Base\AggregateRoot.cs" />
     <Compile Include="Base\DomainEvent.cs" />
     <Compile Include="Base\IHandles.cs" />
+    <Compile Include="Commands\MessageBase.cs" />
     <Compile Include="Commands\NameDirector.cs" />
     <Compile Include="Commands\TitleMovie.cs" />
     <Compile Include="Domain\Director.cs" />
