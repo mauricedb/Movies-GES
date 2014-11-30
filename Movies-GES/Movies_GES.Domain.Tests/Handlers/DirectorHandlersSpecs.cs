@@ -15,14 +15,30 @@ namespace Movies_GES.Domain.Tests.Handlers
         {
             var repository = new DummyRepository<Director>();
             var handler = new DirectorHandlers(repository);
-
-            handler.Handle(new NameDirector()
+            var command = new NameDirector()
             {
                 DirectorId = Guid.NewGuid(),
                 Name = "Some Guy"
+            };
+
+            handler.Handle(command);
+
+            command.Error.Should().BeNull();
+            repository.Items.Count.Should().Be(1);
+        }
+
+        [Fact]
+        public void Create_director_without_a_name_should_fail()
+        {
+            var repository = new DummyRepository<Director>();
+            var handler = new DirectorHandlers(repository);
+
+            Action action = () => handler.Handle(new NameDirector()
+            {
+                DirectorId = Guid.NewGuid(),
             });
 
-            repository.Items.Count.Should().Be(1);
+            action.ShouldThrow<ArgumentException>();
         }
     }
 }

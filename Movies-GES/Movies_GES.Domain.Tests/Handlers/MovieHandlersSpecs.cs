@@ -24,5 +24,20 @@ namespace Movies_GES.Domain.Tests.Handlers
 
             repository.Items.Count.Should().Be(1);
         }
+
+        [Fact]
+        public void Create_movie_without_title_command_should_fail()
+        {
+            var repository = new DummyRepository<Director>();
+            var handler = new DirectorHandlers(repository);
+
+            Action action = () => handler.Handle(new NameDirector()
+            {
+                DirectorId = Guid.NewGuid(),
+            });
+
+            action.ShouldThrow<ArgumentException>();
+        }
+
     }
 }

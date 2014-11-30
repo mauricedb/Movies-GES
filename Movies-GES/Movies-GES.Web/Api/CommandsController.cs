@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Movies_GES.Domain.Commands;
 using TinyMessenger;
 
 namespace Movies_GES.Web.Api
@@ -29,15 +30,9 @@ namespace Movies_GES.Web.Api
 
                     _messengerHub.Publish(cmd);
 
-                    if (cmd.Exception != null)
+                    if (cmd.HasError)
                     {
-                        if (cmd.Exception is ArgumentException)
-                        {
-                            ModelState.AddModelError("Exception", cmd.Exception);
-                            return BadRequest(ModelState);
-                        }
-
-                        return InternalServerError(cmd.Exception);
+                        return HandleCommandError(cmd);
                     }
 
                     return Ok();
@@ -49,6 +44,17 @@ namespace Movies_GES.Web.Api
             }
 
             return BadRequest(string.Format("No command found to execute"));
+        }
+
+        private IHttpActionResult HandleCommandError(CommandBase cmd)
+        {
+            if (cmd.Error is ArgumentException)
+            {
+                ModelState.AddModelError("Exception", cmd.Error);
+                return BadRequest(ModelState);
+            }
+
+            throw cmd.Error;
         }
 
         private static Type DetermineCommandType(HttpRequestMessage request)

@@ -24,5 +24,18 @@ namespace Movies_GES.Domain.Tests.Domain
             var uncommittedChanges = movie.GetUncommittedChanges();
             uncommittedChanges.Should().BeEquivalentTo(new MovieTitled(id, "Some movie"));
         }
+
+        [Fact]
+        public void Creating_a_new_movie_without_a_title_should_throw()
+        {
+            Action create = () =>
+            {
+                var id = Guid.NewGuid();
+                new Movie(id, "");
+            };
+
+            create.ShouldThrow<ArgumentException>();
+        }
+
     }
 }

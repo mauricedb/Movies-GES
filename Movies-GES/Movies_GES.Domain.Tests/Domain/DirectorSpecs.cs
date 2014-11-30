@@ -24,5 +24,17 @@ namespace Movies_GES.Domain.Tests.Domain
             var uncommittedChanges = movie.GetUncommittedChanges();
             uncommittedChanges.Should().BeEquivalentTo(new DirectorNamed(id, "Some Guy"));
         }
+
+        [Fact]
+        public void Creating_a_new_director_without_a_name_should_throw()
+        {
+            Action create = () =>
+            {
+                var id = Guid.NewGuid();
+                new Director(id, "");
+            };
+
+            create.ShouldThrow<ArgumentException>();
+        }
     }
 }
