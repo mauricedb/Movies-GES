@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using TinyIoC;
 
 namespace Movies_GES.Web
 {
@@ -9,7 +10,7 @@ namespace Movies_GES.Web
     {
         protected void Application_Start()
         {
-            TinyIocConfig.Register();
+            TinyIocConfig.Register(TinyIoCContainer.Current);
             GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

@@ -4,17 +4,17 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Movies_GES.Domain.Handlers;
+using TinyMessenger;
 
 namespace Movies_GES.Web.Api
 {
     public class CommandsController : ApiController
     {
-        private readonly MovieHandlers _handler;
+        private readonly ITinyMessengerHub _messengerHub;
 
-        public CommandsController(MovieHandlers handler)
+        public CommandsController(ITinyMessengerHub messengerHub)
         {
-            _handler = handler;
+            _messengerHub = messengerHub;
         }
 
         public async Task<IHttpActionResult> Put(string id)
@@ -27,7 +27,12 @@ namespace Movies_GES.Web.Api
                 {
                     dynamic cmd = await Request.Content.ReadAsAsync(type);
 
-                    _handler.Handle(cmd);
+                    _messengerHub.Publish(cmd);
+
+                    if (cmd.Exception != null)
+                    {
+                        return InternalServerError(cmd.Exception);
+                    }
 
                     return Ok();
                 }
@@ -37,7 +42,7 @@ namespace Movies_GES.Web.Api
                 return InternalServerError(ex);
             }
 
-            return BadRequest();
+            return BadRequest(string.Format("No command found to execute"));
         }
 
         private static Type DetermineCommandType(HttpRequestMessage request)

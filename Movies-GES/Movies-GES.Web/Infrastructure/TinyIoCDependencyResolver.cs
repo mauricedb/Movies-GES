@@ -23,7 +23,7 @@ namespace Movies_GES.Web.Infrastructure
             if (_disposed)
                 throw new ObjectDisposedException("this", "This scope has already been disposed.");
 
-            return new TinyIoCDependencyResolver(_container.GetChildContainer());
+            return new TinyIoCDependencyResolver(_container);
         }
 
         public object GetService(Type serviceType)

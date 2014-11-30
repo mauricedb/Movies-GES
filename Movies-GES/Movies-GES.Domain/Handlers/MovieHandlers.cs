@@ -18,11 +18,18 @@ namespace Movies_GES.Domain.Handlers
 
         public void Handle(TitleMovie command)
         {
-            command.MovieId = Guid.NewGuid();
-            command.Id = Guid.NewGuid();
+            try
+            {
+                command.MovieId = Guid.NewGuid();
+                command.Id = Guid.NewGuid();
 
-            var movie = new Movie(command.MovieId, command.Title);
-            _repository.Save(movie, command.Id);
+                var movie = new Movie(command.MovieId, command.Title);
+                _repository.Save(movie, command.Id);
+            }
+            catch (Exception ex)
+            {
+                command.Exception = ex;
+            }
         }
     }
 }
