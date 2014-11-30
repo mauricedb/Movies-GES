@@ -7,9 +7,11 @@ using ReflectionMagic;
 
 namespace Movies_GES.Domain.Base
 {
-    public class AggregateRoot
+    public abstract class AggregateRoot
     {
         private readonly List<DomainEvent> _changes = new List<DomainEvent>();
+
+        public abstract Guid Id { get;  }
 
         public IEnumerable<DomainEvent> GetUncommittedChanges()
         {

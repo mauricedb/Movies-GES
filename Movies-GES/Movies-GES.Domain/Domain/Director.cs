@@ -17,6 +17,8 @@ namespace Movies_GES.Domain.Domain
             ApplyChanges(new DirectorNamed(id, name));
         }
 
+        public override Guid Id { get { return _id; } }
+
         public void Apply(DirectorNamed directorNamed)
         {
             _id = directorNamed.DirectorId;

@@ -12,12 +12,12 @@ namespace Movies_GES.Domain.Domain
         public Movie(Guid id, string title)
         {
             Guard.Requires<ArgumentException>(id != Guid.Empty);
-            Guard.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(title),"Please enter a title");
+            Guard.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(title), "Please enter a title");
 
             ApplyChanges(new MovieTitled(id, title));
         }
 
-        public Guid Id { get { return _id; } }
+        public override Guid Id { get { return _id; } }
 
         public void Apply(MovieTitled movieTitled)
         {

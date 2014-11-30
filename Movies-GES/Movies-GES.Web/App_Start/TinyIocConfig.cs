@@ -14,7 +14,7 @@ namespace Movies_GES.Web
 
             container.Register<MovieHandlers>().AsMultiInstance();
 
-            container.Register<IRepository<Movie>, MemoryMovieRepository>().AsSingleton();
+            container.Register<IRepository<Movie>, InMemoryMovieRepository>().AsSingleton();
         }
     }
 }
