@@ -24,5 +24,12 @@ namespace Movies_GES.Domain.Handlers
             var movie = new Movie(command.MovieId, command.Title);
             _repository.Save(movie, command.Id);
         }
+
+        public void Handle(DescribeMovie command)
+        {
+            var movie = _repository.GetById(command.MovieId);
+            movie.Describe(command.Synopsis, command.CriticsConsensus, command.Year);
+            _repository.Save(movie, command.Id);
+        }
     }
 }

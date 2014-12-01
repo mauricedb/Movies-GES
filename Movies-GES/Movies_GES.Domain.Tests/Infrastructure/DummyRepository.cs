@@ -1,26 +1,28 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Movies_GES.Domain.Base;
 using Movies_GES.Domain.Infrastructure;
 
 namespace Movies_GES.Domain.Tests.Infrastructure
 {
-    internal class DummyRepository<T> : IRepository<T>
+    internal class DummyRepository<T> : IRepository<T> where T : AggregateRoot
     {
         public DummyRepository()
         {
-            Items = new List<T>();
+            Items = new Dictionary<Guid, T>();
         }
 
-        public List<T> Items { get; private set; }
+        public Dictionary<Guid, T> Items { get; private set; }
 
         public T GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return Items[id];
         }
 
         public void Save(T movie, Guid commitId)
         {
-            Items.Add(movie);
+            Items[movie.Id] = movie;
         }
     }
 }

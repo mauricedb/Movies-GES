@@ -48,8 +48,10 @@
     <Compile Include="Base\DomainEvent.cs" />
     <Compile Include="Base\IHandles.cs" />
     <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="Commands\DescribeMovie.cs" />
     <Compile Include="Commands\NameDirector.cs" />
     <Compile Include="Commands\TitleMovie.cs" />
+    <Compile Include="Domain\MovieDescribed.cs" />
     <Compile Include="Domain\Director.cs" />
     <Compile Include="Domain\DirectorNamed.cs" />
     <Compile Include="Domain\Movie.cs" />

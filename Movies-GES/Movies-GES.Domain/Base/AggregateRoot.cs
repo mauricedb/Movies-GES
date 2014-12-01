@@ -18,6 +18,10 @@ namespace Movies_GES.Domain.Base
             return _changes;
         }
 
+        public void MarkChangesAsCommitted()
+        {
+            _changes.Clear();
+        }
 
         protected void ApplyChanges(DomainEvent domainEvent)
         {
@@ -26,5 +30,11 @@ namespace Movies_GES.Domain.Base
 
             _changes.Add(domainEvent);
         }
+
+        public void Apply(DomainEvent movieDescribed)
+        {
+
+        }
+
     }
 }

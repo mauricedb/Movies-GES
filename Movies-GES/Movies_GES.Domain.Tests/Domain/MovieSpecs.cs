@@ -37,5 +37,29 @@ namespace Movies_GES.Domain.Tests.Domain
             create.ShouldThrow<ArgumentException>();
         }
 
+        [Fact]
+        public void Describing_an_existing_movie_should_raise_event()
+        {
+            var id = Guid.NewGuid();
+            var movie = new Movie(id, "Some movie");
+            movie.MarkChangesAsCommitted();
+
+            movie.Describe("Synopsis", "Critics consensus", 2014);
+
+            var uncommittedChanges = movie.GetUncommittedChanges();
+            uncommittedChanges.Should().BeEquivalentTo(new MovieDescribed("Synopsis", "Critics consensus", 2014));
+         }
+
+        [Fact]
+        public void Describing_a_movie_with_a_future_year_should_throw()
+        {
+            var id = Guid.NewGuid();
+            var movie = new Movie(id, "Some movie");
+            movie.MarkChangesAsCommitted();
+
+            Action create = () => movie.Describe("Synopsis", "Critics consensus", DateTime.Now.Year + 1);
+
+            create.ShouldThrow<ArgumentException>();
+        }
     }
 }

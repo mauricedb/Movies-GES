@@ -6,7 +6,6 @@ namespace Movies_GES.Domain.Domain
 {
     public class Director : AggregateRoot
     {
-        private string _name;
         private Guid _id;
 
         public Director(Guid id, string name)
@@ -22,7 +21,6 @@ namespace Movies_GES.Domain.Domain
         public void Apply(DirectorNamed directorNamed)
         {
             _id = directorNamed.DirectorId;
-            _name = directorNamed.Name;
         }
     }
 }
