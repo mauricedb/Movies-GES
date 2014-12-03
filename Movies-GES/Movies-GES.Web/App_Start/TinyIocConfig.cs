@@ -22,7 +22,8 @@ namespace Movies_GES.Web
             container.Register<MovieHandlers>().AsSingleton();
             container.Register<DirectorHandlers>().AsSingleton();
 
-            container.Register<IRepository<Movie>, InMemoryMovieRepository>().AsSingleton();
+            //container.Register<IRepository<Movie>, InMemoryMovieRepository>().AsSingleton();
+            container.Register<IRepository<Movie>, EventStoreRepository<Movie>>().AsSingleton();
             container.Register<IRepository<Director>, InMemoryDirectorRepository>().AsSingleton();
         }
 
@@ -32,7 +33,7 @@ namespace Movies_GES.Web
             var movieHandlers = container.Resolve<MovieHandlers>();
             var directorHandlers = container.Resolve<DirectorHandlers>();
 
-            messengerHub.Subscribe<TitleMovie>(cmd => WrappedHandler(movieHandlers, cmd));
+            messengerHub.Subscribe<TitleMovie>( cmd =>  WrappedHandler(movieHandlers, cmd));
             messengerHub.Subscribe<NameDirector>(cmd => WrappedHandler(directorHandlers, cmd));
         }
 
@@ -44,7 +45,7 @@ namespace Movies_GES.Web
             }
             catch (Exception ex)
             {
-                cmd.Exception = ex;
+                cmd.Error = ex;
             }
         }
     }

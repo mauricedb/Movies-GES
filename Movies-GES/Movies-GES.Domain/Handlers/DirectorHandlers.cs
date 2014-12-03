@@ -6,8 +6,7 @@ using Movies_GES.Domain.Infrastructure;
 
 namespace Movies_GES.Domain.Handlers
 {
-    public class DirectorHandlers:
-        IHandles<NameDirector>
+    public class DirectorHandlers
     {
         private readonly IRepository<Director> _repository;
 
