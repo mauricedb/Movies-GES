@@ -15,13 +15,13 @@ namespace Movies_GES.Domain.Handlers
             _repository = repository;
         }
 
-        public async Task Handle(NameDirector command)
+        public Task Handle(NameDirector command)
         {
             command.DirectorId = Guid.NewGuid();
             command.Id = Guid.NewGuid();
 
             var director = new Director(command.DirectorId, command.Name);
-            await _repository.Save(director, command.Id);
+            return _repository.Save(director, command.Id);
         }
     }
 }

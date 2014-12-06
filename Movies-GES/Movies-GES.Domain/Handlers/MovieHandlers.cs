@@ -16,20 +16,20 @@ namespace Movies_GES.Domain.Handlers
             _repository = repository;
         }
 
-        public async Task Handle(TitleMovie command)
+        public Task Handle(TitleMovie command)
         {
             command.MovieId = Guid.NewGuid();
             command.Id = Guid.NewGuid();
 
             var movie = new Movie(command.MovieId, command.Title);
-            await _repository.Save(movie, command.Id);
+            return _repository.Save(movie, command.Id);
         }
 
-        public async Task Handle(DescribeMovie command)
+        public Task Handle(DescribeMovie command)
         {
             var movie = _repository.GetById(command.MovieId);
             movie.Describe(command.Synopsis, command.CriticsConsensus, command.Year);
-            await _repository.Save(movie, command.Id);
+            return _repository.Save(movie, command.Id);
         }
     }
 }
