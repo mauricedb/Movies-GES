@@ -10,6 +10,7 @@ using Movies_GES.Domain.Domain;
 using Movies_GES.Domain.Handlers;
 using Movies_GES.Domain.Infrastructure;
 using Movies_GES.Web.Infrastructure;
+using Movies_GES.Web.Projections;
 using TinyIoC;
 using TinyMessenger;
 
@@ -17,6 +18,8 @@ namespace Movies_GES.Web
 {
     public static class TinyIocConfig
     {
+        private static EventStoreProjector _projector;
+
         public static void Register(TinyIoCContainer container)
         {
             RegisterTypes(container).Wait();
@@ -34,6 +37,8 @@ namespace Movies_GES.Web
 
             container.Register<IRepository<Movie>, EventStoreRepository<Movie>>().AsSingleton();
             container.Register<IRepository<Director>, EventStoreRepository<Director>>().AsSingleton();
+
+            _projector = container.Resolve<EventStoreProjector>();
         }
 
         private static async Task<IEventStoreConnection> CreateEventStoreConnection()
