@@ -24,12 +24,7 @@ namespace Movies_GES.Web.Infrastructure
             throw new System.NotImplementedException();
         }
 
-        public void Save(T aggregate, Guid commitId)
-        {
-            SaveAsync(aggregate, commitId).Wait();
-        }
-
-        public async Task SaveAsync(T aggregate, Guid commitId)
+        public async Task Save(T aggregate, Guid commitId)
         {
             var changes = aggregate.GetUncommittedChanges();
             var events = DomainEventsToEventData(changes);
@@ -37,21 +32,19 @@ namespace Movies_GES.Web.Infrastructure
             var result = await _eventStoreConnection.AppendToStreamAsync(
                    aggregate.Id.ToString(),
                    ExpectedVersion.Any,
-                   events).ConfigureAwait(false);
-
-            Console.WriteLine(result);
+                   events);
         }
 
         private static IEnumerable<EventData> DomainEventsToEventData(IEnumerable<DomainEvent> changes)
         {
             return (from change in changes
-                let json = JsonConvert.SerializeObject(change)
-                let bytes = Encoding.UTF8.GetBytes(json)
-                select new EventData(Guid.NewGuid(),
-                    change.GetType().FullName,
-                    true,
-                    bytes,
-                    null))
+                    let json = JsonConvert.SerializeObject(change)
+                    let bytes = Encoding.UTF8.GetBytes(json)
+                    select new EventData(Guid.NewGuid(),
+                        change.GetType().FullName,
+                        true,
+                        bytes,
+                        null))
                 .ToList();
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Movies_GES.Domain.Base;
 using Movies_GES.Domain.Infrastructure;
 
@@ -14,9 +15,11 @@ namespace Movies_GES.Web.Infrastructure
             return _data[id];
         }
 
-        public void Save(T aggregate, Guid commitId)
+        public Task Save(T aggregate, Guid commitId)
         {
             _data[aggregate.Id] = aggregate;
+
+            return Task.FromResult(0);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Movies_GES.Domain.Commands;
 using Movies_GES.Domain.Domain;
@@ -11,7 +12,7 @@ namespace Movies_GES.Domain.Tests.Handlers
     public class DirectorHandlersSpecs
     {
         [Fact]
-        public void Create_movie_on_TitleMovie_command()
+        public async Task Create_movie_on_TitleMovie_command()
         {
             var repository = new DummyRepository<Director>();
             var handler = new DirectorHandlers(repository);
@@ -21,7 +22,7 @@ namespace Movies_GES.Domain.Tests.Handlers
                 Name = "Some Guy"
             };
 
-            handler.Handle(command);
+            await handler.Handle(command);
 
             command.Error.Should().BeNull();
             repository.Items.Count.Should().Be(1);
@@ -33,12 +34,10 @@ namespace Movies_GES.Domain.Tests.Handlers
             var repository = new DummyRepository<Director>();
             var handler = new DirectorHandlers(repository);
 
-            Action action = () => handler.Handle(new NameDirector()
+            handler.Awaiting(h => h.Handle(new NameDirector()
             {
                 DirectorId = Guid.NewGuid(),
-            });
-
-            action.ShouldThrow<ArgumentException>();
+            })).ShouldThrow<ArgumentException>();
         }
     }
 }

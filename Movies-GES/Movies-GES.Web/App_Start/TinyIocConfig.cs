@@ -66,11 +66,11 @@ namespace Movies_GES.Web
             messengerHub.Subscribe<NameDirector>(cmd => WrappedHandler(directorHandlers, cmd));
         }
 
-        private static void WrappedHandler(dynamic handler, dynamic cmd)
+        private static async Task WrappedHandler(dynamic handler, dynamic cmd)
         {
             try
             {
-                handler.Handle(cmd);
+                await handler.Handle(cmd);
             }
             catch (AggregateException ex)
             {

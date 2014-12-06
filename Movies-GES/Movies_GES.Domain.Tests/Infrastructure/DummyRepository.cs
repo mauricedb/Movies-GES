@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Movies_GES.Domain.Base;
 using Movies_GES.Domain.Infrastructure;
 
@@ -20,9 +21,11 @@ namespace Movies_GES.Domain.Tests.Infrastructure
             return Items[id];
         }
 
-        public void Save(T movie, Guid commitId)
+        public Task Save(T movie, Guid commitId)
         {
             Items[movie.Id] = movie;
+
+            return Task.FromResult(0);
         }
     }
 }
