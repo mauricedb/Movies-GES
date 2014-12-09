@@ -1,23 +1,28 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 using EventStore.ClientAPI;
+using Movies_GES.Domain.Base;
+using Newtonsoft.Json;
+using TinyMessenger;
+using System.Linq;
 
 namespace Movies_GES.Web.Projections
 {
     public class EventStoreProjector
     {
-        private readonly IEventStoreConnection _connection;
+        private readonly ITinyMessengerHub _hub;
 
-        public EventStoreProjector(IEventStoreConnection connection)
+        public EventStoreProjector(IEventStoreConnection connection, ITinyMessengerHub hub)
         {
-            _connection = connection;
+            _hub = hub;
 
-            _connection.SubscribeToAllFrom(
-                Position.Start, 
-                false, 
-                OnEventAppeared, 
-                OnLiveProcessingStarted, 
+            connection.SubscribeToAllFrom(
+                Position.Start,
+                false,
+                OnEventAppeared,
+                OnLiveProcessingStarted,
                 OnSubscriptionDropped);
         }
 
@@ -25,15 +30,22 @@ namespace Movies_GES.Web.Projections
         {
             if (resolvedEvent.Event.EventType.StartsWith("$")) return;
 
-            Trace.TraceWarning("Created:       {0}", resolvedEvent.Event.Created);
-            Trace.TraceWarning("EventStreamId: {0}", resolvedEvent.Event.EventStreamId);
-            Trace.TraceWarning("EventType:     {0}", resolvedEvent.Event.EventType);
-            Trace.TraceWarning(Encoding.UTF8.GetString(resolvedEvent.Event.Data));
+            Trace.TraceInformation("Created:       {0}", resolvedEvent.Event.Created);
+            Trace.TraceInformation("EventStreamId: {0}", resolvedEvent.Event.EventStreamId);
+            Trace.TraceInformation("EventType:     {0}", resolvedEvent.Event.EventType);
+            Trace.TraceInformation("EventData:     {0}", Encoding.UTF8.GetString(resolvedEvent.Event.Data));
+
+            var eventType = Type.GetType(resolvedEvent.Event.EventType + ", " + typeof(DomainEvent).Assembly.FullName);
+
+            var json = Encoding.UTF8.GetString(resolvedEvent.Event.Data);
+            var @event = JsonConvert.DeserializeObject(json, eventType) as dynamic;
+
+            _hub.Publish(@event);
         }
 
         private void OnLiveProcessingStarted(EventStoreCatchUpSubscription s)
         {
-            Trace.TraceWarning("Live");
+            Trace.TraceInformation("Live");
         }
 
         private void OnSubscriptionDropped(EventStoreCatchUpSubscription catchUpSubscription, SubscriptionDropReason reason, Exception ex)

@@ -38,6 +38,8 @@ namespace Movies_GES.Web
             container.Register<IRepository<Movie>, EventStoreRepository<Movie>>().AsSingleton();
             container.Register<IRepository<Director>, EventStoreRepository<Director>>().AsSingleton();
 
+            container.Register<MovieProjectionHandlers>();
+
             _projector = container.Resolve<EventStoreProjector>();
         }
 
@@ -69,6 +71,9 @@ namespace Movies_GES.Web
 
             messengerHub.Subscribe<TitleMovie>(cmd => WrappedHandler(movieHandlers, cmd));
             messengerHub.Subscribe<NameDirector>(cmd => WrappedHandler(directorHandlers, cmd));
+
+            var movieProjectionHandlers = container.Resolve<MovieProjectionHandlers>();
+            messengerHub.Subscribe<MovieTitled>(@event => movieProjectionHandlers.Handle(@event));
         }
 
         private static async Task WrappedHandler(dynamic handler, dynamic cmd)
