@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Reflection;
 using System.Text;
 using EventStore.ClientAPI;
 using Movies_GES.Domain.Base;
 using Newtonsoft.Json;
 using TinyMessenger;
-using System.Linq;
 
 namespace Movies_GES.Web.Projections
 {

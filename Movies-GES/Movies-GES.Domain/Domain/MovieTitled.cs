@@ -18,8 +18,8 @@ namespace Movies_GES.Domain.Domain
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((MovieTitled) obj);
+            if (obj.GetType() != GetType()) return false;
+            return Equals((MovieTitled)obj);
         }
 
         protected bool Equals(MovieTitled other)

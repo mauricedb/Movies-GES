@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Movies_GES.Domain.Base;
 using Movies_GES.Domain.Commands;
 using Movies_GES.Domain.Domain;
 using Movies_GES.Domain.Infrastructure;

@@ -18,8 +18,6 @@ namespace Movies_GES.Web
 {
     public static class TinyIocConfig
     {
-        private static EventStoreProjector _projector;
-
         public static void Register(TinyIoCContainer container)
         {
             RegisterTypes(container).Wait();
@@ -40,7 +38,7 @@ namespace Movies_GES.Web
 
             container.Register<MovieProjectionHandlers>();
 
-            _projector = container.Resolve<EventStoreProjector>();
+           container.Resolve<EventStoreProjector>();
         }
 
         private static async Task<IEventStoreConnection> CreateEventStoreConnection()

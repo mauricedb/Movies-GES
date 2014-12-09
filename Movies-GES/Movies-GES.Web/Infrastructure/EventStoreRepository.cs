@@ -12,16 +12,16 @@ namespace Movies_GES.Web.Infrastructure
 {
     public class EventStoreRepository<T> : IRepository<T> where T : AggregateRoot
     {
-        private IEventStoreConnection _eventStoreConnection;
+        private readonly IEventStoreConnection _eventStoreConnection;
 
         public EventStoreRepository(IEventStoreConnection eventStoreConnection)
         {
             _eventStoreConnection = eventStoreConnection;
         }
 
-        public T GetById(System.Guid id)
+        public T GetById(Guid id)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public async Task Save(T aggregate, Guid commitId)
@@ -29,7 +29,7 @@ namespace Movies_GES.Web.Infrastructure
             var changes = aggregate.GetUncommittedChanges();
             var events = DomainEventsToEventData(changes);
 
-            var result = await _eventStoreConnection.AppendToStreamAsync(
+            await _eventStoreConnection.AppendToStreamAsync(
                    aggregate.Id.ToString(),
                    ExpectedVersion.Any,
                    events);

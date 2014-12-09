@@ -8,7 +8,7 @@ namespace Movies_GES.Web.Infrastructure
 {
     public class TinyIoCDependencyResolver : IDependencyResolver
     {
-        private TinyIoCContainer _container;
+        private readonly TinyIoCContainer _container;
 
         public TinyIoCDependencyResolver(TinyIoCContainer container)
         {

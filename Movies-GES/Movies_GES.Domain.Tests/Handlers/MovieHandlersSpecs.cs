@@ -32,7 +32,7 @@ namespace Movies_GES.Domain.Tests.Handlers
             var repository = new DummyRepository<Movie>();
             var handler = new MovieHandlers(repository);
 
-            handler.Awaiting(h => h.Handle(new TitleMovie()
+            handler.Awaiting(h => h.Handle(new TitleMovie
             {
                 MovieId = Guid.NewGuid()
             })).ShouldThrow<ArgumentException>();

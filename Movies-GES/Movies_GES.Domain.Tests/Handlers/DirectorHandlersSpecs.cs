@@ -16,7 +16,7 @@ namespace Movies_GES.Domain.Tests.Handlers
         {
             var repository = new DummyRepository<Director>();
             var handler = new DirectorHandlers(repository);
-            var command = new NameDirector()
+            var command = new NameDirector
             {
                 DirectorId = Guid.NewGuid(),
                 Name = "Some Guy"
@@ -34,7 +34,7 @@ namespace Movies_GES.Domain.Tests.Handlers
             var repository = new DummyRepository<Director>();
             var handler = new DirectorHandlers(repository);
 
-            handler.Awaiting(h => h.Handle(new NameDirector()
+            handler.Awaiting(h => h.Handle(new NameDirector
             {
                 DirectorId = Guid.NewGuid(),
             })).ShouldThrow<ArgumentException>();
