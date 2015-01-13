@@ -11,6 +11,7 @@ using Movies_GES.Domain.Handlers;
 using Movies_GES.Domain.Infrastructure;
 using Movies_GES.Web.Infrastructure;
 using Movies_GES.Web.Projections;
+using ServiceStack.Redis;
 using TinyIoC;
 using TinyMessenger;
 
@@ -29,6 +30,9 @@ namespace Movies_GES.Web
             var connection = await CreateEventStoreConnection();
 
             container.Register((_, __) => connection);
+
+            var redisManagerPool = new RedisManagerPool();
+            container.Register<IRedisClientsManager>((_, __) => redisManagerPool);
 
             container.Register<MovieHandlers>().AsSingleton();
             container.Register<DirectorHandlers>().AsSingleton();
