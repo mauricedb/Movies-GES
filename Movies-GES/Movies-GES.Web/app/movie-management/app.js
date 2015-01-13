@@ -5,12 +5,34 @@
 
     mod.controller('movie-list-controller', MovieListController);
 
-    function MovieListController($modal) {
+    mod.factory('moviesSvc', function ($http) {
+
+        function query() {
+            return $http.get('/api/movies');
+        }
+
+        return {
+            query: query
+        }
+    });
+
+    function MovieListController($modal, moviesSvc) {
         this.$modal = $modal;
+        this.moviesSvc = moviesSvc;
+        this.movies = [];
+
+        var that = this;
+        moviesSvc.query().then(function (e) {
+            [].push.apply(that.movies, e.data);
+        });
     }
 
+    MovieListController.prototype.movieDetails = function(movie) {
+        alert(movie.title);
+    };
 
     MovieListController.prototype.addMovie = function () {
+        var that = this;
         var modalInstance = this.$modal.open({
             templateUrl: '/app/movie-management/add-movie.html',
             controller: 'add-movie-controller',
@@ -18,8 +40,10 @@
         });
 
         modalInstance.result.then(function (newMovie) {
+            that.movies.push(newMovie);
         });
     };
+
 
     mod.controller('add-movie-controller', AddMovieController);
 
@@ -46,8 +70,8 @@
             }, function (e) {
                 console.log(e.data.modelState.exception[0]);
 
-            //console.log(e.data.exceptionMessage || e.data);
-        });
+                //console.log(e.data.exceptionMessage || e.data);
+            });
     };
 
     AddMovieController.prototype.cancel = function () {
