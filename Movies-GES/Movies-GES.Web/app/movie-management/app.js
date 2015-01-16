@@ -1,9 +1,34 @@
 ﻿(function () {
     'use strict';
 
-    var mod = angular.module('movie-management-app', ['ui.bootstrap']);
+    var mod = angular.module('movie-management-app', [
+        'ngRoute',
+        'ui.bootstrap'
+    ]);
+
+    mod.config(function ($routeProvider) {
+        $routeProvider.when('/list', {
+            controller: 'movie-list-controller',
+            controllerAs: 'ctrl',
+            templateUrl: '/app/movie-management/movie-list.html'
+        });
+
+        $routeProvider.when('/details/:id', {
+            controller: 'movie-details-controller',
+            controllerAs: 'ctrl',
+            templateUrl: '/app/movie-management/movie-details.html'
+        });
+
+
+        $routeProvider.otherwise({
+            redirectTo: '/list'
+        });
+    });
+
 
     mod.controller('movie-list-controller', MovieListController);
+    mod.controller('movie-details-controller', MovieDetailsController);
+    mod.controller('add-movie-controller', AddMovieController);
 
     mod.factory('moviesSvc', function ($http) {
 
@@ -11,13 +36,19 @@
             return $http.get('/api/movies');
         }
 
+        function get(params) {
+            return $http.get('/api/movies/' + params.id);
+        }
+
         return {
-            query: query
+            query: query,
+            get: get
         }
     });
 
-    function MovieListController($modal, moviesSvc) {
+    function MovieListController($modal, $location, moviesSvc) {
         this.$modal = $modal;
+        this.$location = $location;
         this.moviesSvc = moviesSvc;
         this.movies = [];
 
@@ -27,8 +58,8 @@
         });
     }
 
-    MovieListController.prototype.movieDetails = function(movie) {
-        alert(movie.title);
+    MovieListController.prototype.movieDetails = function (movie) {
+        this.$location.path('/details/' + movie.id);
     };
 
     MovieListController.prototype.addMovie = function () {
@@ -44,8 +75,18 @@
         });
     };
 
+    function MovieDetailsController($route, $modal, $location, moviesSvc) {
+        this.$modal = $modal;
+        this.$location = $location;
+        this.moviesSvc = moviesSvc;
+        this.movie = {};
 
-    mod.controller('add-movie-controller', AddMovieController);
+        var that = this;
+        moviesSvc.get({ id: $route.current.params.id }).then(function (e) {
+            that.movie = e.data;
+        });
+
+    }
 
     function AddMovieController($scope, $modalInstance, $http) {
         this.$scope = $scope;

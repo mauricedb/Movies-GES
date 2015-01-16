@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using Movies_GES.Web.Models;
@@ -23,6 +24,22 @@ namespace Movies_GES.Web.Api
                 return typedClient
                     .GetAll()
                     .OrderBy(m => m.Title);
+            }
+        }
+
+        public IHttpActionResult Get(Guid id)
+        {
+            using (var client = _clientsManager.GetClient())
+            {
+                var typedClient = client.As<MovieProjection>();
+                var movie = typedClient.GetById(id);
+
+                if (movie != null)
+                {
+                    return Ok(movie);
+                }
+
+                return NotFound();
             }
         }
     }
