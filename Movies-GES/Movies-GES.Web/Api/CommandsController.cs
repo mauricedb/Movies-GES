@@ -27,7 +27,7 @@ namespace Movies_GES.Web.Api
                 if (type != null)
                 {
                     dynamic cmd = await Request.Content.ReadAsAsync(type);
-					cmd.Id = id;
+                    cmd.CommandId = id;
 
                     _messengerHub.Publish(cmd);
 

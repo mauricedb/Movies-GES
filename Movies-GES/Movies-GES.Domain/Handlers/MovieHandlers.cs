@@ -18,14 +18,14 @@ namespace Movies_GES.Domain.Handlers
         public Task Handle(TitleMovie command)
         {
             var movie = new Movie(command.MovieId, command.Title);
-            return _repository.Save(movie, command.Id);
+            return _repository.Save(movie, command.CommandId);
         }
 
         public Task Handle(DescribeMovie command)
         {
             var movie = _repository.GetById(command.MovieId);
             movie.Describe(command.Synopsis, command.CriticsConsensus, command.Year);
-            return _repository.Save(movie, command.Id);
+            return _repository.Save(movie, command.CommandId);
         }
     }
 }

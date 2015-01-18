@@ -18,10 +18,10 @@ namespace Movies_GES.Domain.Handlers
         public Task Handle(NameDirector command)
         {
             command.DirectorId = Guid.NewGuid();
-            command.Id = Guid.NewGuid();
+            command.CommandId = Guid.NewGuid();
 
             var director = new Director(command.DirectorId, command.Name);
-            return _repository.Save(director, command.Id);
+            return _repository.Save(director, command.CommandId);
         }
     }
 }
