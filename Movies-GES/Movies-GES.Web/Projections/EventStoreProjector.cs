@@ -12,24 +12,29 @@ namespace Movies_GES.Web.Projections
     public class EventStoreProjector
     {
         private readonly ITinyMessengerHub _hub;
+        private readonly IEventStoreConnection _connection;
+        private EventStoreAllCatchUpSubscription _subscription;
         private IRedisClientsManager _clientsManager;
         private const string LastcheckpointKey = "urn:LastCheckpoint:last";
 
         public EventStoreProjector(IEventStoreConnection connection, ITinyMessengerHub hub,
             IRedisClientsManager clientsManager)
         {
+            _connection = connection;
             _clientsManager = clientsManager;
             _hub = hub;
+        }
 
-
+        public void Start()
+        {
             var lastCheckpoint = LoadLastCheckpoint();
 
-            connection.SubscribeToAllFrom(
-                lastCheckpoint,
-                false,
-                OnEventAppeared,
-                OnLiveProcessingStarted,
-                OnSubscriptionDropped);
+            _subscription = _connection.SubscribeToAllFrom(
+               lastCheckpoint,
+               false,
+               OnEventAppeared,
+               OnLiveProcessingStarted,
+               OnSubscriptionDropped);
         }
 
         private void OnEventAppeared(EventStoreCatchUpSubscription catchUpSubscription, ResolvedEvent resolvedEvent)
@@ -58,10 +63,15 @@ namespace Movies_GES.Web.Projections
 
         private void OnSubscriptionDropped(EventStoreCatchUpSubscription catchUpSubscription, SubscriptionDropReason reason, Exception ex)
         {
-            Trace.TraceWarning("EventStoreCatchUpSubscription Dropped");
-            Trace.TraceWarning(catchUpSubscription.ToString());
-            Trace.TraceWarning(reason.ToString());
-            Trace.TraceWarning(ex.ToString());
+            if (reason != SubscriptionDropReason.UserInitiated)
+            {
+                Trace.TraceWarning("EventStoreCatchUpSubscription Dropped");
+                Trace.TraceWarning(catchUpSubscription.ToString());
+                Trace.TraceWarning(reason.ToString());
+                Trace.TraceWarning(ex.ToString());
+
+                Start();
+            }
         }
 
         private Position LoadLastCheckpoint()
