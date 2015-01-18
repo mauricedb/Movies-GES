@@ -5,8 +5,8 @@ namespace Movies_GES.Domain.Infrastructure
 {
     public interface IRepository<T>
     {
-        Task<T> GetById(Guid id);
-        Task Save(T aggregate, Guid commitId);
+        T GetById(Guid id);
+        void Save(T aggregate, Guid commitId);
     }
 
     public static class Guard

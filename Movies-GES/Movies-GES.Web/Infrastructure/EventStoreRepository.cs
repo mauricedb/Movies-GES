@@ -20,7 +20,7 @@ namespace Movies_GES.Web.Infrastructure
             _eventStoreConnection = eventStoreConnection;
         }
 
-        public async Task<T> GetById(Guid id)
+        public T GetById(Guid id)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace Movies_GES.Web.Infrastructure
                 //    aggregate.LoadsFromHistory(changes);
                 //}
 
-                var resolvedEvent = await ReadStreamEvents(id.ToString());
+                var resolvedEvent = ReadStreamEvents(id.ToString());
                 if (resolvedEvent.Any())
                 {
                     var changes = EventDataToDomainEvents(resolvedEvent);
@@ -57,7 +57,7 @@ namespace Movies_GES.Web.Infrastructure
         }
 
 
-        private async Task<List<ResolvedEvent>> ReadStreamEvents(string id)
+        private List<ResolvedEvent> ReadStreamEvents(string id)
         {
             var streamEvents = new List<ResolvedEvent>();
 
@@ -68,7 +68,7 @@ namespace Movies_GES.Web.Infrastructure
             {
                 try
                 {
-                    currentSlice = await _eventStoreConnection.ReadStreamEventsForwardAsync(id, nextSliceStart, 200, false);
+                    currentSlice = _eventStoreConnection.ReadStreamEventsForwardAsync(id, nextSliceStart, 200, false).Result;
                 }
                 catch (Exception ex)
                 {
@@ -83,15 +83,15 @@ namespace Movies_GES.Web.Infrastructure
             return streamEvents;
         }
 
-        public async Task Save(T aggregate, Guid commitId)
+        public void Save(T aggregate, Guid commitId)
         {
             var changes = aggregate.GetUncommittedChanges();
             var events = DomainEventsToEventData(changes);
 
-            await _eventStoreConnection.AppendToStreamAsync(
+            _eventStoreConnection.AppendToStreamAsync(
                 aggregate.Id.ToString(),
                 ExpectedVersion.Any,
-                events);
+                events).Wait();
         }
 
         private static IEnumerable<EventData> DomainEventsToEventData(IEnumerable<DomainEvent> changes)

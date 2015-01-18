@@ -15,9 +15,9 @@ namespace Movies_GES.Domain.Handlers
             _repository = repository;
         }
 
-        public async Task Handle(TitleMovie command)
+        public void Handle(TitleMovie command)
         {
-            var movie = await _repository.GetById(command.MovieId);
+            var movie = _repository.GetById(command.MovieId);
             if (movie != null)
             {
                 movie.Title(command.Title);
@@ -27,14 +27,14 @@ namespace Movies_GES.Domain.Handlers
                 movie = new Movie(command.MovieId, command.Title);
             }
 
-            await _repository.Save(movie, command.CommandId);
+            _repository.Save(movie, command.CommandId);
         }
 
-        public async Task Handle(DescribeMovie command)
+        public void Handle(DescribeMovie command)
         {
-            var movie = await _repository.GetById(command.MovieId);
+            var movie = _repository.GetById(command.MovieId);
             movie.Describe(command.Synopsis, command.CriticsConsensus, command.Year);
-            await _repository.Save(movie, command.CommandId);
+            _repository.Save(movie, command.CommandId);
         }
     }
 }

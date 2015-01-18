@@ -15,20 +15,18 @@ namespace Movies_GES.Domain.Tests.Infrastructure
 
         public Dictionary<Guid, T> Items { get; private set; }
 
-        public Task<T> GetById(Guid id)
+        public T GetById(Guid id)
         {
             var result = default(T);
 
             Items.TryGetValue(id, out result);
 
-            return Task.FromResult(result);
+            return result;
         }
 
-        public Task Save(T movie, Guid commitId)
+        public void Save(T movie, Guid commitId)
         {
             Items[movie.Id] = movie;
-
-            return Task.FromResult(0);
         }
     }
 }

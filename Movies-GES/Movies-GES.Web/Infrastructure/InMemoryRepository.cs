@@ -10,20 +10,19 @@ namespace Movies_GES.Web.Infrastructure
     {
         private readonly Dictionary<Guid, T> _data = new Dictionary<Guid, T>();
 
-        public Task<T> GetById(Guid id)
+        public T GetById(Guid id)
         {
             var result = default(T);
 
             _data.TryGetValue(id, out result);
 
-            return Task.FromResult(result);
+            return result;
         }
 
-        public Task Save(T aggregate, Guid commitId)
+        public void Save(T aggregate, Guid commitId)
         {
             _data[aggregate.Id] = aggregate;
 
-            return Task.FromResult(0);
         }
     }
 }

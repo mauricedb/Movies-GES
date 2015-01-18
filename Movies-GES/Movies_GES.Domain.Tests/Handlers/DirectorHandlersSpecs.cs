@@ -12,7 +12,7 @@ namespace Movies_GES.Domain.Tests.Handlers
     public class DirectorHandlersSpecs
     {
         [Fact]
-        public async Task Create_movie_on_TitleMovie_command()
+        public void Create_movie_on_TitleMovie_command()
         {
             var repository = new DummyRepository<Director>();
             var handler = new DirectorHandlers(repository);
@@ -22,7 +22,7 @@ namespace Movies_GES.Domain.Tests.Handlers
                 Name = "Some Guy"
             };
 
-            await handler.Handle(command);
+            handler.Handle(command);
 
             command.Error.Should().BeNull();
             repository.Items.Count.Should().Be(1);
@@ -34,7 +34,7 @@ namespace Movies_GES.Domain.Tests.Handlers
             var repository = new DummyRepository<Director>();
             var handler = new DirectorHandlers(repository);
 
-            handler.Awaiting(h => h.Handle(new NameDirector
+            handler.Invoking(h => h.Handle(new NameDirector
             {
                 DirectorId = Guid.NewGuid(),
             })).ShouldThrow<ArgumentException>();

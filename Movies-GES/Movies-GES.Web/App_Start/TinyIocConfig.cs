@@ -21,13 +21,13 @@ namespace Movies_GES.Web
     {
         public static void Register(TinyIoCContainer container)
         {
-            RegisterTypes(container).Wait();
+            RegisterTypes(container);
             RegisterMessageSubscribers(container);
         }
 
-        private static async Task RegisterTypes(TinyIoCContainer container)
+        private static void RegisterTypes(TinyIoCContainer container)
         {
-            var connection = await CreateEventStoreConnection();
+            var connection = CreateEventStoreConnection();
 
             container.Register((_, __) => connection);
 
@@ -44,10 +44,10 @@ namespace Movies_GES.Web
 
             container.Register<MovieProjectionHandlers>();
 
-           container.Resolve<EventStoreProjector>();
+           container.Resolve<EventStoreProjector>().Start();
         }
 
-        private static async Task<IEventStoreConnection> CreateEventStoreConnection()
+        private static IEventStoreConnection CreateEventStoreConnection()
         {
             var settings = ConnectionSettings
                 .Create()
@@ -61,14 +61,10 @@ namespace Movies_GES.Web
             connection.ErrorOccurred += (s, e) => Trace.TraceWarning("ErrorOccurred: {0}", e.Exception);
             connection.Closed += (s, e) => Trace.TraceWarning("Closed: {0}", e.Reason);
             connection.Connected += (s, e) => Trace.TraceWarning("Connected: {0}", e.RemoteEndPoint);
-            connection.Disconnected += (s, e) =>
-            {
-                Trace.TraceWarning("Disconnected: {0}", e.RemoteEndPoint);
-            };
+            connection.Disconnected += (s, e) => Trace.TraceWarning("Disconnected: {0}", e.RemoteEndPoint);
             connection.Reconnecting += (s, e) => Trace.TraceWarning("Reconnecting: {0}", e);
 
-
-            await connection.ConnectAsync();
+            connection.ConnectAsync().Wait();
             return connection;
         }
 
@@ -85,11 +81,11 @@ namespace Movies_GES.Web
             messengerHub.Subscribe<MovieTitled>(@event => movieProjectionHandlers.Handle(@event));
         }
 
-        private static async Task WrappedHandler(dynamic handler, dynamic cmd)
+        private static void WrappedHandler(dynamic handler, dynamic cmd)
         {
             try
             {
-                await handler.Handle(cmd);
+                handler.Handle(cmd);
             }
             catch (AggregateException ex)
             {

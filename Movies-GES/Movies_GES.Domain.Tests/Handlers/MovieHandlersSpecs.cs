@@ -12,12 +12,12 @@ namespace Movies_GES.Domain.Tests.Handlers
     public class MovieHandlersSpecs
     {
         [Fact]
-        public async Task Create_movie_on_TitleMovie_command()
+        public void Create_movie_on_TitleMovie_command()
         {
             var repository = new DummyRepository<Movie>();
             var handler = new MovieHandlers(repository);
 
-            await handler.Handle(new TitleMovie
+            handler.Handle(new TitleMovie
               {
                   MovieId = Guid.NewGuid(),
                   Title = "Some movie"
@@ -32,7 +32,7 @@ namespace Movies_GES.Domain.Tests.Handlers
             var repository = new DummyRepository<Movie>();
             var handler = new MovieHandlers(repository);
 
-            handler.Awaiting(h => h.Handle(new TitleMovie
+            handler.Invoking(h => h.Handle(new TitleMovie
             {
                 MovieId = Guid.NewGuid()
             })).ShouldThrow<ArgumentException>();
@@ -43,10 +43,10 @@ namespace Movies_GES.Domain.Tests.Handlers
         {
             var movieId = Guid.NewGuid();
             var repository = new DummyRepository<Movie>();
-            await repository.Save(new Movie(movieId, "Some movie"), Guid.Empty);
+            repository.Save(new Movie(movieId, "Some movie"), Guid.Empty);
             var handler = new MovieHandlers(repository);
 
-            await handler.Handle(new DescribeMovie
+            handler.Handle(new DescribeMovie
              {
                  MovieId = movieId,
                  Synopsis = "Synopsis",
@@ -62,10 +62,10 @@ namespace Movies_GES.Domain.Tests.Handlers
         {
             var movieId = Guid.NewGuid();
             var repository = new DummyRepository<Movie>();
-            await repository.Save(new Movie(movieId, "Some movie"), Guid.Empty);
+            repository.Save(new Movie(movieId, "Some movie"), Guid.Empty);
             var handler = new MovieHandlers(repository);
 
-            handler.Awaiting(h => h.Handle(new DescribeMovie
+            handler.Invoking(h=>h.Handle(new DescribeMovie
             {
                 MovieId = movieId,
                 Synopsis = "Synopsis",
