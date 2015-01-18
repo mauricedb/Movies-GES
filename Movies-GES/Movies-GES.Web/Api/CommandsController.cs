@@ -18,7 +18,7 @@ namespace Movies_GES.Web.Api
             _messengerHub = messengerHub;
         }
 
-        public async Task<IHttpActionResult> Put(string id)
+        public async Task<IHttpActionResult> Put(Guid id)
         {
             try
             {
@@ -27,6 +27,7 @@ namespace Movies_GES.Web.Api
                 if (type != null)
                 {
                     dynamic cmd = await Request.Content.ReadAsAsync(type);
+					cmd.Id = id;
 
                     _messengerHub.Publish(cmd);
 

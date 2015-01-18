@@ -17,9 +17,6 @@ namespace Movies_GES.Domain.Handlers
 
         public Task Handle(TitleMovie command)
         {
-            command.MovieId = Guid.NewGuid();
-            command.Id = Guid.NewGuid();
-
             var movie = new Movie(command.MovieId, command.Title);
             return _repository.Save(movie, command.Id);
         }

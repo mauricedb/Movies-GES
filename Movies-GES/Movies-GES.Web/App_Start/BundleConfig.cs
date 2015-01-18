@@ -27,16 +27,19 @@ namespace Movies_GES.Web
                       "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/movie-management").Include(
+                        "~/Scripts/uuid.js",
                         "~/Scripts/angular.js",
                         "~/Scripts/angular-route.js",
                         "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
-                        "~/app/movie-management/app.js"
+                        "~/app/movie-management/app.js",
+                        "~/app/movie-management/app-utils.js"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/director-management").Include(
                         "~/Scripts/angular.js",
                         "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
-                        "~/app/director-management/app.js"
+                        "~/app/director-management/app.js",
+                        "~/app/movie-management/app-utils.js"
                         ));
 
             // Set EnableOptimizations to false for debugging. For more information,

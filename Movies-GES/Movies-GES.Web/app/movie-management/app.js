@@ -2,6 +2,7 @@
     'use strict';
 
     var mod = angular.module('movie-management-app', [
+		'app-utils',
         'ngRoute',
         'ui.bootstrap'
     ]);
@@ -88,20 +89,25 @@
 
     }
 
-    function AddMovieController($scope, $modalInstance, $http) {
+    function AddMovieController($scope, $modalInstance, $http, uuid) {
         this.$scope = $scope;
         this.$modalInstance = $modalInstance;
         this.$http = $http;
+        this.uuid = uuid;
 
-        $scope.newMovie = { title: '' };
+        $scope.newMovie = { 
+			title: '', 
+			movieId: uuid.v4() 
+		};
     }
 
     AddMovieController.prototype.ok = function () {
         var self = this;
+		var commandId = self.uuid.v4();
 
         self.$http.put(
-            '/api/commands/1',
-            this.$scope.newMovie,
+            '/api/commands/' + commandId,
+            self.$scope.newMovie,
             {
                 headers: {
                     'x-command-name': 'TitleMovie'

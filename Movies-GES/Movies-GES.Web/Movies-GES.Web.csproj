@@ -165,6 +165,7 @@
     <Content Include="app\director-management\add-director.html" />
     <Content Include="app\director-management\app.js" />
     <Content Include="app\movie-management\add-movie.html" />
+    <Content Include="app\movie-management\app-utils.js" />
     <Content Include="app\movie-management\app.js" />
     <Content Include="app\movie-management\movie-details.html" />
     <Content Include="app\movie-management\movie-list.html" />
@@ -198,6 +199,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\uuid.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
