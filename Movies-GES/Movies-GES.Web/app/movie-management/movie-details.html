@@ -2,7 +2,9 @@
 <form>
     <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.title">
+        <input type="text" class="form-control" id="title"
+               ng-model="ctrl.movie.title"
+               ng-model-options="{ updateOn: 'blur' }">
     </div>
     
     <div class="form-group">

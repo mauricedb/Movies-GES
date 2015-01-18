@@ -75,18 +75,46 @@
         });
     };
 
-    function MovieDetailsController($route, $modal, $location, moviesSvc) {
+    function MovieDetailsController($scope, $route, $modal, $location, moviesSvc, uuid, $http) {
+        this.$scope = $scope;
         this.$modal = $modal;
         this.$location = $location;
         this.moviesSvc = moviesSvc;
+        this.uuid = uuid;
+        this.$http = $http;
         this.movie = {};
 
         var that = this;
         moviesSvc.get({ id: $route.current.params.id }).then(function (e) {
             that.movie = e.data;
-        });
 
+            that.$scope.$watch('ctrl.movie.title', function (newValue, oldValue) {
+                if (oldValue) {
+                    var commandId = that.uuid.v4();
+                    var command = {
+                        movieId: that.movie.id,
+                        title: newValue
+                    };
+                    that.$http.put(
+                        '/api/commands/' + commandId,
+                        command,
+                        {
+                            headers: {
+                                'x-command-name': 'TitleMovie'
+                            }
+                        }).then(function (e) {
+                            console.log('New title for movie')
+                        }, function (e) {
+                            console.log(e.data.modelState.exception[0]);
+                        });
+                }
+            });
+        });
     }
+
+
+
+
 
     function AddMovieController($scope, $modalInstance, $http, uuid) {
         this.$scope = $scope;

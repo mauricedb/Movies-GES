@@ -20,6 +20,15 @@ namespace Movies_GES.Domain.Base
             _changes.Clear();
         }
 
+        public void LoadsFromHistory(IEnumerable<DomainEvent> domainEvents)
+        {
+            foreach (var domainEvent in domainEvents)
+            {
+                ApplyChanges(domainEvent);
+            }
+            this.MarkChangesAsCommitted();
+        } 
+
         protected void ApplyChanges(DomainEvent domainEvent)
         {
             var dhis = this.AsDynamic();

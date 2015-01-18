@@ -16,6 +16,10 @@ namespace Movies_GES.Domain.Domain
             ApplyChanges(new MovieTitled(id, title));
         }
 
+        protected Movie()
+        {
+        }
+
         public override Guid Id { get { return _id; } }
 
         public void Describe(string synopsis, string criticsConsensus, int year)
@@ -24,7 +28,11 @@ namespace Movies_GES.Domain.Domain
 
             ApplyChanges(new MovieDescribed(synopsis, criticsConsensus, year));
         }
-        
+
+        internal void Title(string title)
+        {
+            ApplyChanges(new MovieTitled(_id, title));
+        }
 
         public void Apply(MovieTitled movieTitled)
         {

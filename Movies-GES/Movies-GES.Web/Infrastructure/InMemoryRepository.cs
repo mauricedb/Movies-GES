@@ -6,13 +6,13 @@ using Movies_GES.Domain.Infrastructure;
 
 namespace Movies_GES.Web.Infrastructure
 {
-    public class InMemoryRepository<T> : IRepository<T> where T: AggregateRoot
+    public class InMemoryRepository<T> : IRepository<T> where T : AggregateRoot
     {
         private readonly Dictionary<Guid, T> _data = new Dictionary<Guid, T>();
 
-        public T GetById(Guid id)
+        public Task<T> GetById(Guid id)
         {
-            return _data[id];
+            return Task.FromResult(_data[id]);
         }
 
         public Task Save(T aggregate, Guid commitId)

@@ -15,9 +15,9 @@ namespace Movies_GES.Domain.Tests.Infrastructure
 
         public Dictionary<Guid, T> Items { get; private set; }
 
-        public T GetById(Guid id)
+        public Task<T> GetById(Guid id)
         {
-            return Items[id];
+            return Task.FromResult(Items[id]);
         }
 
         public Task Save(T movie, Guid commitId)

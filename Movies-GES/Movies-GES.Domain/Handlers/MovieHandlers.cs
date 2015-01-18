@@ -15,17 +15,26 @@ namespace Movies_GES.Domain.Handlers
             _repository = repository;
         }
 
-        public Task Handle(TitleMovie command)
+        public async Task Handle(TitleMovie command)
         {
-            var movie = new Movie(command.MovieId, command.Title);
-            return _repository.Save(movie, command.CommandId);
+            var movie = await _repository.GetById(command.MovieId);
+            if (movie != null)
+            {
+                movie.Title(command.Title);
+            }
+            else
+            {
+                movie = new Movie(command.MovieId, command.Title);
+            }
+
+            await _repository.Save(movie, command.CommandId);
         }
 
-        public Task Handle(DescribeMovie command)
+        public async Task Handle(DescribeMovie command)
         {
-            var movie = _repository.GetById(command.MovieId);
+            var movie = await _repository.GetById(command.MovieId);
             movie.Describe(command.Synopsis, command.CriticsConsensus, command.Year);
-            return _repository.Save(movie, command.CommandId);
+            await _repository.Save(movie, command.CommandId);
         }
     }
 }
