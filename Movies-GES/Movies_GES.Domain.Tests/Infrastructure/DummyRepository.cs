@@ -17,7 +17,11 @@ namespace Movies_GES.Domain.Tests.Infrastructure
 
         public Task<T> GetById(Guid id)
         {
-            return Task.FromResult(Items[id]);
+            var result = default(T);
+
+            Items.TryGetValue(id, out result);
+
+            return Task.FromResult(result);
         }
 
         public Task Save(T movie, Guid commitId)
