@@ -151,9 +151,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\EventStoreRepository.cs" />
-    <Compile Include="Infrastructure\InMemoryDirectorRepository.cs" />
     <Compile Include="Infrastructure\InMemoryRepository.cs" />
-    <Compile Include="Infrastructure\InMemoryMovieRepository.cs" />
     <Compile Include="Infrastructure\TinyIoCDependencyResolver.cs" />
     <Compile Include="Projections\EventStoreProjector.cs" />
     <Compile Include="Models\MovieProjection.cs" />

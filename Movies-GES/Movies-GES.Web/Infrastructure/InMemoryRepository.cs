@@ -12,7 +12,11 @@ namespace Movies_GES.Web.Infrastructure
 
         public Task<T> GetById(Guid id)
         {
-            return Task.FromResult(_data[id]);
+            var result = default(T);
+
+            _data.TryGetValue(id, out result);
+
+            return Task.FromResult(result);
         }
 
         public Task Save(T aggregate, Guid commitId)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,14 +59,21 @@ namespace Movies_GES.Web.Infrastructure
 
         private async Task<List<ResolvedEvent>> ReadStreamEvents(string id)
         {
-
             var streamEvents = new List<ResolvedEvent>();
 
-            StreamEventsSlice currentSlice;
+
+            StreamEventsSlice currentSlice = null;
             var nextSliceStart = StreamPosition.Start;
             do
             {
-                currentSlice = await _eventStoreConnection.ReadStreamEventsForwardAsync(id, nextSliceStart, 200, false);
+                try
+                {
+                    currentSlice = await _eventStoreConnection.ReadStreamEventsForwardAsync(id, nextSliceStart, 200, false);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
 
                 nextSliceStart = currentSlice.NextEventNumber;
 
@@ -81,9 +89,9 @@ namespace Movies_GES.Web.Infrastructure
             var events = DomainEventsToEventData(changes);
 
             await _eventStoreConnection.AppendToStreamAsync(
-                   aggregate.Id.ToString(),
-                   ExpectedVersion.Any,
-                   events);
+                aggregate.Id.ToString(),
+                ExpectedVersion.Any,
+                events);
         }
 
         private static IEnumerable<EventData> DomainEventsToEventData(IEnumerable<DomainEvent> changes)
@@ -101,18 +109,11 @@ namespace Movies_GES.Web.Infrastructure
 
         private static IEnumerable<DomainEvent> EventDataToDomainEvents(IEnumerable<ResolvedEvent> resolvedEvents)
         {
-            var result = new List<DomainEvent>();
-
-            foreach (var resolvedEvent in resolvedEvents)
-            {
-                var eventType = Type.GetType(resolvedEvent.OriginalEvent.EventType + ", " + typeof(DomainEvent).Assembly.FullName);
-
-                var json = Encoding.UTF8.GetString(resolvedEvent.OriginalEvent.Data);
-                var domainEvent = JsonConvert.DeserializeObject(json, eventType) as DomainEvent;
-                result.Add(domainEvent);
-            }
-
-            return result;
+            return (from resolvedEvent in resolvedEvents
+                    let eventType = Type.GetType(resolvedEvent.OriginalEvent.EventType + ", " + typeof(DomainEvent).Assembly.FullName)
+                    let json = Encoding.UTF8.GetString(resolvedEvent.OriginalEvent.Data)
+                    select JsonConvert.DeserializeObject(json, eventType) as DomainEvent)
+                .ToList();
         }
     }
 }

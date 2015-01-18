@@ -37,6 +37,8 @@ namespace Movies_GES.Web
             container.Register<MovieHandlers>().AsSingleton();
             container.Register<DirectorHandlers>().AsSingleton();
 
+            //container.Register<IRepository<Movie>, InMemoryRepository<Movie>>().AsSingleton();
+            //container.Register<IRepository<Director>, InMemoryRepository<Director>>().AsSingleton();
             container.Register<IRepository<Movie>, EventStoreRepository<Movie>>().AsSingleton();
             container.Register<IRepository<Director>, EventStoreRepository<Director>>().AsSingleton();
 
@@ -49,6 +51,8 @@ namespace Movies_GES.Web
         {
             var settings = ConnectionSettings
                 .Create()
+                .UseDebugLogger()
+                .EnableVerboseLogging()
                 .SetDefaultUserCredentials(new UserCredentials("admin", "changeit"));
 
             var connection = EventStoreConnection.Create(settings, new IPEndPoint(IPAddress.Loopback, 1113));
@@ -57,7 +61,10 @@ namespace Movies_GES.Web
             connection.ErrorOccurred += (s, e) => Trace.TraceWarning("ErrorOccurred: {0}", e.Exception);
             connection.Closed += (s, e) => Trace.TraceWarning("Closed: {0}", e.Reason);
             connection.Connected += (s, e) => Trace.TraceWarning("Connected: {0}", e.RemoteEndPoint);
-            connection.Disconnected += (s, e) => Trace.TraceWarning("Disconnected: {0}", e.RemoteEndPoint);
+            connection.Disconnected += (s, e) =>
+            {
+                Trace.TraceWarning("Disconnected: {0}", e.RemoteEndPoint);
+            };
             connection.Reconnecting += (s, e) => Trace.TraceWarning("Reconnecting: {0}", e);
 
 

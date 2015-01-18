@@ -58,7 +58,7 @@ namespace Movies_GES.Web.Projections
 
         private void OnSubscriptionDropped(EventStoreCatchUpSubscription catchUpSubscription, SubscriptionDropReason reason, Exception ex)
         {
-            Trace.TraceWarning("Dropped");
+            Trace.TraceWarning("EventStoreCatchUpSubscription Dropped");
             Trace.TraceWarning(catchUpSubscription.ToString());
             Trace.TraceWarning(reason.ToString());
             Trace.TraceWarning(ex.ToString());
