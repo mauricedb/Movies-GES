@@ -20,12 +20,10 @@
             templateUrl: '/app/movie-management/movie-details.html'
         });
 
-
         $routeProvider.otherwise({
             redirectTo: '/list'
         });
     });
-
 
     mod.controller('movie-list-controller', MovieListController);
     mod.controller('movie-details-controller', MovieDetailsController);
@@ -44,7 +42,7 @@
         return {
             query: query,
             get: get
-        }
+        };
     });
 
     function MovieListController($modal, $location, moviesSvc) {
@@ -72,6 +70,7 @@
         });
 
         modalInstance.result.then(function (newMovie) {
+            newMovie.id = newMovie.movieId;
             that.movies.push(newMovie);
         });
     };
@@ -95,15 +94,15 @@
         this.$http = $http;
         this.uuid = uuid;
 
-        $scope.newMovie = { 
-			title: '', 
-			movieId: uuid.v4() 
-		};
+        $scope.newMovie = {
+            title: '',
+            movieId: uuid.v4()
+        };
     }
 
     AddMovieController.prototype.ok = function () {
         var self = this;
-		var commandId = self.uuid.v4();
+        var commandId = self.uuid.v4();
 
         self.$http.put(
             '/api/commands/' + commandId,
