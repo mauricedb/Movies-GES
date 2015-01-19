@@ -31,6 +31,8 @@ namespace Movies_GES.Domain.Domain
 
         internal void Title(string title)
         {
+            Guard.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(title), "Please enter a title");
+
             ApplyChanges(new MovieTitled(_id, title));
         }
 

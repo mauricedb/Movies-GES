@@ -1,7 +1,10 @@
 ﻿(function () {
     'use strict';
 
-    var mod = angular.module('director-management-app', ['ui.bootstrap']);
+    var mod = angular.module('director-management-app', [
+        'app-utils',
+        'ui.bootstrap'
+    ]);
 
     mod.controller('director-list-controller', DirectorListController);
 
@@ -23,28 +26,30 @@
 
     mod.controller('add-director-controller', AddDirectorController);
 
-    function AddDirectorController($scope, $modalInstance, $http) {
+    function AddDirectorController($scope, $modalInstance, $http, uuid) {
         this.$scope = $scope;
         this.$modalInstance = $modalInstance;
         this.$http = $http;
+        this.uuid = uuid;
 
         $scope.newDirector = { name: '' };
     }
 
     AddDirectorController.prototype.ok = function () {
         var self = this;
+        var commandId = self.uuid.v4();
 
         self.$http.put(
-            '/api/commands/1',
+            '/api/commands/' + commandId,
             this.$scope.newDirector,
             {
                 headers: {
-                    'x-command-name': 'NameDirector'
+                    'Content-Type': 'application/vnd.movies_ges.domain.commands.namedirector+json'
                 }
             }).then(function (e) {
                 self.$modalInstance.close(self.$scope.newDirector);
             }, function (e) {
-                console.log(e.data.exceptionMessage);
+                console.log(e);
             });
     };
 

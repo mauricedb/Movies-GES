@@ -24,7 +24,6 @@ namespace Movies_GES.Domain.Tests.Handlers
 
             await handler.Handle(command);
 
-            command.Error.Should().BeNull();
             repository.Items.Count.Should().Be(1);
         }
 

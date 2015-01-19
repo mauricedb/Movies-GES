@@ -75,30 +75,9 @@ namespace Movies_GES.Web
         private static void RegisterMessageSubscribers(TinyIoCContainer container)
         {
             var messengerHub = container.Resolve<ITinyMessengerHub>();
-            var movieHandlers = container.Resolve<MovieHandlers>();
-            var directorHandlers = container.Resolve<DirectorHandlers>();
-
-            messengerHub.Subscribe<TitleMovie>(cmd => WrappedHandler(movieHandlers, cmd));
-            messengerHub.Subscribe<NameDirector>(cmd => WrappedHandler(directorHandlers, cmd));
-
             var movieProjectionHandlers = container.Resolve<MovieProjectionHandlers>();
-            messengerHub.Subscribe<MovieTitled>(@event => movieProjectionHandlers.Handle(@event));
-        }
 
-        private static async Task WrappedHandler(dynamic handler, dynamic cmd)
-        {
-            try
-            {
-                await handler.Handle(cmd);
-            }
-            catch (AggregateException ex)
-            {
-                cmd.Error = ex.InnerExceptions.First();
-            }
-            catch (Exception ex)
-            {
-                cmd.Error = ex;
-            }
+            messengerHub.Subscribe<MovieTitled>(@event => movieProjectionHandlers.Handle(@event));
         }
     }
 }

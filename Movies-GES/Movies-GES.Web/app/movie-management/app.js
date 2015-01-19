@@ -101,12 +101,12 @@
                         command,
                         {
                             headers: {
-                                'Content-Type': 'application/vnd.movies_ges.domain.commands.titlemovie'
+                                'Content-Type': 'application/vnd.movies_ges.domain.commands.titlemovie+json'
                             }
                         }).then(function (e) {
                             console.log('New title for movie');
                         }, function (e) {
-                            console.log(e.data.modelState.exception[0]);
+                            console.log(e);
                         });
                 }
             });
