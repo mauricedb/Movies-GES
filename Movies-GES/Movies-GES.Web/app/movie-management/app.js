@@ -95,15 +95,16 @@
                         movieId: that.movie.id,
                         title: newValue
                     };
+
                     that.$http.put(
                         '/api/commands/' + commandId,
                         command,
                         {
                             headers: {
-                                'x-command-name': 'TitleMovie'
+                                'Content-Type': 'application/vnd.movies_ges.domain.commands.titlemovie'
                             }
                         }).then(function (e) {
-                            console.log('New title for movie')
+                            console.log('New title for movie');
                         }, function (e) {
                             console.log(e.data.modelState.exception[0]);
                         });
@@ -137,12 +138,12 @@
             self.$scope.newMovie,
             {
                 headers: {
-                    'x-command-name': 'TitleMovie'
+                    'Content-Type': 'application/vnd.movies_ges.domain.commands.titlemovie+json'
                 }
             }).then(function (e) {
                 self.$modalInstance.close(self.$scope.newMovie);
             }, function (e) {
-                console.log(e.data.modelState.exception[0]);
+                console.log(e);
 
                 //console.log(e.data.exceptionMessage || e.data);
             });

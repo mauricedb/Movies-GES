@@ -44,7 +44,7 @@ namespace Movies_GES.Web
 
             container.Register<MovieProjectionHandlers>();
 
-           container.Resolve<EventStoreProjector>();
+           container.Resolve<EventStoreProjector>().Start();
         }
 
         private static async Task<IEventStoreConnection> CreateEventStoreConnection()

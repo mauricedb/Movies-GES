@@ -22,38 +22,19 @@ namespace Movies_GES.Web.Infrastructure
 
         public async Task<T> GetById(Guid id)
         {
-            try
+            var aggregate = default(T);
+
+            var resolvedEvent = await ReadStreamEvents(id.ToString());
+            if (resolvedEvent.Any())
             {
+                var changes = EventDataToDomainEvents(resolvedEvent);
+                aggregate = (T)Activator.CreateInstance(typeof(T), true);
 
-                var aggregate = default(T);
+                aggregate.LoadsFromHistory(changes);
 
-                //var stream = await _eventStoreConnection.ReadStreamEventsForwardAsync(id.ToString(), 0, int.MaxValue, false);
-
-                //if (stream.Status == SliceReadStatus.Success)
-                //{
-                //    var changes = EventDataToDomainEvents(stream.Events);
-                //    aggregate = (T)Activator.CreateInstance(typeof(T), true);
-
-                //    aggregate.LoadsFromHistory(changes);
-                //}
-
-                var resolvedEvent = await ReadStreamEvents(id.ToString());
-                if (resolvedEvent.Any())
-                {
-                    var changes = EventDataToDomainEvents(resolvedEvent);
-                    aggregate = (T)Activator.CreateInstance(typeof(T), true);
-
-                    aggregate.LoadsFromHistory(changes);
-
-                }
-
-                return aggregate;
             }
-            catch (Exception ex)
-            {
-                var x = ex.ToString();
-                throw;
-            }
+
+            return aggregate;
         }
 
 
@@ -66,15 +47,7 @@ namespace Movies_GES.Web.Infrastructure
             var nextSliceStart = StreamPosition.Start;
             do
             {
-                try
-                {
-                    currentSlice = await _eventStoreConnection.ReadStreamEventsForwardAsync(id, nextSliceStart, 200, false);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                }
-
+                currentSlice = await _eventStoreConnection.ReadStreamEventsForwardAsync(id, nextSliceStart, 200, false);
                 nextSliceStart = currentSlice.NextEventNumber;
 
                 streamEvents.AddRange(currentSlice.Events);
