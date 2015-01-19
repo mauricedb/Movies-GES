@@ -14,8 +14,9 @@ namespace Movies_GES.Web
         {
             app.Map("/api/commands", builder =>
             {
-                var commandModule = TinyIoCContainer.Current.Resolve<CommandModule>();
-                var resolver = new CommandHandlerResolver(commandModule);
+                var moviesCommandModule = TinyIoCContainer.Current.Resolve<MoviesCommandModule>();
+                var directorsCommandModule = TinyIoCContainer.Current.Resolve<DirectorsCommandModule>();
+                var resolver = new CommandHandlerResolver(moviesCommandModule, directorsCommandModule);
                 var settings = new CommandHandlingSettings(resolver);
 
                 var commandHandlingMiddleware = CommandHandlingMiddleware.HandleCommands(settings);

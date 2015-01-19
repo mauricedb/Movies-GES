@@ -154,7 +154,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\CommandModule.cs" />
+    <Compile Include="Api\DirectorsCommandModule.cs" />
+    <Compile Include="Api\MoviesCommandModule.cs" />
     <Compile Include="Api\MoviesController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
