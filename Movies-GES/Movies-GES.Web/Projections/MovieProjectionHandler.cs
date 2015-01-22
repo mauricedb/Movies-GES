@@ -17,7 +17,7 @@ namespace Movies_GES.Web.Projections
             _clientsManager = clientsManager;
         }
 
-        public Task Handle(MovieTitled movieTitled)
+        public void Handle(MovieTitled movieTitled)
         {
             using (var client = _clientsManager.GetClient())
             {
@@ -31,11 +31,9 @@ namespace Movies_GES.Web.Projections
                 movie.Title = movieTitled.Title;
                 typedClient.Store(movie);
             }
-
-            return Task.FromResult(0);
         }
 
-        public Task Handle(MovieDescribed movieDescribed)
+        public void Handle(MovieDescribed movieDescribed)
         {
             UpdateMovie(movieDescribed.MovieId, m =>
             {
@@ -43,8 +41,6 @@ namespace Movies_GES.Web.Projections
                 m.CriticsConsensus = movieDescribed.CriticsConsensus;
                 m.Year = movieDescribed.Year;
             });
-
-            return Task.FromResult(0);
         }
 
         private void UpdateMovie(object id, Action<MovieProjection> action)

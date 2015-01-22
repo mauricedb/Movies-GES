@@ -61,10 +61,7 @@ namespace Movies_GES.Web
             connection.ErrorOccurred += (s, e) => Trace.TraceWarning("ErrorOccurred: {0}", e.Exception);
             connection.Closed += (s, e) => Trace.TraceWarning("Closed: {0}", e.Reason);
             connection.Connected += (s, e) => Trace.TraceWarning("Connected: {0}", e.RemoteEndPoint);
-            connection.Disconnected += (s, e) =>
-            {
-                Trace.TraceWarning("Disconnected: {0}", e.RemoteEndPoint);
-            };
+            connection.Disconnected += (s, e) => Trace.TraceWarning("Disconnected: {0}", e.RemoteEndPoint);
             connection.Reconnecting += (s, e) => Trace.TraceWarning("Reconnecting: {0}", e);
 
 
@@ -77,8 +74,8 @@ namespace Movies_GES.Web
             var messengerHub = container.Resolve<ITinyMessengerHub>();
             var movieProjectionHandlers = container.Resolve<MovieProjectionHandlers>();
 
-            messengerHub.Subscribe<MovieTitled>(@event => movieProjectionHandlers.Handle(@event));
-            messengerHub.Subscribe<MovieDescribed>(@event => movieProjectionHandlers.Handle(@event));
+            messengerHub.Subscribe<MovieTitled>(movieProjectionHandlers.Handle);
+            messengerHub.Subscribe<MovieDescribed>(movieProjectionHandlers.Handle);
         }
     }
 }
