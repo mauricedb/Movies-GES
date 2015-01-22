@@ -1,4 +1,5 @@
-﻿using Movies_GES.Domain.Base;
+﻿using System;
+using Movies_GES.Domain.Base;
 
 namespace Movies_GES.Domain.Domain
 {
@@ -20,12 +21,14 @@ namespace Movies_GES.Domain.Domain
             }
         }
 
+        public Guid MovieId { get; private set; }
         public string Synopsis { get; private set; }
         public string CriticsConsensus { get; private set; }
         public int Year { get; private set; }
 
-        public MovieDescribed(string synopsis, string criticsConsensus, int year)
+        public MovieDescribed(Guid movieId, string synopsis, string criticsConsensus, int year)
         {
+            MovieId = movieId;
             Synopsis = synopsis;
             CriticsConsensus = criticsConsensus;
             Year = year;

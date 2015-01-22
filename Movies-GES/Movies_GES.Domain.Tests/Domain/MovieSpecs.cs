@@ -47,7 +47,7 @@ namespace Movies_GES.Domain.Tests.Domain
             movie.Describe("Synopsis", "Critics consensus", 2014);
 
             var uncommittedChanges = movie.GetUncommittedChanges();
-            uncommittedChanges.Should().BeEquivalentTo(new MovieDescribed("Synopsis", "Critics consensus", 2014));
+            uncommittedChanges.Should().BeEquivalentTo(new MovieDescribed(id, "Synopsis", "Critics consensus", 2014));
          }
 
         [Fact]

@@ -7,6 +7,27 @@
                ng-model-options="{ updateOn: 'blur' }">
     </div>
     
+    <div ng-controller="movie-description-controller">
+        <button class="btn btn-default" ng-show="readonly" ng-click="readonly=false;">Edit</button>
+        <button class="btn btn-default" ng-show="!readonly" ng-click="save()">Save</button>
+        <button class="btn btn-default" ng-show="!readonly" ng-click="readonly=true;">Cancel</button>
+
+        <div class="form-group">
+            <label for="title">Synopsis</label>
+            <input type="text" class="form-control" id="title" ng-model="ctrl.movie.synopsis" ng-disabled="readonly">
+        </div>
+
+        <div class="form-group">
+            <label for="title">CriticsConsensus</label>
+            <input type="text" class="form-control" id="Yeartitle" ng-model="ctrl.movie.criticsConsensus" ng-disabled="readonly">
+        </div>
+
+        <div class="form-group">
+            <label for="title">Year</label>
+            <input type="text" class="form-control" id="title" ng-model="ctrl.movie.year" ng-disabled="readonly">
+        </div>
+    </div>
+    
     <div class="form-group">
         <label for="title">Directors</label>
         <button class="btn btn-default">Add</button>
@@ -15,10 +36,6 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="title">Year</label>
-        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.year">
-    </div>
 
     <div class="form-group">
         <label for="title">MpaaRating</label>
@@ -35,15 +52,7 @@
         <input type="text" class="form-control" id="title" ng-model="ctrl.movie.audienceScore">
     </div>
 
-    <div class="form-group">
-        <label for="title">CriticsConsensus</label>
-        <input type="text" class="form-control" id="Yeartitle" ng-model="ctrl.movie.criticsConsensus">
-    </div>
 
-    <div class="form-group">
-        <label for="title">Synopsis</label>
-        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.synopsis">
-    </div>
     
     <div class="form-group">
         <label for="title">Genres</label>

@@ -78,6 +78,7 @@ namespace Movies_GES.Web
             var movieProjectionHandlers = container.Resolve<MovieProjectionHandlers>();
 
             messengerHub.Subscribe<MovieTitled>(@event => movieProjectionHandlers.Handle(@event));
+            messengerHub.Subscribe<MovieDescribed>(@event => movieProjectionHandlers.Handle(@event));
         }
     }
 }

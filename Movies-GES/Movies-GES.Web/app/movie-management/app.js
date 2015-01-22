@@ -28,6 +28,7 @@
     mod.controller('movie-list-controller', MovieListController);
     mod.controller('movie-details-controller', MovieDetailsController);
     mod.controller('add-movie-controller', AddMovieController);
+    mod.controller('movie-description-controller', MovieDescriptionController);
 
     mod.factory('moviesSvc', function ($http) {
 
@@ -152,4 +153,34 @@
     AddMovieController.prototype.cancel = function () {
         this.$modalInstance.dismiss();
     };
+
+    function MovieDescriptionController($scope, $http, uuid) {
+        $scope.readonly = true;
+
+
+        $scope.save=function() {
+            var commandId = uuid.v4();
+            var movie = $scope.ctrl.movie;
+            var command = {
+                movieId: movie.id,
+                synopsis: movie.synopsis,
+                criticsConsensus: movie.criticsConsensus,
+                year: movie.year||0
+            }
+
+            $http.put(
+                '/api/commands/' + commandId,
+                command,
+                {
+                    headers: {
+                        'Content-Type': 'application/vnd.movies_ges.domain.commands.describemovie+json'
+                    }
+                }).then(function (e) {
+                    $scope.readonly = true;
+                }, function (e) {
+                    console.error(e);
+                });
+
+        }
+    }
 }());

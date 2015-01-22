@@ -26,7 +26,7 @@ namespace Movies_GES.Domain.Domain
         {
             Guard.Requires<ArgumentException>(year <= DateTime.Now.Year, "The film can't be created in the future");
 
-            ApplyChanges(new MovieDescribed(synopsis, criticsConsensus, year));
+            ApplyChanges(new MovieDescribed(Id, synopsis, criticsConsensus, year));
         }
 
         internal void Title(string title)
