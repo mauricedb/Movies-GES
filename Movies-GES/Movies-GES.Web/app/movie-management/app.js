@@ -3,6 +3,7 @@
 
     var mod = angular.module('movie-management-app', [
 		'app-utils',
+        'movie-commands',
         'ngRoute',
         'ui.bootstrap'
     ]);
@@ -47,12 +48,13 @@
         };
     });
 
-    function MovieListController($modal, $location, $http, moviesSvc, uuid) {
+    function MovieListController($modal, $location, $http, moviesSvc, uuid, movieCommands) {
         this.$modal = $modal;
         this.$location = $location;
         this.$http = $http;
         this.moviesSvc = moviesSvc;
         this.uuid = uuid;
+        this.movieCommands = movieCommands;
         this.movies = [];
 
         var that = this;
@@ -87,24 +89,12 @@
             self.$http.get('/data/' + m + '.json').then(function (e) {
                 console.log(e.data);
                 var movie = e.data;
-                var movieId = self.uuid.v4();
-                var commandId = self.uuid.v4();
-                var command = {
-                    movieId: movieId,
-                    title: movie.title
-                };
 
-                self.$http.put(
-                           '/api/commands/' + commandId,
-                           command,
-                           {
-                               headers: {
-                                   'Content-Type': 'application/vnd.movies_ges.domain.commands.titlemovie+json'
-                               }
-                           }).then(function (e) {
-                           }, function (e) {
-                               console.log(e);
-                           });
+                var command = self.movieCommands.titleMovie(movie);
+                self.movieCommands.excute(command).then(function(e2) {
+                    console.log(e2);
+                });
+
             });
         });
     }
@@ -126,34 +116,23 @@
     }
 
 
-    function AddMovieController($scope, $modalInstance, $http, uuid) {
+    function AddMovieController($scope, $modalInstance, movieCommands) {
         this.$scope = $scope;
         this.$modalInstance = $modalInstance;
-        this.$http = $http;
-        this.uuid = uuid;
+        this.movieCommands = movieCommands;
 
         $scope.newMovie = {
-            title: '',
-            movieId: uuid.v4()
+            title: ''
         };
     }
 
     AddMovieController.prototype.ok = function () {
         var self = this;
-        var commandId = self.uuid.v4();
+        var command = self.movieCommands.titleMovie(self.$scope.newMovie);
 
-        self.$http.put(
-            '/api/commands/' + commandId,
-            self.$scope.newMovie,
-            {
-                headers: {
-                    'Content-Type': 'application/vnd.movies_ges.domain.commands.titlemovie+json'
-                }
-            }).then(function (e) {
-                self.$modalInstance.close(self.$scope.newMovie);
-            }, function (e) {
-                console.log(e);
-            });
+        self.movieCommands.excute(command).then(function () {
+            self.$modalInstance.close(self.$scope.newMovie);
+        });
     };
 
     AddMovieController.prototype.cancel = function () {
@@ -161,24 +140,14 @@
     };
 
 
-    function MovieTitleController($scope, $http, uuid) {
+    function MovieTitleController($scope, movieCommands) {
         $scope.readonly = true;
 
         $scope.save = function () {
-            var commandId = uuid.v4();
-
-            $http.put(
-                '/api/commands/' + commandId,
-                command,
-                {
-                    headers: {
-                        'Content-Type': 'application/vnd.movies_ges.domain.commands.titlemovie+json'
-                    }
-                }).then(function () {
-                    $scope.readonly = true;
-                }, function (e) {
-                    console.log(e);
-                });
+            var command = movieCommands.titleMovie($scope.ctrl.movie);
+            movieCommands.excute(command).then(function (e2) {
+                $scope.readonly = true;
+            });
         };
     }
 
