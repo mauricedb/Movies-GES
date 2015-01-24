@@ -1,16 +1,23 @@
 ﻿
 <form>
-    <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" id="title"
-               ng-model="ctrl.movie.title"
-               ng-model-options="{ updateOn: 'blur' }">
+    <div ng-controller="movie-title-controller">
+        <button class="btn btn-xs btn-default btn-edit pull-right" ng-show="readonly" ng-click="readonly=false;">Edit</button>
+        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="readonly=true;">Cancel</button>
+        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="save()">Save</button>
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title"
+                   ng-model="ctrl.movie.title"
+                   ng-model-options="{ updateOn: 'blur' }"
+                   ng-disabled="readonly">
+        </div>
     </div>
-    
+
     <div ng-controller="movie-description-controller">
-        <button class="btn btn-default" ng-show="readonly" ng-click="readonly=false;">Edit</button>
-        <button class="btn btn-default" ng-show="!readonly" ng-click="save()">Save</button>
-        <button class="btn btn-default" ng-show="!readonly" ng-click="readonly=true;">Cancel</button>
+        <button class="btn btn-xs btn-default btn-edit pull-right" ng-show="readonly" ng-click="readonly=false;">Edit</button>
+        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="readonly=true;">Cancel</button>
+        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="save()">Save</button>
 
         <div class="form-group">
             <label for="title">Synopsis</label>
@@ -27,7 +34,7 @@
             <input type="text" class="form-control" id="title" ng-model="ctrl.movie.year" ng-disabled="readonly">
         </div>
     </div>
-    
+
     <div class="form-group">
         <label for="title">Directors</label>
         <button class="btn btn-default">Add</button>
@@ -53,7 +60,7 @@
     </div>
 
 
-    
+
     <div class="form-group">
         <label for="title">Genres</label>
         <input type="text" class="form-control" id="title" ng-model="ctrl.movie.Genres">

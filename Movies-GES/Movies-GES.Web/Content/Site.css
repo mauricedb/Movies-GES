@@ -22,3 +22,12 @@ select,
 textarea {
     max-width: 280px;
 }*/
+
+
+.btn-edit {
+    display: none;
+}
+
+div:hover > .btn-edit {
+    display: inline;
+}

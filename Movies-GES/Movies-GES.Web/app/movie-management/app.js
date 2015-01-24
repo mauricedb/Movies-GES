@@ -28,6 +28,7 @@
     mod.controller('movie-list-controller', MovieListController);
     mod.controller('movie-details-controller', MovieDetailsController);
     mod.controller('add-movie-controller', AddMovieController);
+    mod.controller('movie-title-controller', MovieTitleController);
     mod.controller('movie-description-controller', MovieDescriptionController);
 
     mod.factory('moviesSvc', function ($http) {
@@ -89,33 +90,8 @@
         moviesSvc.get({ id: $route.current.params.id }).then(function (e) {
             that.movie = e.data;
 
-            that.$scope.$watch('ctrl.movie.title', function (newValue, oldValue) {
-                if (oldValue) {
-                    var commandId = that.uuid.v4();
-                    var command = {
-                        movieId: that.movie.id,
-                        title: newValue
-                    };
-
-                    that.$http.put(
-                        '/api/commands/' + commandId,
-                        command,
-                        {
-                            headers: {
-                                'Content-Type': 'application/vnd.movies_ges.domain.commands.titlemovie+json'
-                            }
-                        }).then(function (e) {
-                            console.log('New title for movie');
-                        }, function (e) {
-                            console.log(e);
-                        });
-                }
-            });
         });
     }
-
-
-
 
 
     function AddMovieController($scope, $modalInstance, $http, uuid) {
@@ -145,8 +121,6 @@
                 self.$modalInstance.close(self.$scope.newMovie);
             }, function (e) {
                 console.log(e);
-
-                //console.log(e.data.exceptionMessage || e.data);
             });
     };
 
@@ -154,18 +128,45 @@
         this.$modalInstance.dismiss();
     };
 
+
+    function MovieTitleController($scope, $http, uuid) {
+        $scope.readonly = true;
+
+        $scope.save = function () {
+            var commandId = uuid.v4();
+            var movie = $scope.ctrl.movie;
+
+            var command = {
+                movieId: movie.id,
+                title: movie.title
+            };
+
+            $http.put(
+                '/api/commands/' + commandId,
+                command,
+                {
+                    headers: {
+                        'Content-Type': 'application/vnd.movies_ges.domain.commands.titlemovie+json'
+                    }
+                }).then(function () {
+                    $scope.readonly = true;
+                }, function (e) {
+                    console.log(e);
+                });
+        };
+    }
+
     function MovieDescriptionController($scope, $http, uuid) {
         $scope.readonly = true;
 
-
-        $scope.save=function() {
+        $scope.save = function () {
             var commandId = uuid.v4();
             var movie = $scope.ctrl.movie;
             var command = {
                 movieId: movie.id,
                 synopsis: movie.synopsis,
                 criticsConsensus: movie.criticsConsensus,
-                year: movie.year||0
+                year: movie.year || 0
             }
 
             $http.put(
@@ -175,7 +176,7 @@
                     headers: {
                         'Content-Type': 'application/vnd.movies_ges.domain.commands.describemovie+json'
                     }
-                }).then(function (e) {
+                }).then(function () {
                     $scope.readonly = true;
                 }, function (e) {
                     console.error(e);
