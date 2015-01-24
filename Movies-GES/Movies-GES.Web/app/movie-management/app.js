@@ -82,7 +82,7 @@
     };
 
     MovieListController.prototype.generateMovies = function() {
-        var movies = [12862, 12865];
+        var movies = [12862, 12865, 13092, 16673];
         var self = this;
         var movieCommands = this.movieCommands;
 
