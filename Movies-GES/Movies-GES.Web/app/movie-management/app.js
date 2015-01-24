@@ -97,10 +97,10 @@
 
                 var titleCommand = movieCommands.titleMovie(movie);
                 movieCommands.excute(titleCommand).then(function() {
-
                     var describeCommand = movieCommands.describeMovie(movie);
-                    movieCommands.excute(describeCommand).then(function() {
-                    });
+                    return movieCommands.excute(describeCommand);
+                }).then(function() {
+
                 });
             });
         });
@@ -146,19 +146,18 @@
         this.$modalInstance.dismiss();
     };
 
-
     function MovieTitleController($scope, movieCommands) {
         $scope.readonly = true;
 
         $scope.save = function() {
             var command = movieCommands.titleMovie($scope.ctrl.movie);
-            movieCommands.excute(command).then(function(e2) {
+            movieCommands.excute(command).then(function() {
                 $scope.readonly = true;
             });
         };
     }
 
-    function MovieDescriptionController($scope, $http, uuid) {
+    function MovieDescriptionController($scope, movieCommands) {
         $scope.readonly = true;
 
         $scope.save = function() {
