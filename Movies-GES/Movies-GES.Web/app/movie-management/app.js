@@ -1,14 +1,14 @@
-﻿(function () {
+﻿(function() {
     'use strict';
 
     var mod = angular.module('movie-management-app', [
-		'app-utils',
+        'app-utils',
         'movie-commands',
         'ngRoute',
         'ui.bootstrap'
     ]);
 
-    mod.config(function ($routeProvider) {
+    mod.config(function($routeProvider) {
         $routeProvider.when('/list', {
             controller: 'movie-list-controller',
             controllerAs: 'ctrl',
@@ -32,7 +32,7 @@
     mod.controller('movie-title-controller', MovieTitleController);
     mod.controller('movie-description-controller', MovieDescriptionController);
 
-    mod.factory('moviesSvc', function ($http) {
+    mod.factory('moviesSvc', function($http) {
 
         function query() {
             return $http.get('/api/movies');
@@ -58,16 +58,16 @@
         this.movies = [];
 
         var that = this;
-        moviesSvc.query().then(function (e) {
+        moviesSvc.query().then(function(e) {
             [].push.apply(that.movies, e.data);
         });
     }
 
-    MovieListController.prototype.movieDetails = function (movie) {
+    MovieListController.prototype.movieDetails = function(movie) {
         this.$location.path('/details/' + movie.id);
     };
 
-    MovieListController.prototype.addMovie = function () {
+    MovieListController.prototype.addMovie = function() {
         var that = this;
         var modalInstance = this.$modal.open({
             templateUrl: '/app/movie-management/add-movie.html',
@@ -75,18 +75,18 @@
             controllerAs: 'ctrl'
         });
 
-        modalInstance.result.then(function (newMovie) {
+        modalInstance.result.then(function(newMovie) {
             newMovie.id = newMovie.movieId;
             that.movies.push(newMovie);
         });
     };
 
-    MovieListController.prototype.generateMovies = function () {
+    MovieListController.prototype.generateMovies = function() {
         var movies = [12862, 12865];
         var self = this;
-        movies.forEach(function (m) {
+        movies.forEach(function(m) {
 
-            self.$http.get('/data/' + m + '.json').then(function (e) {
+            self.$http.get('/data/' + m + '.json').then(function(e) {
                 console.log(e.data);
                 var movie = e.data;
 
@@ -97,7 +97,7 @@
 
             });
         });
-    }
+    };
 
     function MovieDetailsController($scope, $route, $modal, $location, moviesSvc, uuid, $http) {
         this.$scope = $scope;
@@ -109,7 +109,7 @@
         this.movie = {};
 
         var that = this;
-        moviesSvc.get({ id: $route.current.params.id }).then(function (e) {
+        moviesSvc.get({ id: $route.current.params.id }).then(function(e) {
             that.movie = e.data;
 
         });
@@ -126,16 +126,16 @@
         };
     }
 
-    AddMovieController.prototype.ok = function () {
+    AddMovieController.prototype.ok = function() {
         var self = this;
         var command = self.movieCommands.titleMovie(self.$scope.newMovie);
 
-        self.movieCommands.excute(command).then(function () {
+        self.movieCommands.excute(command).then(function() {
             self.$modalInstance.close(self.$scope.newMovie);
         });
     };
 
-    AddMovieController.prototype.cancel = function () {
+    AddMovieController.prototype.cancel = function() {
         this.$modalInstance.dismiss();
     };
 
@@ -143,9 +143,9 @@
     function MovieTitleController($scope, movieCommands) {
         $scope.readonly = true;
 
-        $scope.save = function () {
+        $scope.save = function() {
             var command = movieCommands.titleMovie($scope.ctrl.movie);
-            movieCommands.excute(command).then(function (e2) {
+            movieCommands.excute(command).then(function(e2) {
                 $scope.readonly = true;
             });
         };
@@ -154,7 +154,7 @@
     function MovieDescriptionController($scope, $http, uuid) {
         $scope.readonly = true;
 
-        $scope.save = function () {
+        $scope.save = function() {
             var commandId = uuid.v4();
             var movie = $scope.ctrl.movie;
             var command = {
@@ -162,8 +162,7 @@
                 synopsis: movie.synopsis,
                 criticsConsensus: movie.criticsConsensus,
                 year: movie.year || 0
-            }
-
+            };
             $http.put(
                 '/api/commands/' + commandId,
                 command,
@@ -171,12 +170,12 @@
                     headers: {
                         'Content-Type': 'application/vnd.movies_ges.domain.commands.describemovie+json'
                     }
-                }).then(function () {
-                    $scope.readonly = true;
-                }, function (e) {
-                    console.error(e);
-                });
+                }).then(function() {
+                $scope.readonly = true;
+            }, function(e) {
+                console.error(e);
+            });
 
-        }
+        };
     }
 }());
