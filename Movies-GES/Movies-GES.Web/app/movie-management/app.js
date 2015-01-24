@@ -47,10 +47,12 @@
         };
     });
 
-    function MovieListController($modal, $location, moviesSvc) {
+    function MovieListController($modal, $location, $http, moviesSvc, uuid) {
         this.$modal = $modal;
         this.$location = $location;
+        this.$http = $http;
         this.moviesSvc = moviesSvc;
+        this.uuid = uuid;
         this.movies = [];
 
         var that = this;
@@ -76,6 +78,36 @@
             that.movies.push(newMovie);
         });
     };
+
+    MovieListController.prototype.generateMovies = function () {
+        var movies = [12862, 12865];
+        var self = this;
+        movies.forEach(function (m) {
+
+            self.$http.get('/data/' + m + '.json').then(function (e) {
+                console.log(e.data);
+                var movie = e.data;
+                var movieId = self.uuid.v4();
+                var commandId = self.uuid.v4();
+                var command = {
+                    movieId: movieId,
+                    title: movie.title
+                };
+
+                self.$http.put(
+                           '/api/commands/' + commandId,
+                           command,
+                           {
+                               headers: {
+                                   'Content-Type': 'application/vnd.movies_ges.domain.commands.titlemovie+json'
+                               }
+                           }).then(function (e) {
+                           }, function (e) {
+                               console.log(e);
+                           });
+            });
+        });
+    }
 
     function MovieDetailsController($scope, $route, $modal, $location, moviesSvc, uuid, $http) {
         this.$scope = $scope;
@@ -134,12 +166,6 @@
 
         $scope.save = function () {
             var commandId = uuid.v4();
-            var movie = $scope.ctrl.movie;
-
-            var command = {
-                movieId: movie.id,
-                title: movie.title
-            };
 
             $http.put(
                 '/api/commands/' + commandId,
