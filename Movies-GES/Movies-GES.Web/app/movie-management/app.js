@@ -84,17 +84,24 @@
     MovieListController.prototype.generateMovies = function() {
         var movies = [12862, 12865];
         var self = this;
+        var movieCommands = this.movieCommands;
+
         movies.forEach(function(m) {
 
             self.$http.get('/data/' + m + '.json').then(function(e) {
                 console.log(e.data);
                 var movie = e.data;
+                delete movie.id;
+                movie.criticsConsensus = movie.critics_consensus;
+                delete movie.critics_consensus;;
 
-                var command = self.movieCommands.titleMovie(movie);
-                self.movieCommands.excute(command).then(function(e2) {
-                    console.log(e2);
+                var titleCommand = movieCommands.titleMovie(movie);
+                movieCommands.excute(titleCommand).then(function() {
+
+                    var describeCommand = movieCommands.describeMovie(movie);
+                    movieCommands.excute(describeCommand).then(function() {
+                    });
                 });
-
             });
         });
     };
@@ -155,27 +162,10 @@
         $scope.readonly = true;
 
         $scope.save = function() {
-            var commandId = uuid.v4();
-            var movie = $scope.ctrl.movie;
-            var command = {
-                movieId: movie.id,
-                synopsis: movie.synopsis,
-                criticsConsensus: movie.criticsConsensus,
-                year: movie.year || 0
-            };
-            $http.put(
-                '/api/commands/' + commandId,
-                command,
-                {
-                    headers: {
-                        'Content-Type': 'application/vnd.movies_ges.domain.commands.describemovie+json'
-                    }
-                }).then(function() {
+            var command = movieCommands.describeMovie($scope.ctrl.movie);
+            movieCommands.excute(command).then(function() {
                 $scope.readonly = true;
-            }, function(e) {
-                console.error(e);
             });
-
         };
     }
 }());

@@ -20,6 +20,18 @@
             });
         }
 
+        function describeMovie(movie) {
+
+            return {
+                commandName: 'DescribeMovie',
+                commandId: uuid.v4(),
+                movieId: movie.id,
+                synopsis: movie.synopsis,
+                criticsConsensus: movie.criticsConsensus,
+                year: movie.year || 0
+            };
+        }
+
         function titleMovie(movie) {
             movie.id = movie.id || uuid.v4();
 
@@ -34,6 +46,7 @@
 
         return {
             titleMovie: titleMovie,
+            describeMovie: describeMovie,
             excute: excute
         };
     });
