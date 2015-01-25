@@ -46,7 +46,6 @@
   <ItemGroup>
     <Compile Include="Base\AggregateRoot.cs" />
     <Compile Include="Base\DomainEvent.cs" />
-    <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\DescribeMovie.cs" />
     <Compile Include="Commands\NameDirector.cs" />
     <Compile Include="Commands\TitleMovie.cs" />

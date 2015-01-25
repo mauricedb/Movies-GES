@@ -21,7 +21,7 @@ namespace Movies_GES.Domain.Tests.Handlers
               {
                   MovieId = Guid.NewGuid(),
                   Title = "Some movie"
-              });
+              }, Guid.NewGuid());
 
             repository.Items.Count.Should().Be(1);
         }
@@ -35,7 +35,8 @@ namespace Movies_GES.Domain.Tests.Handlers
             handler.Awaiting(h => h.Handle(new TitleMovie
             {
                 MovieId = Guid.NewGuid()
-            })).ShouldThrow<ArgumentException>();
+            }, Guid.NewGuid()))
+            .ShouldThrow<ArgumentException>();
         }
 
         [Fact]
@@ -52,7 +53,7 @@ namespace Movies_GES.Domain.Tests.Handlers
                  Synopsis = "Synopsis",
                  CriticsConsensus = "CriticsConsensus",
                  Year = 2014
-             });
+             }, Guid.NewGuid());
 
             repository.Items.Count.Should().Be(1);
         }
@@ -71,7 +72,8 @@ namespace Movies_GES.Domain.Tests.Handlers
                 Synopsis = "Synopsis",
                 CriticsConsensus = "CriticsConsensus",
                 Year = DateTime.Now.Year + 1
-            })).ShouldThrow<ArgumentException>();
+            }, Guid.NewGuid()))
+            .ShouldThrow<ArgumentException>();
         }
     }
 }

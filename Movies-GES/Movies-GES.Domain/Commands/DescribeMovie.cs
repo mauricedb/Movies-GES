@@ -2,7 +2,7 @@
 
 namespace Movies_GES.Domain.Commands
 {
-    public class DescribeMovie : CommandBase
+    public class DescribeMovie
     {
         public Guid MovieId { get; set; }
         public string Synopsis { get; set; }

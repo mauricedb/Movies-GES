@@ -22,7 +22,7 @@ namespace Movies_GES.Domain.Tests.Handlers
                 Name = "Some Guy"
             };
 
-            await handler.Handle(command);
+            await handler.Handle(command, Guid.NewGuid());
 
             repository.Items.Count.Should().Be(1);
         }
@@ -36,7 +36,8 @@ namespace Movies_GES.Domain.Tests.Handlers
             handler.Awaiting(h => h.Handle(new NameDirector
             {
                 DirectorId = Guid.NewGuid(),
-            })).ShouldThrow<ArgumentException>();
+            }, Guid.NewGuid()))
+            .ShouldThrow<ArgumentException>();
         }
     }
 }

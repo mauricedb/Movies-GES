@@ -8,7 +8,7 @@ namespace Movies_GES.Web.Api
     {
         public DirectorsCommandModule(DirectorHandlers directorHandlers)
         {
-            For<NameDirector>().Handle(async (message, _) => await directorHandlers.Handle(message.Command));
-        }        
+            For<NameDirector>().Handle(async (message, _) => await directorHandlers.Handle(message.Command, message.CommandId));
+        }
     }
 }
