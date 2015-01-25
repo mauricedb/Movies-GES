@@ -75,5 +75,50 @@ namespace Movies_GES.Domain.Tests.Handlers
             }, Guid.NewGuid()))
             .ShouldThrow<ArgumentException>();
         }
+
+        [Fact]
+        public async Task Rating_movie_50_should_pass()
+        {
+            var movieId = Guid.NewGuid();
+            var repository = new DummyRepository<Movie>();
+            await repository.Save(new Movie(movieId, "Some movie"), Guid.Empty);
+            var handler = new MovieHandlers(repository);
+
+          handler.Awaiting(h => h.Handle(new RateMovie
+            {
+                MovieId = movieId,
+                Rating = 50
+            }, Guid.NewGuid())).ShouldNotThrow();
+        }
+
+        [Fact]
+        public async Task Rating_movie_below_zero_should_fail()
+        {
+            var movieId = Guid.NewGuid();
+            var repository = new DummyRepository<Movie>();
+            await repository.Save(new Movie(movieId, "Some movie"), Guid.Empty);
+            var handler = new MovieHandlers(repository);
+
+            handler.Awaiting(h => h.Handle(new RateMovie
+            {
+                MovieId = movieId,
+                Rating = -1
+            }, Guid.NewGuid())).ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public async Task Rating_movie_above_100_should_fail()
+        {
+            var movieId = Guid.NewGuid();
+            var repository = new DummyRepository<Movie>();
+            await repository.Save(new Movie(movieId, "Some movie"), Guid.Empty);
+            var handler = new MovieHandlers(repository);
+
+            handler.Awaiting(h => h.Handle(new RateMovie
+            {
+                MovieId = movieId,
+                Rating = 101
+            }, Guid.NewGuid())).ShouldThrow<ArgumentException>();
+        }
     }
 }

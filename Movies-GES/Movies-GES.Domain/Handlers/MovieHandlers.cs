@@ -36,5 +36,12 @@ namespace Movies_GES.Domain.Handlers
             movie.Describe(command.Synopsis, command.CriticsConsensus, command.Year);
             await _repository.Save(movie, commandId);
         }
+
+        public async Task Handle(RateMovie command, Guid commandId)
+        {
+            var movie = await _repository.GetById(command.MovieId);
+            movie.Rate(command.Rating);
+            await _repository.Save(movie, commandId);
+        }
     }
 }

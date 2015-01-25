@@ -48,11 +48,13 @@
     <Compile Include="Base\DomainEvent.cs" />
     <Compile Include="Commands\DescribeMovie.cs" />
     <Compile Include="Commands\NameDirector.cs" />
+    <Compile Include="Commands\RateMovie.cs" />
     <Compile Include="Commands\TitleMovie.cs" />
     <Compile Include="Domain\MovieDescribed.cs" />
     <Compile Include="Domain\Director.cs" />
     <Compile Include="Domain\DirectorNamed.cs" />
     <Compile Include="Domain\Movie.cs" />
+    <Compile Include="Domain\MovieRated.cs" />
     <Compile Include="Domain\MovieTitled.cs" />
     <Compile Include="Handlers\DirectorHandlers.cs" />
     <Compile Include="Handlers\MovieHandlers.cs" />
