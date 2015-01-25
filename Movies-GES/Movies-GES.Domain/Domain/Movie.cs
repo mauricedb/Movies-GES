@@ -44,6 +44,14 @@ namespace Movies_GES.Domain.Domain
             ApplyChanges(new MovieRatedByAudience(_id, rating));
         }
 
+        internal void RateByCritcis(int rating)
+        {
+            Guard.Requires<ArgumentException>(rating >= 0, "The rating must be zero or greater");
+            Guard.Requires<ArgumentException>(rating <= 100, "The rating must be equaloor less than 100");
+
+            ApplyChanges(new MovieRatedByCritics(_id, rating));
+        }
+
         public void Apply(MovieTitled movieTitled)
         {
             _id = movieTitled.MovieId;
