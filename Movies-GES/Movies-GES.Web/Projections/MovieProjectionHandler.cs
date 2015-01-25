@@ -43,6 +43,14 @@ namespace Movies_GES.Web.Projections
             });
         }
 
+        public void Handle(MovieRatedByAudience movieDescribed)
+        {
+            UpdateMovie(movieDescribed.MovieId, m =>
+            {
+                m.AudienceScore = (int)Math.Round(0.9 * m.AudienceScore + 0.1 * movieDescribed.Rating, 0);
+            });
+        }
+
         private void UpdateMovie(object id, Action<MovieProjection> action)
         {
             using (var client = _clientsManager.GetClient())

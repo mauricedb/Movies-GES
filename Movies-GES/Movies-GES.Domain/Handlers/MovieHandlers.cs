@@ -37,10 +37,10 @@ namespace Movies_GES.Domain.Handlers
             await _repository.Save(movie, commandId);
         }
 
-        public async Task Handle(RateMovie command, Guid commandId)
+        public async Task Handle(RateMovieByAudience command, Guid commandId)
         {
             var movie = await _repository.GetById(command.MovieId);
-            movie.Rate(command.Rating);
+            movie.RateByAudience(command.Rating);
             await _repository.Save(movie, commandId);
         }
     }

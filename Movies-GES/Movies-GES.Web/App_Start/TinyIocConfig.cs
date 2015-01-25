@@ -76,6 +76,7 @@ namespace Movies_GES.Web
 
             messengerHub.Subscribe<MovieTitled>(movieProjectionHandlers.Handle);
             messengerHub.Subscribe<MovieDescribed>(movieProjectionHandlers.Handle);
+            messengerHub.Subscribe<MovieRatedByAudience>(movieProjectionHandlers.Handle);
         }
     }
 }

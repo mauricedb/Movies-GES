@@ -2,7 +2,7 @@
 
 namespace Movies_GES.Domain.Commands
 {
-    public class RateMovie
+    public class RateMovieByAudience
     {
         public Guid MovieId { get; set; }
         public int Rating { get; set; }
