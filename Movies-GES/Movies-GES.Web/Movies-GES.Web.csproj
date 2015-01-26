@@ -172,9 +172,11 @@
     <Compile Include="Infrastructure\EventStoreRepository.cs" />
     <Compile Include="Infrastructure\InMemoryRepository.cs" />
     <Compile Include="Infrastructure\TinyIoCDependencyResolver.cs" />
-    <Compile Include="Projections\EventStoreProjector.cs" />
+    <Compile Include="Infrastructure\EventStoreProjector.cs" />
     <Compile Include="Models\MovieProjection.cs" />
+    <Compile Include="Infrastructure\IProjectionRepository.cs" />
     <Compile Include="Projections\MovieProjectionHandler.cs" />
+    <Compile Include="Infrastructure\MovieProjectionRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="TinyIoC.cs" />

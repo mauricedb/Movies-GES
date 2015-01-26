@@ -1,36 +1,29 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using Movies_GES.Domain.Domain;
+using Movies_GES.Web.Infrastructure;
 using Movies_GES.Web.Models;
-using ServiceStack.Redis;
-using ServiceStack.Redis.Generic;
 
 namespace Movies_GES.Web.Projections
 {
     public class MovieProjectionHandlers
     {
-        private readonly IRedisClientsManager _clientsManager;
+        private readonly IProjectionRepository<MovieProjection> _repository;
 
-        public MovieProjectionHandlers(IRedisClientsManager clientsManager)
+        public MovieProjectionHandlers(IProjectionRepository<MovieProjection> repository)
         {
-            _clientsManager = clientsManager;
+            _repository = repository;
         }
 
         public void Handle(MovieTitled movieTitled)
         {
-            using (var client = _clientsManager.GetClient())
-            {
-                var typedClient = client.As<MovieProjection>();
-                var movie = typedClient.GetById(movieTitled.MovieId)
-                                        ?? new MovieProjection
-                                        {
-                                            Id = movieTitled.MovieId
-                                        };
+            var movie = _repository.GetById(movieTitled.MovieId)
+                        ?? new MovieProjection
+                        {
+                            Id = movieTitled.MovieId
+                        };
 
-                movie.Title = movieTitled.Title;
-                typedClient.Store(movie);
-            }
+            movie.Title = movieTitled.Title;
+            _repository.Store(movie);
         }
 
         public void Handle(MovieDescribed movieDescribed)
@@ -45,31 +38,23 @@ namespace Movies_GES.Web.Projections
 
         public void Handle(MovieRatedByAudience movieDescribed)
         {
-            UpdateMovie(movieDescribed.MovieId, m =>
-            {
-                m.AudienceScore = (int)Math.Round(0.9 * m.AudienceScore + 0.1 * movieDescribed.Rating, 0);
-            });
+            UpdateMovie(movieDescribed.MovieId,
+                m => { m.AudienceScore = (int) Math.Round(0.9*m.AudienceScore + 0.1*movieDescribed.Rating, 0); });
         }
 
         public void Handle(MovieRatedByCritics movieDescribed)
         {
-            UpdateMovie(movieDescribed.MovieId, m =>
-            {
-                m.CriticsScore = (int)Math.Round(0.9 * m.CriticsScore + 0.1 * movieDescribed.Rating, 0);
-            });
+            UpdateMovie(movieDescribed.MovieId,
+                m => { m.CriticsScore = (int) Math.Round(0.9*m.CriticsScore + 0.1*movieDescribed.Rating, 0); });
         }
 
         private void UpdateMovie(object id, Action<MovieProjection> action)
         {
-            using (var client = _clientsManager.GetClient())
-            {
-                var typedClient = client.As<MovieProjection>();
-                var movie = typedClient.GetById(id);
+            var movie = _repository.GetById(id);
 
-                action(movie);
+            action(movie);
 
-                typedClient.Store(movie);
-            }
+            _repository.Store(movie);
         }
     }
 }

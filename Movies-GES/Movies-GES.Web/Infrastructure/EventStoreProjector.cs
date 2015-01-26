@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using ServiceStack.Redis;
 using TinyMessenger;
 
-namespace Movies_GES.Web.Projections
+namespace Movies_GES.Web.Infrastructure
 {
     public class EventStoreProjector
     {

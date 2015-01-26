@@ -10,10 +10,12 @@ using Movies_GES.Domain.Domain;
 using Movies_GES.Domain.Handlers;
 using Movies_GES.Domain.Infrastructure;
 using Movies_GES.Web.Infrastructure;
+using Movies_GES.Web.Models;
 using Movies_GES.Web.Projections;
 using ServiceStack.Redis;
 using TinyIoC;
 using TinyMessenger;
+using Director = Movies_GES.Domain.Domain.Director;
 
 namespace Movies_GES.Web
 {
@@ -41,6 +43,8 @@ namespace Movies_GES.Web
             //container.Register<IRepository<Director>, InMemoryRepository<Director>>().AsSingleton();
             container.Register<IRepository<Movie>, EventStoreRepository<Movie>>().AsSingleton();
             container.Register<IRepository<Director>, EventStoreRepository<Director>>().AsSingleton();
+
+            container.Register<IProjectionRepository<MovieProjection>, MovieProjectionRepository>();
 
             container.Register<MovieProjectionHandlers>();
 
