@@ -36,16 +36,36 @@ namespace Movies_GES.Web.Projections
             });
         }
 
-        public void Handle(MovieRatedByAudience movieDescribed)
+        public void Handle(MovieRatedByAudience movieRated)
         {
-            UpdateMovie(movieDescribed.MovieId,
-                m => { m.AudienceScore = (int) Math.Round(0.9*m.AudienceScore + 0.1*movieDescribed.Rating, 0); });
+            UpdateMovie(movieRated.MovieId,
+                m =>
+                {
+                    if (m.AudienceScore.HasValue)
+                    {
+                        m.AudienceScore = (int)Math.Round(0.9 * m.AudienceScore.Value + 0.1 * movieRated.Rating, 0);
+                    }
+                    else
+                    {
+                        m.AudienceScore = movieRated.Rating;
+                    }
+                });
         }
 
-        public void Handle(MovieRatedByCritics movieDescribed)
+        public void Handle(MovieRatedByCritics movieRated)
         {
-            UpdateMovie(movieDescribed.MovieId,
-                m => { m.CriticsScore = (int) Math.Round(0.9*m.CriticsScore + 0.1*movieDescribed.Rating, 0); });
+            UpdateMovie(movieRated.MovieId,
+                m =>
+                {
+                    if (m.CriticsScore.HasValue)
+                    {
+                        m.CriticsScore = (int) Math.Round(0.9*m.CriticsScore.Value + 0.1*movieRated.Rating, 0);
+                    }
+                    else
+                    {
+                        m.CriticsScore = movieRated.Rating;
+                    }
+                });
         }
 
         private void UpdateMovie(object id, Action<MovieProjection> action)
