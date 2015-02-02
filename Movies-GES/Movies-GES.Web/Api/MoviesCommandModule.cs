@@ -10,6 +10,8 @@ namespace Movies_GES.Web.Api
         {
             For<TitleMovie>().Handle(async (message, _) => await movieHandlers.Handle(message.Command, message.CommandId));
             For<DescribeMovie>().Handle(async (message, _) => await movieHandlers.Handle(message.Command, message.CommandId));
+            For<RateMovieByCrictics>().Handle(async (message, _) => await movieHandlers.Handle(message.Command, message.CommandId));
+            For<RateMovieByAudience>().Handle(async (message, _) => await movieHandlers.Handle(message.Command, message.CommandId));
 
         }
     }

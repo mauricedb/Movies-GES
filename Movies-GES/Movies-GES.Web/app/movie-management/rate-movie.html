@@ -1,0 +1,21 @@
+﻿
+<div class="modal-header">
+    <h3 class="modal-title">Rate Movie</h3>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label for="movieRating">Rating</label>
+        <input type="range"
+               class="form-control"
+               id="movieRating"
+               name="movieRating"
+               ng-model="rating.value"
+               min="0"
+               max="100">
+        Rating: {{rating.value}} out of 100
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ctrl.ok()">OK</button>
+    <button class="btn btn-warning" ng-click="ctrl.cancel()">Cancel</button>
+</div>

@@ -43,23 +43,23 @@
         </div>
     </div>
 
+    <div class="form-group">
+        <label for="criticsScore">CriticsScore:</label>
+        {{ctrl.movie.criticsScore}}
+        <button class="btn btn-xs" ng-click="ctrl.rateCritics(ctrl.movie)">Score</button>
+    </div>
 
     <div class="form-group">
+        <label for="audienceScore">AudienceScore</label>
+        {{ctrl.movie.audienceScore}}
+        <button class="btn btn-xs" ng-click="ctrl.rateAudience(ctrl.movie)">Score</button>
+    </div>
+
+
+    <!--<div class="form-group">
         <label for="title">MpaaRating</label>
         <input type="text" class="form-control" id="title" ng-model="ctrl.movie.mpaaRating">
     </div>
-
-    <div class="form-group">
-        <label for="title">CriticsScore</label>
-        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.criticsScore">
-    </div>
-
-    <div class="form-group">
-        <label for="title">AudienceScore</label>
-        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.audienceScore">
-    </div>
-
-
 
     <div class="form-group">
         <label for="title">Genres</label>
@@ -74,7 +74,7 @@
     <div class="form-group">
         <label for="title">AbridgedCast</label>
         <input type="text" class="form-control" id="title" ng-model="ctrl.movie.AbridgedCast">
-    </div>
+    </div>-->
 
 
 
