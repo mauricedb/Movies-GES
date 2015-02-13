@@ -52,10 +52,16 @@ namespace Movies_GES.Domain.Domain
             ApplyChanges(new MovieRatedByCritics(_id, rating));
         }
 
+        internal void DirectedBy(string director)
+        {
+            Guard.Requires<ArgumentException>(!string.IsNullOrEmpty(director), "The director must be provided");
+ 
+            ApplyChanges(new MovieIsDirectedBy(_id, director));
+        }
+
         public void Apply(MovieTitled movieTitled)
         {
             _id = movieTitled.MovieId;
         }
-
     }
 }

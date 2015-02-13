@@ -84,11 +84,11 @@ namespace Movies_GES.Domain.Tests.Handlers
             await repository.Save(new Movie(movieId, "Some movie"), Guid.Empty);
             var handler = new MovieHandlers(repository);
 
-          handler.Awaiting(h => h.Handle(new RateMovieByAudience
-            {
-                MovieId = movieId,
-                Rating = 50
-            }, Guid.NewGuid())).ShouldNotThrow();
+            handler.Awaiting(h => h.Handle(new RateMovieByAudience
+              {
+                  MovieId = movieId,
+                  Rating = 50
+              }, Guid.NewGuid())).ShouldNotThrow();
         }
 
         [Fact]
@@ -164,6 +164,21 @@ namespace Movies_GES.Domain.Tests.Handlers
                 MovieId = movieId,
                 Rating = 101
             }, Guid.NewGuid())).ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public async Task Can_add_director_to_movie()
+        {
+            var movieId = Guid.NewGuid();
+            var repository = new DummyRepository<Movie>();
+            await repository.Save(new Movie(movieId, "Some movie"), Guid.Empty);
+            var handler = new MovieHandlers(repository);
+
+            handler.Awaiting(h => h.Handle(new MovieDirectedBy
+            {
+                MovieId = movieId,
+                Director = "Jack"
+            }, Guid.NewGuid())).ShouldNotThrow();
         }
     }
 }

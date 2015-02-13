@@ -39,6 +39,5 @@ namespace Movies_GES.Domain.Domain
         {
             return string.Format("MovieId: {0}, Rating: {1}", MovieId, Rating);
         }
-
     }
 }

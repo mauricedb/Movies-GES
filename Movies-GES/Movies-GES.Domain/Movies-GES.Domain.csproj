@@ -47,6 +47,7 @@
     <Compile Include="Base\AggregateRoot.cs" />
     <Compile Include="Base\DomainEvent.cs" />
     <Compile Include="Commands\DescribeMovie.cs" />
+    <Compile Include="Commands\MovieDirectedBy.cs" />
     <Compile Include="Commands\NameDirector.cs" />
     <Compile Include="Commands\RateMovieByAudience.cs" />
     <Compile Include="Commands\RateMovieByCrictics.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Domain\Director.cs" />
     <Compile Include="Domain\DirectorNamed.cs" />
     <Compile Include="Domain\Movie.cs" />
+    <Compile Include="Domain\MovieIsDirectedBy.cs" />
     <Compile Include="Domain\MovieRatedByAudience.cs" />
     <Compile Include="Domain\MovieRatedByCritics.cs" />
     <Compile Include="Domain\MovieTitled.cs" />
