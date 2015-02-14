@@ -106,6 +106,9 @@
                 }).then(function () {
                     var rateMovieByCrictics = movieCommands.rateMovieByCrictics(movie.id, movie.ratings.critics_score);
                     return movieCommands.excute(rateMovieByCrictics);
+                }).then(function () {
+                    var movieDirectedBy = movieCommands.movieDirectedBy(movie.id, movie.abridged_directors[0].name);
+                    return movieCommands.excute(movieDirectedBy);
                 });
             });
         });

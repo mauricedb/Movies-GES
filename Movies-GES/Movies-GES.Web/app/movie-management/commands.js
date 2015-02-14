@@ -61,11 +61,21 @@
             };
         }
 
+        function movieDirectedBy(movieId, director) {
+            return {
+                commandName: 'MovieDirectedBy',
+                commandId: uuid.v4(),
+                movieId: movieId,
+                director: director
+            }
+        }
+
         return {
             titleMovie: titleMovie,
             describeMovie: describeMovie,
             rateMovieByAudience: rateMovieByAudience,
             rateMovieByCrictics: rateMovieByCrictics,
+            movieDirectedBy: movieDirectedBy,
             excute: excute
         };
     });
