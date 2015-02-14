@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Movies_GES.Domain.Domain;
 using Movies_GES.Web.Infrastructure;
 using Movies_GES.Web.Models;
@@ -65,6 +66,20 @@ namespace Movies_GES.Web.Projections
                     {
                         m.CriticsScore = movieRated.Rating;
                     }
+                });
+        }
+
+        public void Handle(MovieIsDirectedBy isDirectedBy)
+        {
+            UpdateMovie(isDirectedBy.MovieId,
+                m =>
+                {
+                    if (m.AbridgedDirectors == null)
+                    {
+                        m.AbridgedDirectors=new List<string>();
+                    }
+
+                    m.AbridgedDirectors.Add(isDirectedBy.Director);
                 });
         }
 

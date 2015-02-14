@@ -18,7 +18,7 @@ namespace Movies_GES.Web.Models
         public IEnumerable<string> Genres { get; set; }
         public Posters Posters { get; set; }
         public IEnumerable<CastActor> AbridgedCast { get; set; }
-        public IEnumerable<Director> AbridgedDirectors { get; set; }
+        public IList<string> AbridgedDirectors { get; set; }
 
     }
 
