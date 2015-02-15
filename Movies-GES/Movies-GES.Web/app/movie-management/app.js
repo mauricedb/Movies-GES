@@ -32,6 +32,7 @@
     mod.controller('movie-title-controller', MovieTitleController);
     mod.controller('rate-movie-controller', RateMovieController);
     mod.controller('movie-description-controller', MovieDescriptionController);
+    mod.controller('add-director-controller', AddDirectorController);
 
     mod.factory('moviesSvc', function ($http) {
 
@@ -175,6 +176,24 @@
         });
     };
 
+    MovieDetailsController.prototype.addDirector=function(movie) {
+        var that = this;
+        var modalInstance = this.$modal.open({
+            templateUrl: '/app/movie-management/add-director.html',
+            controller: 'add-director-controller',
+            controllerAs: 'ctrl'
+        });
+
+        modalInstance.result.then(function (director) {
+            var movieDirectedBy = that.movieCommands.movieDirectedBy(movie.id, director);
+            that.movieCommands.excute(movieDirectedBy)
+                .then(function () {
+                    movie.abridgedDirectors.push(director);
+            });
+        });
+
+    }
+
     function AddMovieController($scope, $modalInstance, movieCommands) {
         this.$scope = $scope;
         this.$modalInstance = $modalInstance;
@@ -235,6 +254,21 @@
     };
 
     RateMovieController.prototype.cancel = function () {
+        this.$modalInstance.dismiss();
+    };
+
+
+    function AddDirectorController($scope, $modalInstance) {
+        this.$modalInstance = $modalInstance;
+        this.director = '';
+
+    }
+
+    AddDirectorController.prototype.ok = function () {
+        this.$modalInstance.close(this.director);
+    };
+
+    AddDirectorController.prototype.cancel = function () {
         this.$modalInstance.dismiss();
     };
 

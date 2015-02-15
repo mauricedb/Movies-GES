@@ -37,7 +37,10 @@
 
     <div class="form-group">
         <label for="title">Directors</label>
-        <button class="btn btn-default">Add</button>
+        <button class="btn btn-default"
+                ng-click="ctrl.addDirector(ctrl.movie)">
+            Add
+        </button>
         <ul>
             <li ng-repeat="director in ctrl.movie.abridgedDirectors">
                 {{director}}
