@@ -56,7 +56,7 @@ namespace Movies_GES.Domain.Domain
         {
             Guard.Requires<ArgumentException>(!string.IsNullOrEmpty(director), "The director must be provided");
  
-            ApplyChanges(new MovieIsDirectedBy(_id, director));
+            ApplyChanges(new DirectorAddedToMovie(_id, director));
         }
 
         public void Apply(MovieTitled movieTitled)

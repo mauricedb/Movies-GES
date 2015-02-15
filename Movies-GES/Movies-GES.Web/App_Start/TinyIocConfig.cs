@@ -82,7 +82,7 @@ namespace Movies_GES.Web
             messengerHub.Subscribe<MovieDescribed>(movieProjectionHandlers.Handle);
             messengerHub.Subscribe<MovieRatedByAudience>(movieProjectionHandlers.Handle);
             messengerHub.Subscribe<MovieRatedByCritics>(movieProjectionHandlers.Handle);
-            messengerHub.Subscribe<MovieIsDirectedBy>(movieProjectionHandlers.Handle);
+            messengerHub.Subscribe<DirectorAddedToMovie>(movieProjectionHandlers.Handle);
         }
     }
 }

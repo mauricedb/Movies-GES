@@ -61,9 +61,9 @@
             };
         }
 
-        function movieDirectedBy(movieId, director) {
+        function addDirectorToMovie(movieId, director) {
             return {
-                commandName: 'MovieDirectedBy',
+                commandName: 'AddDirectorToMovie',
                 commandId: uuid.v4(),
                 movieId: movieId,
                 director: director
@@ -75,7 +75,7 @@
             describeMovie: describeMovie,
             rateMovieByAudience: rateMovieByAudience,
             rateMovieByCrictics: rateMovieByCrictics,
-            movieDirectedBy: movieDirectedBy,
+            addDirectorToMovie: addDirectorToMovie,
             excute: excute
         };
     });

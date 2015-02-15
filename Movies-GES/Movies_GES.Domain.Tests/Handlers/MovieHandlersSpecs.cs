@@ -174,7 +174,7 @@ namespace Movies_GES.Domain.Tests.Handlers
             await repository.Save(new Movie(movieId, "Some movie"), Guid.Empty);
             var handler = new MovieHandlers(repository);
 
-            handler.Awaiting(h => h.Handle(new MovieDirectedBy
+            handler.Awaiting(h => h.Handle(new AddDirectorToMovie
             {
                 MovieId = movieId,
                 Director = "Jack"

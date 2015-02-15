@@ -108,8 +108,8 @@
                     var rateMovieByCrictics = movieCommands.rateMovieByCrictics(movie.id, movie.ratings.critics_score);
                     return movieCommands.excute(rateMovieByCrictics);
                 }).then(function () {
-                    var movieDirectedBy = movieCommands.movieDirectedBy(movie.id, movie.abridged_directors[0].name);
-                    return movieCommands.excute(movieDirectedBy);
+                    var addDirectorToMovie = movieCommands.addDirectorToMovie(movie.id, movie.abridged_directors[0].name);
+                    return movieCommands.excute(addDirectorToMovie);
                 });
             });
         });
@@ -176,7 +176,7 @@
         });
     };
 
-    MovieDetailsController.prototype.addDirector=function(movie) {
+    MovieDetailsController.prototype.addDirector = function (movie) {
         var that = this;
         var modalInstance = this.$modal.open({
             templateUrl: '/app/movie-management/add-director.html',
@@ -185,11 +185,12 @@
         });
 
         modalInstance.result.then(function (director) {
-            var movieDirectedBy = that.movieCommands.movieDirectedBy(movie.id, director);
-            that.movieCommands.excute(movieDirectedBy)
+            var addDirectorToMovie = that.movieCommands.addDirectorToMovie(movie.id, director);
+            that.movieCommands.excute(addDirectorToMovie)
                 .then(function () {
+                    movie.abridgedDirectors = movie.abridgedDirectors || [];
                     movie.abridgedDirectors.push(director);
-            });
+                });
         });
 
     }

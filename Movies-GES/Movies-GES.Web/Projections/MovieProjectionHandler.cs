@@ -69,7 +69,7 @@ namespace Movies_GES.Web.Projections
                 });
         }
 
-        public void Handle(MovieIsDirectedBy isDirectedBy)
+        public void Handle(DirectorAddedToMovie isDirectedBy)
         {
             UpdateMovie(isDirectedBy.MovieId,
                 m =>

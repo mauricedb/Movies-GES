@@ -3,9 +3,9 @@ using Movies_GES.Domain.Base;
 
 namespace Movies_GES.Domain.Domain
 {
-    public class MovieIsDirectedBy : DomainEvent
+    public class DirectorAddedToMovie : DomainEvent
     {
-        public MovieIsDirectedBy(Guid movieId, string director)
+        public DirectorAddedToMovie(Guid movieId, string director)
         {
             MovieId = movieId;
             Director = director;
@@ -14,7 +14,7 @@ namespace Movies_GES.Domain.Domain
         public Guid MovieId { get; private set; }
         public string Director { get; private set; }
 
-        protected bool Equals(MovieIsDirectedBy other)
+        protected bool Equals(DirectorAddedToMovie other)
         {
             return MovieId.Equals(other.MovieId) && string.Equals(Director, other.Director);
         }
@@ -24,7 +24,7 @@ namespace Movies_GES.Domain.Domain
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((MovieIsDirectedBy) obj);
+            return Equals((DirectorAddedToMovie) obj);
         }
 
         public override int GetHashCode()

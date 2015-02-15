@@ -51,7 +51,7 @@ namespace Movies_GES.Domain.Handlers
             await _repository.Save(movie, commandId);
         }
 
-        public async Task Handle(MovieDirectedBy command, Guid commandId)
+        public async Task Handle(AddDirectorToMovie command, Guid commandId)
         {
             var movie = await _repository.GetById(command.MovieId);
             movie.DirectedBy(command.Director);
