@@ -4,6 +4,7 @@ if not exist .\EventStore-OSS-Win-v3.0.1\EventStore.ClusterNode.exe goto no-ges
 start  .\EventStore-OSS-Win-v3.0.1\EventStore.ClusterNode.exe
 
 if not exist .\redis-2.8.17\redis-server.exe goto no-redis
+del dump.rdb
 start .\redis-2.8.17\redis-server.exe
 start .\redis-2.8.17\redis-cli.exe
 goto: end
