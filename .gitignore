@@ -183,3 +183,4 @@ UpgradeLog*.htm
 FakesAssemblies/
 EventStore-OSS-Win-v3.0.1/
 redis-2.8.17/
+dump.rdb
