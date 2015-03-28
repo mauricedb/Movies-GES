@@ -26,34 +26,12 @@
         });
     });
 
-    mod.controller('movie-list-controller', MovieListController);
-    mod.controller('movie-details-controller', MovieDetailsController);
-    mod.controller('add-movie-controller', AddMovieController);
-    mod.controller('movie-title-controller', MovieTitleController);
-    mod.controller('rate-movie-controller', RateMovieController);
-    mod.controller('movie-description-controller', MovieDescriptionController);
-    mod.controller('add-director-controller', AddDirectorController);
 
-    mod.factory('moviesSvc', function ($http) {
-
-        function query() {
-            return $http.get('/api/movies');
-        }
-
-        function get(params) {
-            return $http.get('/api/movies/' + params.id);
-        }
-
-        return {
-            query: query,
-            get: get
-        };
-    });
-
-    function MovieListController($modal, $location, $http, moviesSvc, uuid, movieCommands) {
+    function MovieListController($modal, $location, $http, $q, moviesSvc, uuid, movieCommands) {
         this.$modal = $modal;
         this.$location = $location;
         this.$http = $http;
+        this.$q = $q;
         this.moviesSvc = moviesSvc;
         this.uuid = uuid;
         this.movieCommands = movieCommands;
@@ -108,8 +86,14 @@
                     var rateMovieByCrictics = movieCommands.rateMovieByCrictics(movie.id, movie.ratings.critics_score);
                     return movieCommands.excute(rateMovieByCrictics);
                 }).then(function () {
-                    var addDirectorToMovie = movieCommands.addDirectorToMovie(movie.id, movie.abridged_directors[0].name);
-                    return movieCommands.excute(addDirectorToMovie);
+                    var promises = movie.abridged_directors.map(function (director) {
+                        var addDirectorToMovie = movieCommands.addDirectorToMovie(movie.id, director.name);
+                        return movieCommands.excute(addDirectorToMovie);
+                    });
+
+                    return self.$q.all(promises);
+                }).then(function() {
+                    self.$location.path('/');
                 });
             });
         });
@@ -272,5 +256,30 @@
     AddDirectorController.prototype.cancel = function () {
         this.$modalInstance.dismiss();
     };
+
+
+    mod.controller('movie-list-controller', MovieListController);
+    mod.controller('movie-details-controller', MovieDetailsController);
+    mod.controller('add-movie-controller', AddMovieController);
+    mod.controller('movie-title-controller', MovieTitleController);
+    mod.controller('rate-movie-controller', RateMovieController);
+    mod.controller('movie-description-controller', MovieDescriptionController);
+    mod.controller('add-director-controller', AddDirectorController);
+
+    mod.factory('moviesSvc', function ($http) {
+
+        function query() {
+            return $http.get('/api/movies');
+        }
+
+        function get(params) {
+            return $http.get('/api/movies/' + params.id);
+        }
+
+        return {
+            query: query,
+            get: get
+        };
+    });
 
 }());

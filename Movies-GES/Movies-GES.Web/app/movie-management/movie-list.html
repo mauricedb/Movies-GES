@@ -25,6 +25,7 @@
 
 <p>
     <button class="btn btn-toolbar"
+            ng-if="ctrl.movies.length == 0"
             ng-click="ctrl.generateMovies()">
         Generate data
     </button>
