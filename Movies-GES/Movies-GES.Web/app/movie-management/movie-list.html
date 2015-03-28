@@ -8,12 +8,12 @@
 <table class="table table-bordered table-striped table-condensed">
     <tr>
         <th>Title</th>
-        <th>Director</th>
+        <th>Directed by</th>
         <th></th>
     </tr>
     <tr ng-repeat="movie in ctrl.movies">
         <td>{{movie.title}}</td>
-        <td>{{movie.director}}</td>
+        <td>{{movie.abridgedDirectors.join(', ')}}</td>
         <td style="width: 1px;">
             <button class="btn btn-default"
                     ng-click="ctrl.movieDetails(movie)">
