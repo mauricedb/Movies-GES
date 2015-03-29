@@ -1,12 +1,14 @@
 @echo off
 
 if not exist .\EventStore-OSS-Win-v3.0.1\EventStore.ClusterNode.exe goto no-ges
+if not exist .\redis-2.8.17\redis-server.exe goto no-redis
+
 start  .\EventStore-OSS-Win-v3.0.1\EventStore.ClusterNode.exe
 
-if not exist .\redis-2.8.17\redis-server.exe goto no-redis
 del dump.rdb
 start .\redis-2.8.17\redis-server.exe
 start .\redis-2.8.17\redis-cli.exe
+gulp
 goto: end
 
 :no-ges
@@ -21,7 +23,4 @@ Echo And unzip to the "redis-2.8.17" folder
 pause
 goto: end
 
-Echo Bla
-
 :end
-
