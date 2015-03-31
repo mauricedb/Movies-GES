@@ -11,12 +11,20 @@ function pack(name){
         .pipe(gulp.dest('./Movies-GES/Movies-GES.Web/dist/'));
 }
 
+
+gulp.task('jshint', function () {
+    var input = './Movies-GES/Movies-GES.Web/app/**/*.js';
+    return gulp.src(input)
+        .pipe(plugins.jshint())
+        .pipe(plugins.jshint.reporter('default'));
+});
+
 gulp.task('compile', function () {
     return pack('movie-management');
 });
 
 gulp.task('watch', function () {
-    gulp.watch('./Movies-GES/Movies-GES.Web/app/**/*.js*', ['compile']);
+    gulp.watch('./Movies-GES/Movies-GES.Web/app/**/*.js*', ['compile', 'jshint']);
 });
 
-gulp.task('default', ['compile', 'watch']);
+gulp.task('default', ['compile', 'jshint', 'watch']);
