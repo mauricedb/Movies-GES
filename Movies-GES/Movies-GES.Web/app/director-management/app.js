@@ -6,7 +6,6 @@
         'ui.bootstrap'
     ]);
 
-    mod.controller('director-list-controller', DirectorListController);
 
     function DirectorListController($modal) {
         this.$modal = $modal;
@@ -20,11 +19,9 @@
             controllerAs: 'ctrl'
         });
 
-        modalInstance.result.then(function (newMovie) {
+        modalInstance.result.then(function () {
         });
     };
-
-    mod.controller('add-director-controller', AddDirectorController);
 
     function AddDirectorController($scope, $modalInstance, $http, uuid) {
         this.$scope = $scope;
@@ -44,9 +41,10 @@
             this.$scope.newDirector,
             {
                 headers: {
-                    'Content-Type': 'application/vnd.movies_ges.domain.commands.namedirector+json'
+                    'Content-Type': 
+						'application/vnd.movies_ges.domain.commands.namedirector+json'
                 }
-            }).then(function (e) {
+            }).then(function () {
                 self.$modalInstance.close(self.$scope.newDirector);
             }, function (e) {
                 console.log(e);
@@ -56,4 +54,8 @@
     AddDirectorController.prototype.cancel = function () {
         this.$modalInstance.dismiss();
     };
+	
+    mod.controller('add-director-controller', AddDirectorController);
+	mod.controller('director-list-controller', DirectorListController);
+
 }());

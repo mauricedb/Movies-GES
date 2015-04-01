@@ -1,8 +1,7 @@
 ﻿'use strict';
 
 var utils = require('./app-utils');
-
-var mod = angular.module('movie-commands', ['app-utils']);
+var mod = angular.module('movie-commands', [utils.name]);
 
 mod.factory('movieCommands', function ($http, uuid) {
 	function excute(command) {
@@ -11,7 +10,8 @@ mod.factory('movieCommands', function ($http, uuid) {
 			command,
 			{
 				headers: {
-					'Content-Type': 'application/vnd.movies_ges.domain.commands.' + command.commandName.toLowerCase() + '+json'
+					'Content-Type': 'application/vnd.movies_ges.domain.commands.' + 
+					                 command.commandName.toLowerCase() + '+json'
 				}
 			}).then(function (e) {
 				return e;
@@ -67,7 +67,7 @@ mod.factory('movieCommands', function ($http, uuid) {
 			commandId: uuid.v4(),
 			movieId: movieId,
 			director: director
-		}
+		};
 	}
 
 	return {

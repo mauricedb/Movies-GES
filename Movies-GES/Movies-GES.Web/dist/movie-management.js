@@ -50,8 +50,8 @@
 	var utils = __webpack_require__(2);
 
 	var mod = angular.module('movie-management-app', [
-		'app-utils',
-		'movie-commands',
+		utils.name,
+		commands.name,
 		'ngRoute',
 		'ui.bootstrap'
 	]);
@@ -75,7 +75,8 @@
 	});
 
 
-	function MovieListController($modal, $location, $http, $q, moviesSvc, uuid, movieCommands) {
+	function MovieListController(
+			$modal, $location, $http, $q, moviesSvc, uuid, movieCommands) {
 		this.$modal = $modal;
 		this.$location = $location;
 		this.$http = $http;
@@ -110,32 +111,35 @@
 	};
 
 	MovieListController.prototype.generateMovies = function () {
+		/* jshint ignore:start */
 		var movies = [12862, 12865, 13092, 16673];
 		var self = this;
-		var movieCommands = this.movieCommands;
 
 		movies.forEach(function (m) {
-
 			self.$http.get('/data/' + m + '.json').then(function (e) {
+				var movieCommands = self.movieCommands;
 				console.log(e.data);
 				var movie = e.data;
 				delete movie.id;
 				movie.criticsConsensus = movie.critics_consensus;
-				delete movie.critics_consensus;;
+				delete movie.critics_consensus;
 
 				var titleCommand = movieCommands.titleMovie(movie);
 				movieCommands.excute(titleCommand).then(function () {
 					var describeCommand = movieCommands.describeMovie(movie);
 					return movieCommands.excute(describeCommand);
 				}).then(function () {
-					var rateMovieByAudience = movieCommands.rateMovieByAudience(movie.id, movie.ratings.audience_score);
+					var rateMovieByAudience = movieCommands.rateMovieByAudience(
+						movie.id, movie.ratings.audience_score);
 					return movieCommands.excute(rateMovieByAudience);
 				}).then(function () {
-					var rateMovieByCrictics = movieCommands.rateMovieByCrictics(movie.id, movie.ratings.critics_score);
+					var rateMovieByCrictics = movieCommands.rateMovieByCrictics(
+						movie.id, movie.ratings.critics_score);
 					return movieCommands.excute(rateMovieByCrictics);
 				}).then(function () {
 					var promises = movie.abridged_directors.map(function (director) {
-						var addDirectorToMovie = movieCommands.addDirectorToMovie(movie.id, director.name);
+						var addDirectorToMovie = movieCommands.addDirectorToMovie(
+							movie.id, director.name);
 						return movieCommands.excute(addDirectorToMovie);
 					});
 
@@ -145,9 +149,11 @@
 				});
 			});
 		});
+		/* jshint ignore:end */
 	};
 
-	function MovieDetailsController($scope, $route, $modal, $location, moviesSvc, uuid, $http, movieCommands) {
+	function MovieDetailsController(
+		$scope, $route, $modal, $location, moviesSvc, uuid, $http, movieCommands) {
 		this.$scope = $scope;
 		this.$modal = $modal;
 		this.$location = $location;
@@ -181,7 +187,8 @@
 			var command = that.movieCommands.rateMovieByCrictics(movie.id, rating);
 			that.movieCommands.excute(command)
 				.then(function () {
-					movie.criticsScore = Math.round(0.9 * movie.criticsScore + 0.1 * rating);
+					movie.criticsScore = 
+						Math.round(0.9 * movie.criticsScore + 0.1 * rating);
 				});
 		});
 	};
@@ -203,7 +210,8 @@
 			var command = that.movieCommands.rateMovieByAudience(movie.id, rating);
 			that.movieCommands.excute(command)
 				.then(function () {
-					movie.audienceScore = Math.round(0.9 * movie.audienceScore + 0.1 * rating);
+					movie.audienceScore = 
+						Math.round(0.9 * movie.audienceScore + 0.1 * rating);
 				});
 		});
 	};
@@ -217,15 +225,15 @@
 		});
 
 		modalInstance.result.then(function (director) {
-			var addDirectorToMovie = that.movieCommands.addDirectorToMovie(movie.id, director);
+			var addDirectorToMovie = that.movieCommands.addDirectorToMovie(
+				movie.id, director);
 			that.movieCommands.excute(addDirectorToMovie)
 				.then(function () {
 					movie.abridgedDirectors = movie.abridgedDirectors || [];
 					movie.abridgedDirectors.push(director);
 				});
 		});
-
-	}
+	};
 
 	function AddMovieController($scope, $modalInstance, movieCommands) {
 		this.$scope = $scope;
@@ -335,89 +343,89 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	(function () {
-	    'use strict';
+	'use strict';
 
-	    var mod = angular.module('movie-commands', ['app-utils']);
+	var utils = __webpack_require__(2);
+	var mod = angular.module('movie-commands', [utils.name]);
+
+	mod.factory('movieCommands', function ($http, uuid) {
+		function excute(command) {
+			return $http.put(
+				'/api/commands/' + command.commandId,
+				command,
+				{
+					headers: {
+						'Content-Type': 'application/vnd.movies_ges.domain.commands.' + 
+						                 command.commandName.toLowerCase() + '+json'
+					}
+				}).then(function (e) {
+					return e;
+				}, function (e) {
+					console.log(e);
+				});
+		}
+
+		function describeMovie(movie) {
+
+			return {
+				commandName: 'DescribeMovie',
+				commandId: uuid.v4(),
+				movieId: movie.id,
+				synopsis: movie.synopsis,
+				criticsConsensus: movie.criticsConsensus,
+				year: movie.year || 0
+			};
+		}
+
+		function titleMovie(movie) {
+			movie.id = movie.id || uuid.v4();
+
+			return {
+				commandName: 'TitleMovie',
+				commandId: uuid.v4(),
+				movieId: movie.id,
+				title: movie.title
+			};
+		}
+
+		function rateMovieByAudience(movieId, rating) {
+			return {
+				commandName: 'RateMovieByAudience',
+				commandId: uuid.v4(),
+				movieId: movieId,
+				rating: rating
+			};
+		}
+
+		function rateMovieByCrictics(movieId, rating) {
+			return {
+				commandName: 'RateMovieByCrictics',
+				commandId: uuid.v4(),
+				movieId: movieId,
+				rating: rating
+			};
+		}
+
+		function addDirectorToMovie(movieId, director) {
+			return {
+				commandName: 'AddDirectorToMovie',
+				commandId: uuid.v4(),
+				movieId: movieId,
+				director: director
+			};
+		}
+
+		return {
+			titleMovie: titleMovie,
+			describeMovie: describeMovie,
+			rateMovieByAudience: rateMovieByAudience,
+			rateMovieByCrictics: rateMovieByCrictics,
+			addDirectorToMovie: addDirectorToMovie,
+			excute: excute
+		};
+	});
 
 
-	    mod.factory('movieCommands', function ($http, uuid) {
-	        function excute(command) {
-	            return $http.put(
-	                '/api/commands/' + command.commandId,
-	                command,
-	                {
-	                    headers: {
-	                        'Content-Type': 'application/vnd.movies_ges.domain.commands.' + command.commandName.toLowerCase() + '+json'
-	                    }
-	                }).then(function (e) {
-	                    return e;
-	                }, function (e) {
-	                    console.log(e);
-	                });
-	        }
-
-	        function describeMovie(movie) {
-
-	            return {
-	                commandName: 'DescribeMovie',
-	                commandId: uuid.v4(),
-	                movieId: movie.id,
-	                synopsis: movie.synopsis,
-	                criticsConsensus: movie.criticsConsensus,
-	                year: movie.year || 0
-	            };
-	        }
-
-	        function titleMovie(movie) {
-	            movie.id = movie.id || uuid.v4();
-
-	            return {
-	                commandName: 'TitleMovie',
-	                commandId: uuid.v4(),
-	                movieId: movie.id,
-	                title: movie.title
-	            };
-	        }
-
-	        function rateMovieByAudience(movieId, rating) {
-	            return {
-	                commandName: 'RateMovieByAudience',
-	                commandId: uuid.v4(),
-	                movieId: movieId,
-	                rating: rating
-	            };
-	        }
-
-	        function rateMovieByCrictics(movieId, rating) {
-	            return {
-	                commandName: 'RateMovieByCrictics',
-	                commandId: uuid.v4(),
-	                movieId: movieId,
-	                rating: rating
-	            };
-	        }
-
-	        function addDirectorToMovie(movieId, director) {
-	            return {
-	                commandName: 'AddDirectorToMovie',
-	                commandId: uuid.v4(),
-	                movieId: movieId,
-	                director: director
-	            }
-	        }
-
-	        return {
-	            titleMovie: titleMovie,
-	            describeMovie: describeMovie,
-	            rateMovieByAudience: rateMovieByAudience,
-	            rateMovieByCrictics: rateMovieByCrictics,
-	            addDirectorToMovie: addDirectorToMovie,
-	            excute: excute
-	        };
-	    });
-
-	})();
 
 /***/ },
 /* 2 */

@@ -4,8 +4,8 @@ var commands = require('./commands');
 var utils = require('./app-utils');
 
 var mod = angular.module('movie-management-app', [
-	'app-utils',
-	'movie-commands',
+	utils.name,
+	commands.name,
 	'ngRoute',
 	'ui.bootstrap'
 ]);
@@ -29,7 +29,8 @@ mod.config(function ($routeProvider) {
 });
 
 
-function MovieListController($modal, $location, $http, $q, moviesSvc, uuid, movieCommands) {
+function MovieListController(
+		$modal, $location, $http, $q, moviesSvc, uuid, movieCommands) {
 	this.$modal = $modal;
 	this.$location = $location;
 	this.$http = $http;
@@ -64,32 +65,35 @@ MovieListController.prototype.addMovie = function () {
 };
 
 MovieListController.prototype.generateMovies = function () {
+	/* jshint ignore:start */
 	var movies = [12862, 12865, 13092, 16673];
 	var self = this;
-	var movieCommands = this.movieCommands;
 
 	movies.forEach(function (m) {
-
 		self.$http.get('/data/' + m + '.json').then(function (e) {
+			var movieCommands = self.movieCommands;
 			console.log(e.data);
 			var movie = e.data;
 			delete movie.id;
 			movie.criticsConsensus = movie.critics_consensus;
-			delete movie.critics_consensus;;
+			delete movie.critics_consensus;
 
 			var titleCommand = movieCommands.titleMovie(movie);
 			movieCommands.excute(titleCommand).then(function () {
 				var describeCommand = movieCommands.describeMovie(movie);
 				return movieCommands.excute(describeCommand);
 			}).then(function () {
-				var rateMovieByAudience = movieCommands.rateMovieByAudience(movie.id, movie.ratings.audience_score);
+				var rateMovieByAudience = movieCommands.rateMovieByAudience(
+					movie.id, movie.ratings.audience_score);
 				return movieCommands.excute(rateMovieByAudience);
 			}).then(function () {
-				var rateMovieByCrictics = movieCommands.rateMovieByCrictics(movie.id, movie.ratings.critics_score);
+				var rateMovieByCrictics = movieCommands.rateMovieByCrictics(
+					movie.id, movie.ratings.critics_score);
 				return movieCommands.excute(rateMovieByCrictics);
 			}).then(function () {
 				var promises = movie.abridged_directors.map(function (director) {
-					var addDirectorToMovie = movieCommands.addDirectorToMovie(movie.id, director.name);
+					var addDirectorToMovie = movieCommands.addDirectorToMovie(
+						movie.id, director.name);
 					return movieCommands.excute(addDirectorToMovie);
 				});
 
@@ -99,9 +103,11 @@ MovieListController.prototype.generateMovies = function () {
 			});
 		});
 	});
+	/* jshint ignore:end */
 };
 
-function MovieDetailsController($scope, $route, $modal, $location, moviesSvc, uuid, $http, movieCommands) {
+function MovieDetailsController(
+	$scope, $route, $modal, $location, moviesSvc, uuid, $http, movieCommands) {
 	this.$scope = $scope;
 	this.$modal = $modal;
 	this.$location = $location;
@@ -135,7 +141,8 @@ MovieDetailsController.prototype.rateCritics = function (movie) {
 		var command = that.movieCommands.rateMovieByCrictics(movie.id, rating);
 		that.movieCommands.excute(command)
 			.then(function () {
-				movie.criticsScore = Math.round(0.9 * movie.criticsScore + 0.1 * rating);
+				movie.criticsScore = 
+					Math.round(0.9 * movie.criticsScore + 0.1 * rating);
 			});
 	});
 };
@@ -157,7 +164,8 @@ MovieDetailsController.prototype.rateAudience = function (movie) {
 		var command = that.movieCommands.rateMovieByAudience(movie.id, rating);
 		that.movieCommands.excute(command)
 			.then(function () {
-				movie.audienceScore = Math.round(0.9 * movie.audienceScore + 0.1 * rating);
+				movie.audienceScore = 
+					Math.round(0.9 * movie.audienceScore + 0.1 * rating);
 			});
 	});
 };
@@ -171,15 +179,15 @@ MovieDetailsController.prototype.addDirector = function (movie) {
 	});
 
 	modalInstance.result.then(function (director) {
-		var addDirectorToMovie = that.movieCommands.addDirectorToMovie(movie.id, director);
+		var addDirectorToMovie = that.movieCommands.addDirectorToMovie(
+			movie.id, director);
 		that.movieCommands.excute(addDirectorToMovie)
 			.then(function () {
 				movie.abridgedDirectors = movie.abridgedDirectors || [];
 				movie.abridgedDirectors.push(director);
 			});
 	});
-
-}
+};
 
 function AddMovieController($scope, $modalInstance, movieCommands) {
 	this.$scope = $scope;
