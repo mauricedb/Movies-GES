@@ -1,5 +1,8 @@
 ﻿'use strict';
 
+var angular = require('angular');
+require('angular-route');
+
 var commands = require('./commands');
 var utils = require('./app-utils');
 
