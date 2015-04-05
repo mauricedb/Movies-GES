@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 var angular = require('angular');
-require('angular-route');
+var ngRoute = require('angular-route');
 
 var commands = require('./commands');
 var utils = require('./app-utils');
@@ -9,7 +9,7 @@ var utils = require('./app-utils');
 var mod = angular.module('movie-management-app', [
 	utils.name,
 	commands.name,
-	'ngRoute',
+	ngRoute,
 	'ui.bootstrap'
 ]);
 

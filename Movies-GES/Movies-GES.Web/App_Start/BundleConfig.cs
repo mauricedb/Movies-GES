@@ -30,8 +30,8 @@ namespace Movies_GES.Web
                         "~/Scripts/uuid.js",
                         //"~/Scripts/angular.js",
                         //"~/Scripts/angular-route.js",
-                        "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
-                        "~/dist/movie-management.js"
+                        "~/dist/movie-management.js",
+                        "~/Scripts/angular-ui/ui-bootstrap-tpls.js"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/director-management").Include(

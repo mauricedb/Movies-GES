@@ -47,7 +47,7 @@
 	'use strict';
 
 	var angular = __webpack_require__(3);
-	__webpack_require__(4);
+	var ngRoute = __webpack_require__(4);
 
 	var commands = __webpack_require__(1);
 	var utils = __webpack_require__(2);
@@ -55,7 +55,7 @@
 	var mod = angular.module('movie-management-app', [
 		utils.name,
 		commands.name,
-		'ngRoute',
+		ngRoute,
 		'ui.bootstrap'
 	]);
 
@@ -348,8 +348,9 @@
 
 	'use strict';
 
+	var angular = __webpack_require__(3);
 	var utils = __webpack_require__(2);
-	var mod = angular.module('movie-commands', [utils.name]);
+	var mod = module.exports = angular.module('movie-commands', [utils.name]);
 
 	mod.factory('movieCommands', function ($http, uuid) {
 		function excute(command) {
@@ -436,7 +437,9 @@
 
 	'use strict';
 
-	var mod = angular.module('app-utils', [
+	var angular = __webpack_require__(3);
+
+	var mod = module.exports = angular.module('app-utils', [
 	]);
 
 	mod.constant('uuid', window.uuid);
