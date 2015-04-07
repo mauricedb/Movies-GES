@@ -5,6 +5,7 @@ var ngRoute = require('angular-route');
 
 var commands = require('./commands');
 var utils = require('./app-utils');
+require('angular-bootstrap');
 
 var mod = angular.module('movie-management-app', [
 	utils.name,
