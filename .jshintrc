@@ -3,19 +3,18 @@
    * ENVIRONMENTS
    * =================
    */
-   "predef": [ "angular" ],
 
   // Define globals exposed by modern browsers.
   "browser": true,
 
   // Define globals exposed by jQuery.
-  "jquery": true,
+  "jquery": false,
 
   // Define globals exposed by Node.js.
   "node": true,
 
   // Use ECMA Script 6
-  "esnext": true,
+  "esnext": false,
   
   /*
    * ENFORCING OPTIONS
@@ -35,8 +34,8 @@
   // Prohibit use of a variable before it is defined.
   "latedef": true,
 
-  // Enforce line length to 80 characters
-  "maxlen": 80,
+  // Enforce line length to 120 characters
+  "maxlen": 120,
 
   // Require capitalized names for constructor functions.
   "newcap": true,
