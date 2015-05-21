@@ -63,7 +63,6 @@ MovieListController.prototype.addMovie = function () {
 	});
 
 	modalInstance.result.then(function (newMovie) {
-		newMovie.id = newMovie.movieId;
 		that.movies.push(newMovie);
 	});
 };
