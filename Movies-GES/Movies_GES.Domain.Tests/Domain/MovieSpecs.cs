@@ -44,10 +44,10 @@ namespace Movies_GES.Domain.Tests.Domain
             var movie = new Movie(id, "Some movie");
             movie.MarkChangesAsCommitted();
 
-            movie.Describe("Synopsis", "Critics consensus", 2014, "R");
+            movie.Describe("Synopsis", "Critics consensus", 2014);//, "R");
 
             var uncommittedChanges = movie.GetUncommittedChanges();
-            uncommittedChanges.Should().BeEquivalentTo(new MovieDescribed(id, "Synopsis", "Critics consensus", 2014, "R"));
+            uncommittedChanges.Should().BeEquivalentTo(new MovieDescribed(id, "Synopsis", "Critics consensus", 2014));//, "R"));
          }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace Movies_GES.Domain.Tests.Domain
             var movie = new Movie(id, "Some movie");
             movie.MarkChangesAsCommitted();
 
-            Action create = () => movie.Describe("Synopsis", "Critics consensus", DateTime.Now.Year + 1, null);
+            Action create = () => movie.Describe("Synopsis", "Critics consensus", DateTime.Now.Year + 1);//, null);
 
             create.ShouldThrow<ArgumentException>();
         }

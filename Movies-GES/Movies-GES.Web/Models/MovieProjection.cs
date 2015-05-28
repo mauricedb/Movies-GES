@@ -16,7 +16,9 @@ namespace Movies_GES.Web.Models
         public string Synopsis { get; set; }
         public IList<string> AbridgedDirectors { get; set; }
 
-        public string MpaaRating { get; set; }
+        //public string MpaaRating { get; set; }
+
+
 
         //public IEnumerable<string> Genres { get; set; }
         //public Posters Posters { get; set; }

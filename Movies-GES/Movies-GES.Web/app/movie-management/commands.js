@@ -29,7 +29,7 @@ mod.factory('movieCommands', function ($http, uuid) {
 			movieId: movie.id,
 			synopsis: movie.synopsis,
 			criticsConsensus: movie.criticsConsensus,
-			mpaaRating: movie.mpaaRating,
+			//mpaaRating: movie.mpaaRating,
 		    year: movie.year || 0
 		};
 	}

@@ -190,8 +190,8 @@
 			var command = that.movieCommands.rateMovieByCrictics(movie.id, rating);
 			that.movieCommands.excute(command)
 				.then(function () {
-					movie.criticsScore = 
-						Math.round(0.9 * movie.criticsScore + 0.1 * rating);
+					//movie.criticsScore = 
+					//	Math.round(0.9 * movie.criticsScore + 0.1 * rating);
 				});
 		});
 	};
@@ -377,7 +377,7 @@
 				movieId: movie.id,
 				synopsis: movie.synopsis,
 				criticsConsensus: movie.criticsConsensus,
-				mpaaRating: movie.mpaaRating,
+				//mpaaRating: movie.mpaaRating,
 			    year: movie.year || 0
 			};
 		}
