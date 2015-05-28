@@ -62,7 +62,7 @@ namespace Movies_GES.Domain.Tests.Projections
         public void The_MovieDescribed_event_should_update_a_movie()
         {
             var movieId = Guid.NewGuid();
-            var movieTitled = new MovieDescribed(movieId, "Synopsis", "Critics Consensus", 2014);
+            var movieTitled = new MovieDescribed(movieId, "Synopsis", "Critics Consensus", 2014, "R");
 
             var repo = new DummyMovieProjectionRepository();
             repo.List[movieId] = new MovieProjection { Id = movieId };
@@ -79,7 +79,8 @@ namespace Movies_GES.Domain.Tests.Projections
                     Id = movieId,
                     Synopsis = "Synopsis",
                     CriticsConsensus = "Critics Consensus",
-                    Year = 2014
+                    Year = 2014,
+                    MpaaRating = "R"
                 }
             });
         }

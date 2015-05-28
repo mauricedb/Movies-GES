@@ -29,7 +29,8 @@ mod.factory('movieCommands', function ($http, uuid) {
 			movieId: movie.id,
 			synopsis: movie.synopsis,
 			criticsConsensus: movie.criticsConsensus,
-			year: movie.year || 0
+			mpaaRating: movie.mpaaRating,
+		    year: movie.year || 0
 		};
 	}
 

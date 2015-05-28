@@ -22,11 +22,11 @@ namespace Movies_GES.Domain.Domain
 
         public override Guid Id { get { return _id; } }
 
-        public void Describe(string synopsis, string criticsConsensus, int year)
+        public void Describe(string synopsis, string criticsConsensus, int year, string mpaaRating)
         {
             Guard.Requires<ArgumentException>(year <= DateTime.Now.Year, "The film can't be created in the future");
 
-            ApplyChanges(new MovieDescribed(Id, synopsis, criticsConsensus, year));
+            ApplyChanges(new MovieDescribed(Id, synopsis, criticsConsensus, year, mpaaRating));
         }
 
         internal void Title(string title)

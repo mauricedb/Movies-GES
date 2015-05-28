@@ -34,6 +34,7 @@ namespace Movies_GES.Web.Projections
                 m.Synopsis = movieDescribed.Synopsis;
                 m.CriticsConsensus = movieDescribed.CriticsConsensus;
                 m.Year = movieDescribed.Year;
+                m.MpaaRating = movieDescribed.MpaaRating;
             });
         }
 

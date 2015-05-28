@@ -20,19 +20,25 @@
         <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="save()">Save</button>
 
         <div class="form-group">
-            <label for="title">Synopsis</label>
-            <input type="text" class="form-control" id="title" ng-model="ctrl.movie.synopsis" ng-disabled="readonly">
+            <label for="synopsis">Synopsis</label>
+            <input type="text" class="form-control" id="synopsis" ng-model="ctrl.movie.synopsis" ng-disabled="readonly">
         </div>
 
         <div class="form-group">
-            <label for="title">CriticsConsensus</label>
-            <input type="text" class="form-control" id="Yeartitle" ng-model="ctrl.movie.criticsConsensus" ng-disabled="readonly">
+            <label for="criticsConsensus">Critics Consensus</label>
+            <input type="text" class="form-control" id="criticsConsensus" ng-model="ctrl.movie.criticsConsensus" ng-disabled="readonly">
         </div>
 
         <div class="form-group">
-            <label for="title">Year</label>
-            <input type="text" class="form-control" id="title" ng-model="ctrl.movie.year" ng-disabled="readonly">
+            <label for="year">Year</label>
+            <input type="text" class="form-control" id="year" ng-model="ctrl.movie.year" ng-disabled="readonly">
         </div>
+
+        <div class="form-group">
+            <label for="mpaaRating">MPAA Rating</label>
+            <input type="text" class="form-control" id="mpaaRating" ng-model="ctrl.movie.mpaaRating" ng-disabled="readonly">
+        </div>
+
     </div>
 
     <div class="form-group">
@@ -61,12 +67,8 @@
     </div>
 
 
-    <!--<div class="form-group">
-        <label for="title">MpaaRating</label>
-        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.mpaaRating">
-    </div>
 
-    <div class="form-group">
+    <!--<div class="form-group">
         <label for="title">Genres</label>
         <input type="text" class="form-control" id="title" ng-model="ctrl.movie.Genres">
     </div>
