@@ -26,15 +26,15 @@ namespace Movies_GES.Domain.Domain
         public string CriticsConsensus { get; private set; }
         public int Year { get; private set; }
 
-        //public string MpaaRating { get; private set; }
+        public string MpaaRating { get; private set; }
 
-        public MovieDescribed(Guid movieId, string synopsis, string criticsConsensus, int year)//, string mpaaRating)
+        public MovieDescribed(Guid movieId, string synopsis, string criticsConsensus, int year, string mpaaRating)
         {
             MovieId = movieId;
             Synopsis = synopsis;
             CriticsConsensus = criticsConsensus;
             Year = year;
-            //MpaaRating = mpaaRating;
+            MpaaRating = mpaaRating;
         }
 
         public override bool Equals(object obj)

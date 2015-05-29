@@ -33,7 +33,7 @@ namespace Movies_GES.Domain.Handlers
         public async Task Handle(DescribeMovie command, Guid commandId)
         {
             var movie = await _repository.GetById(command.MovieId);
-            movie.Describe(command.Synopsis, command.CriticsConsensus, command.Year);//, command.MpaaRating);
+            movie.Describe(command.Synopsis, command.CriticsConsensus, command.Year, command.MpaaRating);
             await _repository.Save(movie, commandId);
         }
 
