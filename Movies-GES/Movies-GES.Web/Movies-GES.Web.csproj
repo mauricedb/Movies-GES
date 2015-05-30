@@ -193,11 +193,14 @@
     <Content Include="app\director-management\add-director.html" />
     <Content Include="app\director-management\app.js" />
     <Content Include="app\movie-management\add-director.html" />
+    <Content Include="app\movie-management\add-movie-controller.js" />
     <Content Include="app\movie-management\add-movie.html" />
     <Content Include="app\movie-management\app-utils.js" />
     <Content Include="app\movie-management\app.js" />
     <Content Include="app\movie-management\commands.js" />
+    <Content Include="app\movie-management\movie-details-controller.js" />
     <Content Include="app\movie-management\movie-details.html" />
+    <Content Include="app\movie-management\movie-list-controller.js" />
     <Content Include="app\movie-management\movie-list.html" />
     <Content Include="app\movie-management\rate-movie.html" />
     <Content Include="Content\bootstrap.css" />

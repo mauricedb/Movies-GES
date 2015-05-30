@@ -6,3 +6,4 @@ var mod = module.exports = angular.module('app-utils', [
 ]);
 
 mod.constant('uuid', window.uuid);
+

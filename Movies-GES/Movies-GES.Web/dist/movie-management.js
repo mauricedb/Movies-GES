@@ -46,12 +46,16 @@
 
 	'use strict';
 
-	var angular = __webpack_require__(3);
-	var ngRoute = __webpack_require__(4);
+	var angular = __webpack_require__(6);
+	var ngRoute = __webpack_require__(7);
 
 	var commands = __webpack_require__(1);
 	var utils = __webpack_require__(2);
-	__webpack_require__(5);
+	__webpack_require__(8);
+
+	var MovieListController = __webpack_require__(3);
+	var MovieDetailsController = __webpack_require__(4);
+	var AddMovieController = __webpack_require__(5);
 
 	var mod = angular.module('movie-management-app', [
 		utils.name,
@@ -79,187 +83,8 @@
 	});
 
 
-	function MovieListController(
-			$modal, $location, $http, $q, moviesSvc, uuid, movieCommands) {
-		this.$modal = $modal;
-		this.$location = $location;
-		this.$http = $http;
-		this.$q = $q;
-		this.moviesSvc = moviesSvc;
-		this.uuid = uuid;
-		this.movieCommands = movieCommands;
-		this.movies = [];
 
-		var that = this;
-		moviesSvc.query().then(function (e) {
-			[].push.apply(that.movies, e.data);
-		});
-	}
 
-	MovieListController.prototype.movieDetails = function (movie) {
-		this.$location.path('/details/' + movie.id);
-	};
-
-	MovieListController.prototype.addMovie = function () {
-		var that = this;
-		var modalInstance = this.$modal.open({
-			templateUrl: '/app/movie-management/add-movie.html',
-			controller: 'add-movie-controller',
-			controllerAs: 'ctrl'
-		});
-
-		modalInstance.result.then(function (newMovie) {
-			that.movies.push(newMovie);
-		});
-	};
-
-	MovieListController.prototype.generateMovies = function () {
-		/* jshint ignore:start */
-		var movies = [12862, 12865, 13092, 16673];
-		var self = this;
-
-		movies.forEach(function (m) {
-			self.$http.get('/data/' + m + '.json').then(function (e) {
-				var movieCommands = self.movieCommands;
-				console.log(e.data);
-				var movie = e.data;
-				delete movie.id;
-				movie.criticsConsensus = movie.critics_consensus;
-				delete movie.critics_consensus;
-
-				var titleCommand = movieCommands.titleMovie(movie);
-				movieCommands.excute(titleCommand).then(function () {
-					var describeCommand = movieCommands.describeMovie(movie);
-					return movieCommands.excute(describeCommand);
-				}).then(function () {
-					var rateMovieByAudience = movieCommands.rateMovieByAudience(
-						movie.id, movie.ratings.audience_score);
-					return movieCommands.excute(rateMovieByAudience);
-				}).then(function () {
-					var rateMovieByCrictics = movieCommands.rateMovieByCrictics(
-						movie.id, movie.ratings.critics_score);
-					return movieCommands.excute(rateMovieByCrictics);
-				}).then(function () {
-					var promises = movie.abridged_directors.map(function (director) {
-						var addDirectorToMovie = movieCommands.addDirectorToMovie(
-							movie.id, director.name);
-						return movieCommands.excute(addDirectorToMovie);
-					});
-
-					return self.$q.all(promises);
-				}).then(function() {
-					self.$location.path('/');
-				});
-			});
-		});
-		/* jshint ignore:end */
-	};
-
-	function MovieDetailsController(
-		$scope, $route, $modal, $location, moviesSvc, uuid, $http, movieCommands) {
-		this.$scope = $scope;
-		this.$modal = $modal;
-		this.$location = $location;
-		this.moviesSvc = moviesSvc;
-		this.uuid = uuid;
-		this.$http = $http;
-		this.movieCommands = movieCommands;
-		this.movie = {};
-
-		var that = this;
-		moviesSvc.get({ id: $route.current.params.id }).then(function (e) {
-			that.movie = e.data;
-
-		});
-	}
-
-	MovieDetailsController.prototype.rateCritics = function (movie) {
-		var that = this;
-		var modalInstance = this.$modal.open({
-			templateUrl: '/app/movie-management/rate-movie.html',
-			controller: 'rate-movie-controller',
-			controllerAs: 'ctrl',
-			resolve: {
-				rating: function () {
-					return movie.criticsScore;
-				}
-			}
-		});
-
-		modalInstance.result.then(function (rating) {
-			var command = that.movieCommands.rateMovieByCrictics(movie.id, rating);
-			that.movieCommands.excute(command)
-				.then(function () {
-					movie.criticsScore = 
-						Math.round(0.9 * movie.criticsScore + 0.1 * rating);
-				});
-		});
-	};
-
-	MovieDetailsController.prototype.rateAudience = function (movie) {
-		var that = this;
-		var modalInstance = this.$modal.open({
-			templateUrl: '/app/movie-management/rate-movie.html',
-			controller: 'rate-movie-controller',
-			controllerAs: 'ctrl',
-			resolve: {
-				rating: function () {
-					return movie.audienceScore;
-				}
-			}
-		});
-
-		modalInstance.result.then(function (rating) {
-			var command = that.movieCommands.rateMovieByAudience(movie.id, rating);
-			that.movieCommands.excute(command)
-				.then(function () {
-					movie.audienceScore = 
-						Math.round(0.9 * movie.audienceScore + 0.1 * rating);
-				});
-		});
-	};
-
-	MovieDetailsController.prototype.addDirector = function (movie) {
-		var that = this;
-		var modalInstance = this.$modal.open({
-			templateUrl: '/app/movie-management/add-director.html',
-			controller: 'add-director-controller',
-			controllerAs: 'ctrl'
-		});
-
-		modalInstance.result.then(function (director) {
-			var addDirectorToMovie = that.movieCommands.addDirectorToMovie(
-				movie.id, director);
-			that.movieCommands.excute(addDirectorToMovie)
-				.then(function () {
-					movie.abridgedDirectors = movie.abridgedDirectors || [];
-					movie.abridgedDirectors.push(director);
-				});
-		});
-	};
-
-	function AddMovieController($scope, $modalInstance, movieCommands) {
-		this.$scope = $scope;
-		this.$modalInstance = $modalInstance;
-		this.movieCommands = movieCommands;
-
-		$scope.newMovie = {
-			title: ''
-		};
-	}
-
-	AddMovieController.prototype.ok = function () {
-		var self = this;
-		var command = self.movieCommands.titleMovie(self.$scope.newMovie);
-
-		self.movieCommands.excute(command).then(function () {
-			self.$modalInstance.close(self.$scope.newMovie);
-		});
-	};
-
-	AddMovieController.prototype.cancel = function () {
-		this.$modalInstance.dismiss();
-	};
 
 	function MovieTitleController($scope, movieCommands) {
 		$scope.readonly = true;
@@ -348,7 +173,7 @@
 
 	'use strict';
 
-	var angular = __webpack_require__(3);
+	var angular = __webpack_require__(6);
 	var utils = __webpack_require__(2);
 	var mod = module.exports = angular.module('movie-commands', [utils.name]);
 
@@ -438,7 +263,7 @@
 
 	'use strict';
 
-	var angular = __webpack_require__(3);
+	var angular = __webpack_require__(6);
 
 	var mod = module.exports = angular.module('app-utils', [
 	]);
@@ -446,24 +271,235 @@
 	mod.constant('uuid', window.uuid);
 
 
+
 /***/ },
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(6);
-	module.exports = angular;
+	'use strict';
+
+	function MovieListController(
+			$modal, $location, $http, $q, moviesSvc, uuid, movieCommands) {
+		this.$modal = $modal;
+		this.$location = $location;
+		this.$http = $http;
+		this.$q = $q;
+		this.moviesSvc = moviesSvc;
+		this.uuid = uuid;
+		this.movieCommands = movieCommands;
+		this.movies = [];
+
+		var that = this;
+		moviesSvc.query().then(function (e) {
+			[].push.apply(that.movies, e.data);
+		});
+	}
+
+	MovieListController.prototype.movieDetails = function (movie) {
+		this.$location.path('/details/' + movie.id);
+	};
+
+	MovieListController.prototype.addMovie = function () {
+		var that = this;
+		var modalInstance = this.$modal.open({
+			templateUrl: '/app/movie-management/add-movie.html',
+			controller: 'add-movie-controller',
+			controllerAs: 'ctrl'
+		});
+
+		modalInstance.result.then(function (newMovie) {
+			that.movies.push(newMovie);
+		});
+	};
+
+	MovieListController.prototype.generateMovies = function () {
+		/* jshint ignore:start */
+		var movies = [12862, 12865, 13092, 16673];
+		var self = this;
+
+		movies.forEach(function (m) {
+			self.$http.get('/data/' + m + '.json').then(function (e) {
+				var movieCommands = self.movieCommands;
+				console.log(e.data);
+				var movie = e.data;
+				delete movie.id;
+				movie.criticsConsensus = movie.critics_consensus;
+				delete movie.critics_consensus;
+
+				var titleCommand = movieCommands.titleMovie(movie);
+				movieCommands.excute(titleCommand).then(function () {
+					var describeCommand = movieCommands.describeMovie(movie);
+					return movieCommands.excute(describeCommand);
+				}).then(function () {
+					var rateMovieByAudience = movieCommands.rateMovieByAudience(
+						movie.id, movie.ratings.audience_score);
+					return movieCommands.excute(rateMovieByAudience);
+				}).then(function () {
+					var rateMovieByCrictics = movieCommands.rateMovieByCrictics(
+						movie.id, movie.ratings.critics_score);
+					return movieCommands.excute(rateMovieByCrictics);
+				}).then(function () {
+					var promises = movie.abridged_directors.map(function (director) {
+						var addDirectorToMovie = movieCommands.addDirectorToMovie(
+							movie.id, director.name);
+						return movieCommands.excute(addDirectorToMovie);
+					});
+
+					return self.$q.all(promises);
+				}).then(function() {
+					self.$location.path('/');
+				});
+			});
+		});
+		/* jshint ignore:end */
+	};
+
+	module.exports = MovieListController;
 
 
 /***/ },
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(7);
-	module.exports = 'ngRoute';
+	'use strict';
+
+	function MovieDetailsController(
+		$scope, $route, $modal, $location, moviesSvc, uuid, $http, movieCommands) {
+	    this.$scope = $scope;
+	    this.$modal = $modal;
+	    this.$location = $location;
+	    this.moviesSvc = moviesSvc;
+	    this.uuid = uuid;
+	    this.$http = $http;
+	    this.movieCommands = movieCommands;
+	    this.movie = {};
+
+	    var that = this;
+	    moviesSvc.get({ id: $route.current.params.id }).then(function (e) {
+	        that.movie = e.data;
+
+	    });
+	}
+
+	MovieDetailsController.prototype.rateCritics = function (movie) {
+	    var that = this;
+	    var modalInstance = this.$modal.open({
+	        templateUrl: '/app/movie-management/rate-movie.html',
+	        controller: 'rate-movie-controller',
+	        controllerAs: 'ctrl',
+	        resolve: {
+	            rating: function () {
+	                return movie.criticsScore;
+	            }
+	        }
+	    });
+
+	    modalInstance.result.then(function (rating) {
+	        var command = that.movieCommands.rateMovieByCrictics(movie.id, rating);
+	        that.movieCommands.excute(command)
+				.then(function () {
+				    movie.criticsScore =
+						Math.round(0.9 * movie.criticsScore + 0.1 * rating);
+				});
+	    });
+	};
+
+	MovieDetailsController.prototype.rateAudience = function (movie) {
+	    var that = this;
+	    var modalInstance = this.$modal.open({
+	        templateUrl: '/app/movie-management/rate-movie.html',
+	        controller: 'rate-movie-controller',
+	        controllerAs: 'ctrl',
+	        resolve: {
+	            rating: function () {
+	                return movie.audienceScore;
+	            }
+	        }
+	    });
+
+	    modalInstance.result.then(function (rating) {
+	        var command = that.movieCommands.rateMovieByAudience(movie.id, rating);
+	        that.movieCommands.excute(command)
+				.then(function () {
+				    movie.audienceScore =
+						Math.round(0.9 * movie.audienceScore + 0.1 * rating);
+				});
+	    });
+	};
+
+	MovieDetailsController.prototype.addDirector = function (movie) {
+	    var that = this;
+	    var modalInstance = this.$modal.open({
+	        templateUrl: '/app/movie-management/add-director.html',
+	        controller: 'add-director-controller',
+	        controllerAs: 'ctrl'
+	    });
+
+	    modalInstance.result.then(function (director) {
+	        var addDirectorToMovie = that.movieCommands.addDirectorToMovie(
+				movie.id, director);
+	        that.movieCommands.excute(addDirectorToMovie)
+				.then(function () {
+				    movie.abridgedDirectors = movie.abridgedDirectors || [];
+				    movie.abridgedDirectors.push(director);
+				});
+	    });
+	};
+
+	module.exports = MovieDetailsController;
 
 
 /***/ },
 /* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function AddMovieController($scope, $modalInstance, movieCommands) {
+	    this.$scope = $scope;
+	    this.$modalInstance = $modalInstance;
+	    this.movieCommands = movieCommands;
+
+	    $scope.newMovie = {
+	        title: ''
+	    };
+	}
+
+	AddMovieController.prototype.ok = function () {
+	    var self = this;
+	    var command = self.movieCommands.titleMovie(self.$scope.newMovie);
+
+	    self.movieCommands.excute(command).then(function () {
+	        self.$modalInstance.close(self.$scope.newMovie);
+	    });
+	};
+
+	AddMovieController.prototype.cancel = function () {
+	    this.$modalInstance.dismiss();
+	};
+
+
+	module.exports = AddMovieController;
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(9);
+	module.exports = angular;
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(10);
+	module.exports = 'ngRoute';
+
+
+/***/ },
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -478,7 +514,7 @@
 	}]),angular.module("template/typeahead/typeahead-popup.html",[]).run(["$templateCache",function(a){a.put("template/typeahead/typeahead-popup.html",'<ul class="dropdown-menu" ng-show="isOpen()" ng-style="{top: position.top+\'px\', left: position.left+\'px\'}" style="display: block;" role="listbox" aria-hidden="{{!isOpen()}}">\n    <li ng-repeat="match in matches track by $index" ng-class="{active: isActive($index) }" ng-mouseenter="selectActive($index)" ng-click="selectMatch($index)" role="option" id="{{match.id}}">\n        <div typeahead-match index="$index" match="match" query="query" template-url="templateUrl"></div>\n    </li>\n</ul>\n')}]);
 
 /***/ },
-/* 6 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;/**
@@ -26792,7 +26828,7 @@
 	!window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}</style>');
 
 /***/ },
-/* 7 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
