@@ -22,7 +22,6 @@ mod.factory('movieCommands', function ($http, uuid) {
 	}
 
 	function describeMovie(movie) {
-
 		return {
 			commandName: 'DescribeMovie',
 			commandId: uuid.v4(),

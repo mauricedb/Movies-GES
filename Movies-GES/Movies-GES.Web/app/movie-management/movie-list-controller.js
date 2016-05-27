@@ -34,6 +34,22 @@ MovieListController.prototype.addMovie = function () {
 	});
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 MovieListController.prototype.generateMovies = function () {
 	/* jshint ignore:start */
 	var movies = [12862, 12865, 13092, 16673];

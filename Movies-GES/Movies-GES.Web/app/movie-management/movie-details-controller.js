@@ -1,20 +1,18 @@
 ﻿'use strict';
 
 function MovieDetailsController(
-	$scope, $route, $modal, $location, moviesSvc, uuid, $http, movieCommands) {
+    $scope, $route, $modal, $location, moviesSvc, uuid, movieCommands) {
     this.$scope = $scope;
     this.$modal = $modal;
     this.$location = $location;
     this.moviesSvc = moviesSvc;
     this.uuid = uuid;
-    this.$http = $http;
     this.movieCommands = movieCommands;
     this.movie = {};
 
     var that = this;
     moviesSvc.get({ id: $route.current.params.id }).then(function (e) {
         that.movie = e.data;
-
     });
 }
 
@@ -34,10 +32,10 @@ MovieDetailsController.prototype.rateCritics = function (movie) {
     modalInstance.result.then(function (rating) {
         var command = that.movieCommands.rateMovieByCrictics(movie.id, rating);
         that.movieCommands.excute(command)
-			.then(function () {
-			    movie.criticsScore =
-					Math.round(0.9 * movie.criticsScore + 0.1 * rating);
-			});
+            .then(function () {
+                movie.criticsScore =
+                    Math.round(0.9 * movie.criticsScore + 0.1 * rating);
+            });
     });
 };
 
@@ -57,10 +55,10 @@ MovieDetailsController.prototype.rateAudience = function (movie) {
     modalInstance.result.then(function (rating) {
         var command = that.movieCommands.rateMovieByAudience(movie.id, rating);
         that.movieCommands.excute(command)
-			.then(function () {
-			    movie.audienceScore =
-					Math.round(0.9 * movie.audienceScore + 0.1 * rating);
-			});
+            .then(function () {
+                movie.audienceScore =
+                    Math.round(0.9 * movie.audienceScore + 0.1 * rating);
+            });
     });
 };
 
@@ -74,12 +72,12 @@ MovieDetailsController.prototype.addDirector = function (movie) {
 
     modalInstance.result.then(function (director) {
         var addDirectorToMovie = that.movieCommands.addDirectorToMovie(
-			movie.id, director);
+            movie.id, director);
         that.movieCommands.excute(addDirectorToMovie)
-			.then(function () {
-			    movie.abridgedDirectors = movie.abridgedDirectors || [];
-			    movie.abridgedDirectors.push(director);
-			});
+            .then(function () {
+                movie.abridgedDirectors = movie.abridgedDirectors || [];
+                movie.abridgedDirectors.push(director);
+            });
     });
 };
 

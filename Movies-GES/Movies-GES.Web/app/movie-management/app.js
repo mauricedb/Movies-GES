@@ -9,6 +9,7 @@ require('angular-bootstrap');
 
 var MovieListController = require('./movie-list-controller');
 var MovieDetailsController = require('./movie-details-controller.js');
+var MovieDescriptionController = require('./movie-description-controller.js');
 var AddMovieController = require('./add-movie-controller.js');
 
 var mod = angular.module('movie-management-app', [
@@ -51,16 +52,6 @@ function MovieTitleController($scope, movieCommands) {
 	};
 }
 
-function MovieDescriptionController($scope, movieCommands) {
-	$scope.readonly = true;
-
-	$scope.save = function () {
-		var command = movieCommands.describeMovie($scope.ctrl.movie);
-		movieCommands.excute(command).then(function () {
-			$scope.readonly = true;
-		});
-	};
-}
 
 
 function RateMovieController($scope, $modalInstance, rating) {

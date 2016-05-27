@@ -198,6 +198,7 @@
     <Content Include="app\movie-management\app-utils.js" />
     <Content Include="app\movie-management\app.js" />
     <Content Include="app\movie-management\commands.js" />
+    <Content Include="app\movie-management\movie-description-controller.js" />
     <Content Include="app\movie-management\movie-details-controller.js" />
     <Content Include="app\movie-management\movie-details.html" />
     <Content Include="app\movie-management\movie-list-controller.js" />

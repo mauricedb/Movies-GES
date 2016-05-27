@@ -1,5 +1,4 @@
 ﻿using System;
-using ReflectionMagic;
 
 namespace Movies_GES.Domain.Commands
 {
