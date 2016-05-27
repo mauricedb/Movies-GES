@@ -30,7 +30,7 @@ namespace Movies_GES.Web
                         "~/Scripts/uuid.js",
                         //"~/Scripts/angular.js",
                         //"~/Scripts/angular-route.js",
-                        "~/dist/movie-management.js",
+                        "~/Dist/Angular1/movie-management.js",
                         "~/Scripts/angular-ui/ui-bootstrap-tpls.js"
                         ));
 
@@ -38,8 +38,7 @@ namespace Movies_GES.Web
                         "~/Scripts/uuid.js",
                         //"~/Scripts/angular.js",
                         "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
-                        "~/app/director-management/app.js",
-                        "~/app/movie-management/app-utils.js"
+                        "~/Dist/Angular1/director-management/app.js"
                         ));
 
             // Set EnableOptimizations to false for debugging. For more information,
