@@ -1,4 +1,5 @@
-﻿
+﻿'use strict';
+
 
 function MovieDescriptionController($scope, movieCommands) {
     $scope.readonly = true;

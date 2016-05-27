@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Movie Management";
+}
+
+<h2>Movie Management</h2>
+
+<div ng-app="movie-management-app">
+    <div ng-view=""></div>
+</div>
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/movie-management")
+}

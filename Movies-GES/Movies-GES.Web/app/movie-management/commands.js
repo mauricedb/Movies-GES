@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 var angular = require('angular');
-var utils = require('./app-utils');
+var utils = require('../shared/app-utils');
 var mod = module.exports = angular.module('movie-commands', [utils.name]);
 
 mod.factory('movieCommands', function ($http, uuid) {

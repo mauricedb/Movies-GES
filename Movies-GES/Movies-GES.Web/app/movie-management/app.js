@@ -4,7 +4,7 @@ var angular = require('angular');
 var ngRoute = require('angular-route');
 
 var commands = require('./commands');
-var utils = require('./app-utils');
+var utils = require('../shared/app-utils');
 require('angular-bootstrap');
 
 var MovieListController = require('./movie-list-controller');

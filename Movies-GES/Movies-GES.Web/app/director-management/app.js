@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 var angular = require('angular');
-var utils = require('./app-utils');
+var utils = require('../shared/app-utils');
 require('angular-bootstrap');
 
 var mod = angular.module('director-management-app', [

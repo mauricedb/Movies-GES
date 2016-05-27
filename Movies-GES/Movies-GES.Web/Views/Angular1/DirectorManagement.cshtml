@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Director Management";
+}
+
+<h2>Director Management</h2>
+
+<div ng-app="director-management-app">
+    <div ng-controller="director-list-controller as ctrl">
+        <button class="btn btn-default"
+                ng-click="ctrl.addDirector()">
+            Add director
+        </button>
+    </div>
+</div>
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/director-management")
+}
