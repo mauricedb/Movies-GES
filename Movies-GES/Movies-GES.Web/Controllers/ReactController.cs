@@ -6,16 +6,10 @@ using System.Web.Mvc;
 
 namespace Movies_GES.Web.Controllers
 {
-    public class Angular1Controller : Controller
+    public class ReactController : Controller
     {
-        // GET: Angular1/MovieManagement
+        // GET: React/MovieManagement
         public ActionResult MovieManagement()
-        {
-            return View();
-        }
-
-        // GET: Angular1/DirectorManagement
-        public ActionResult DirectorManagement()
         {
             return View();
         }
