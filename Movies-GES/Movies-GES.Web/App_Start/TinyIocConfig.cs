@@ -59,7 +59,9 @@ namespace Movies_GES.Web
                 .EnableVerboseLogging()
                 .SetDefaultUserCredentials(new UserCredentials("admin", "changeit"));
 
-            var connection = EventStoreConnection.Create(settings, new IPEndPoint(IPAddress.Loopback, 1113));
+            var address = Dns.GetHostEntry("docker").AddressList.First();
+            var connection = EventStoreConnection.Create(settings, new IPEndPoint(
+                address, 1113));
 
             connection.AuthenticationFailed += (s, e) => Trace.TraceWarning("AuthenticationFailed: {0}", e.Reason);
             connection.ErrorOccurred += (s, e) => Trace.TraceWarning("ErrorOccurred: {0}", e.Exception);

@@ -2,4 +2,8 @@ redis:
   image: redis:3.2.0
   ports:
     - "6379:6379"
-
+eventstore:
+  image: eventstore/eventstore
+  ports:
+    - "1113:1113"
+    - "2113:2113"
