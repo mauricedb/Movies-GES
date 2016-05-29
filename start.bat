@@ -5,10 +5,10 @@ if not exist .\redis-2.8.17\redis-server.exe goto no-redis
 
 start  .\EventStore-OSS-Win-v3.0.1\EventStore.ClusterNode.exe
 
-del dump.rdb
-start .\redis-2.8.17\redis-server.exe
-start .\redis-2.8.17\redis-cli.exe
-gulp
+rem del dump.rdb
+rem start .\redis-2.8.17\redis-server.exe
+rem start .\redis-2.8.17\redis-cli.exe
+rem gulp
 goto: end
 
 :no-ges

@@ -33,7 +33,7 @@ namespace Movies_GES.Web
 
             container.Register((_, __) => connection);
 
-            var redisManagerPool = new RedisManagerPool();
+            var redisManagerPool = new RedisManagerPool("docker");
             container.Register<IRedisClientsManager>((_, __) => redisManagerPool);
 
             container.Register<MovieHandlers>().AsSingleton();
