@@ -32,8 +32,11 @@ namespace Movies_GES.Web
             var connection = await CreateEventStoreConnection();
 
             container.Register((_, __) => connection);
-
+#if DOCKER
             var redisManagerPool = new RedisManagerPool("docker");
+#else
+            var redisManagerPool = new RedisManagerPool();
+#endif
             container.Register<IRedisClientsManager>((_, __) => redisManagerPool);
 
             container.Register<MovieHandlers>().AsSingleton();
@@ -58,8 +61,11 @@ namespace Movies_GES.Web
                 .UseDebugLogger()
                 .EnableVerboseLogging()
                 .SetDefaultUserCredentials(new UserCredentials("admin", "changeit"));
-
+#if DOCKER
             var address = Dns.GetHostEntry("docker").AddressList.First();
+#else
+            var address = IPAddress.Loopback;
+#endif
             var connection = EventStoreConnection.Create(settings, new IPEndPoint(
                 address, 1113));
 
