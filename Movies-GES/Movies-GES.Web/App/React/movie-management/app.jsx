@@ -6,13 +6,17 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk';
 
 import {App, MovieList, MovieDetails} from './components';
+import * as reducers from './reducers';
 
 const store = createStore(
     combineReducers({
+        ...reducers,
         routing: routerReducer
-    })
+    }),
+    applyMiddleware(thunk)
 );
 
 const history = syncHistoryWithStore(hashHistory, store);

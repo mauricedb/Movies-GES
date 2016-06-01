@@ -46,6 +46,8 @@
 
 	'use strict';
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -62,13 +64,23 @@
 
 	var _reactRedux = __webpack_require__(247);
 
-	var _components = __webpack_require__(258);
+	var _reduxThunk = __webpack_require__(260);
+
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+	var _components = __webpack_require__(254);
+
+	var _reducers = __webpack_require__(261);
+
+	var reducers = _interopRequireWildcard(_reducers);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var store = (0, _redux.createStore)((0, _redux.combineReducers)({
+	var store = (0, _redux.createStore)((0, _redux.combineReducers)(_extends({}, reducers, {
 	  routing: _reactRouterRedux.routerReducer
-	}));
+	})), (0, _redux.applyMiddleware)(_reduxThunk2.default));
 
 	var history = (0, _reactRouterRedux.syncHistoryWithStore)(_reactRouter.hashHistory, store);
 
@@ -27666,11 +27678,7 @@
 	}
 
 /***/ },
-/* 254 */,
-/* 255 */,
-/* 256 */,
-/* 257 */,
-/* 258 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27680,15 +27688,15 @@
 	});
 	exports.MovieDetails = exports.MovieList = exports.App = undefined;
 
-	var _app = __webpack_require__(259);
+	var _app = __webpack_require__(255);
 
 	var _app2 = _interopRequireDefault(_app);
 
-	var _movieList = __webpack_require__(260);
+	var _movieList = __webpack_require__(256);
 
 	var _movieList2 = _interopRequireDefault(_movieList);
 
-	var _movieDetails = __webpack_require__(261);
+	var _movieDetails = __webpack_require__(257);
 
 	var _movieDetails2 = _interopRequireDefault(_movieDetails);
 
@@ -27699,7 +27707,7 @@
 	exports.MovieDetails = _movieDetails2.default;
 
 /***/ },
-/* 259 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27756,7 +27764,7 @@
 	exports.default = App;
 
 /***/ },
-/* 260 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27772,6 +27780,10 @@
 	var _react2 = _interopRequireDefault(_react);
 
 	var _reactRouter = __webpack_require__(168);
+
+	var _reactRedux = __webpack_require__(247);
+
+	var _actions = __webpack_require__(258);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27791,24 +27803,80 @@
 	    }
 
 	    _createClass(MovieList, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.props.loadMovies();
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            console.table(this.props.movies);
 
+	            var rows = this.props.movies.map(function (movie) {
+	                return _react2.default.createElement(
+	                    'tr',
+	                    { key: movie.id },
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        movie.title
+	                    ),
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        movie.abridgedDirectors.join(', ')
+	                    ),
+	                    _react2.default.createElement(
+	                        'td',
+	                        { style: { width: 1 } },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: 'details/' + movie.id,
+	                                className: 'btn btn-default' },
+	                            'Details'
+	                        )
+	                    )
+	                );
+	            });
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                'In MovieList',
-	                _react2.default.createElement('hr', null),
 	                _react2.default.createElement(
-	                    _reactRouter.Link,
-	                    { to: 'list' },
-	                    'List'
+	                    'p',
+	                    null,
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: 'btn btn-toolbar' },
+	                        'Add movie'
+	                    )
 	                ),
-	                ' ',
 	                _react2.default.createElement(
-	                    _reactRouter.Link,
-	                    { to: 'details/12345' },
-	                    'Details'
+	                    'table',
+	                    { className: 'table table-bordered table-striped table-condensed' },
+	                    _react2.default.createElement(
+	                        'thead',
+	                        null,
+	                        _react2.default.createElement(
+	                            'tr',
+	                            null,
+	                            _react2.default.createElement(
+	                                'th',
+	                                null,
+	                                'Title'
+	                            ),
+	                            _react2.default.createElement(
+	                                'th',
+	                                null,
+	                                'Directed by'
+	                            ),
+	                            _react2.default.createElement('th', null)
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'tbody',
+	                        null,
+	                        rows
+	                    )
 	                )
 	            );
 	        }
@@ -27817,10 +27885,24 @@
 	    return MovieList;
 	}(_react.Component);
 
-	exports.default = MovieList;
+	var mapStateToProps = function mapStateToProps(state) {
+	    return {
+	        movies: state.movies
+	    };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	    return {
+	        loadMovies: function loadMovies() {
+	            return dispatch((0, _actions.loadMovies)());
+	        }
+	    };
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(MovieList);
 
 /***/ },
-/* 261 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27885,6 +27967,121 @@
 	}
 
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(MovieDetails);
+
+/***/ },
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.loadMovies = undefined;
+
+	var _jquery = __webpack_require__(259);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var moviesLoaded = function moviesLoaded(movies) {
+	    return {
+	        type: 'MOVIES-LOADED',
+	        movies: movies
+	    };
+	};
+
+	var loadMovies = exports.loadMovies = function loadMovies() {
+	    return function (dispatch) {
+	        _jquery2.default.getJSON('/api/movies').then(function (movies) {
+	            return dispatch(moviesLoaded(movies));
+	        });
+	    };
+	};
+
+/***/ },
+/* 259 */
+/***/ function(module, exports) {
+
+	module.exports = jQuery;
+
+/***/ },
+/* 260 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	function createThunkMiddleware(extraArgument) {
+	  return function (_ref) {
+	    var dispatch = _ref.dispatch;
+	    var getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        if (typeof action === 'function') {
+	          return action(dispatch, getState, extraArgument);
+	        }
+
+	        return next(action);
+	      };
+	    };
+	  };
+	}
+
+	var thunk = createThunkMiddleware();
+	thunk.withExtraArgument = createThunkMiddleware;
+
+	exports['default'] = thunk;
+
+/***/ },
+/* 261 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.movies = undefined;
+
+	var _movies2 = __webpack_require__(262);
+
+	var _movies3 = _interopRequireDefault(_movies2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.movies = _movies3.default; // import { combineReducers } from 'redux'
+	// import movies from './movies'
+
+	// const moviesApp = combineReducers({
+	//   movies
+	// })
+
+	// export default moviesApp
+
+/***/ },
+/* 262 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var movies = function movies() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'MOVIES-LOADED':
+	      return action.movies;
+	    default:
+	      return state;
+	  }
+	};
+
+	exports.default = movies;
 
 /***/ }
 /******/ ]);

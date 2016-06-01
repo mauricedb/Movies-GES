@@ -12,5 +12,8 @@ module.exports = {
                 loaders: ['babel-loader']
             }
         ]
+    },
+    externals: {
+        "jquery": "jQuery"
     }
 };
