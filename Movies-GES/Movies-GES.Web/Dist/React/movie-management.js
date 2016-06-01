@@ -64,11 +64,11 @@
 
 	var _reactRedux = __webpack_require__(247);
 
-	var _reduxThunk = __webpack_require__(260);
+	var _reduxThunk = __webpack_require__(254);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _components = __webpack_require__(254);
+	var _components = __webpack_require__(255);
 
 	var _reducers = __webpack_require__(261);
 
@@ -79,25 +79,25 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var store = (0, _redux.createStore)((0, _redux.combineReducers)(_extends({}, reducers, {
-	  routing: _reactRouterRedux.routerReducer
+	    routing: _reactRouterRedux.routerReducer
 	})), (0, _redux.applyMiddleware)(_reduxThunk2.default));
 
 	var history = (0, _reactRouterRedux.syncHistoryWithStore)(_reactRouter.hashHistory, store);
 
 	_reactDom2.default.render(_react2.default.createElement(
-	  _reactRedux.Provider,
-	  { store: store },
-	  _react2.default.createElement(
-	    _reactRouter.Router,
-	    { history: history },
+	    _reactRedux.Provider,
+	    { store: store },
 	    _react2.default.createElement(
-	      _reactRouter.Route,
-	      { path: '/', component: _components.App },
-	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _components.MovieList }),
-	      _react2.default.createElement(_reactRouter.Route, { path: 'list', component: _components.MovieList }),
-	      _react2.default.createElement(_reactRouter.Route, { path: 'details/:id', component: _components.MovieDetails })
+	        _reactRouter.Router,
+	        { history: history },
+	        _react2.default.createElement(
+	            _reactRouter.Route,
+	            { path: '/', component: _components.App },
+	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _components.MovieList }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'list', component: _components.MovieList }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'details/:id', component: _components.MovieDetails })
+	        )
 	    )
-	  )
 	), document.getElementById('app'));
 
 /***/ },
@@ -27679,6 +27679,34 @@
 
 /***/ },
 /* 254 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	function createThunkMiddleware(extraArgument) {
+	  return function (_ref) {
+	    var dispatch = _ref.dispatch;
+	    var getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        if (typeof action === 'function') {
+	          return action(dispatch, getState, extraArgument);
+	        }
+
+	        return next(action);
+	      };
+	    };
+	  };
+	}
+
+	var thunk = createThunkMiddleware();
+	thunk.withExtraArgument = createThunkMiddleware;
+
+	exports['default'] = thunk;
+
+/***/ },
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27688,15 +27716,15 @@
 	});
 	exports.MovieDetails = exports.MovieList = exports.App = undefined;
 
-	var _app = __webpack_require__(255);
+	var _app = __webpack_require__(256);
 
 	var _app2 = _interopRequireDefault(_app);
 
-	var _movieList = __webpack_require__(256);
+	var _movieList = __webpack_require__(257);
 
 	var _movieList2 = _interopRequireDefault(_movieList);
 
-	var _movieDetails = __webpack_require__(257);
+	var _movieDetails = __webpack_require__(260);
 
 	var _movieDetails2 = _interopRequireDefault(_movieDetails);
 
@@ -27707,7 +27735,7 @@
 	exports.MovieDetails = _movieDetails2.default;
 
 /***/ },
-/* 255 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27716,55 +27744,36 @@
 	    value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var App = function App(props) {
+	    var children = props.children;
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	            'h2',
+	            null,
+	            'Movie Management using React'
+	        ),
+	        _react2.default.createElement('hr', null),
+	        children
+	    );
+	};
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var App = function (_Component) {
-	    _inherits(App, _Component);
-
-	    function App() {
-	        _classCallCheck(this, App);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
-	    }
-
-	    _createClass(App, [{
-	        key: 'render',
-	        value: function render() {
-	            var children = this.props.children;
-
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'h2',
-	                    null,
-	                    'Movie Management using React'
-	                ),
-	                _react2.default.createElement('hr', null),
-	                children
-	            );
-	        }
-	    }]);
-
-	    return App;
-	}(_react.Component);
+	App.propTypes = {
+	    children: _react.PropTypes.array.isRequired
+	};
 
 	exports.default = App;
 
 /***/ },
-/* 256 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27810,8 +27819,6 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            console.table(this.props.movies);
-
 	            var rows = this.props.movies.map(function (movie) {
 	                return _react2.default.createElement(
 	                    'tr',
@@ -27831,8 +27838,10 @@
 	                        { style: { width: 1 } },
 	                        _react2.default.createElement(
 	                            _reactRouter.Link,
-	                            { to: 'details/' + movie.id,
-	                                className: 'btn btn-default' },
+	                            {
+	                                to: 'details/' + movie.id,
+	                                className: 'btn btn-default'
+	                            },
 	                            'Details'
 	                        )
 	                    )
@@ -27885,6 +27894,11 @@
 	    return MovieList;
 	}(_react.Component);
 
+	MovieList.propTypes = {
+	    movies: _react.PropTypes.array.isRequired,
+	    loadMovies: _react.PropTypes.func.isRequired
+	};
+
 	var mapStateToProps = function mapStateToProps(state) {
 	    return {
 	        movies: state.movies
@@ -27900,73 +27914,6 @@
 	};
 
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(MovieList);
-
-/***/ },
-/* 257 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(168);
-
-	var _reactRedux = __webpack_require__(247);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var MovieDetails = function (_Component) {
-	    _inherits(MovieDetails, _Component);
-
-	    function MovieDetails() {
-	        _classCallCheck(this, MovieDetails);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(MovieDetails).apply(this, arguments));
-	    }
-
-	    _createClass(MovieDetails, [{
-	        key: 'render',
-	        value: function render() {
-	            console.log(this.props);
-
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                'In MovieDetails',
-	                _react2.default.createElement('hr', null),
-	                _react2.default.createElement(
-	                    _reactRouter.Link,
-	                    { to: 'list' },
-	                    'List'
-	                )
-	            );
-	        }
-	    }]);
-
-	    return MovieDetails;
-	}(_react.Component);
-
-	function mapStateToProps(state, ownProps) {
-	    return {
-	        id: ownProps.params.id
-	    };
-	}
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(MovieDetails);
 
 /***/ },
 /* 258 */
@@ -28008,31 +27955,71 @@
 
 /***/ },
 /* 260 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.__esModule = true;
-	function createThunkMiddleware(extraArgument) {
-	  return function (_ref) {
-	    var dispatch = _ref.dispatch;
-	    var getState = _ref.getState;
-	    return function (next) {
-	      return function (action) {
-	        if (typeof action === 'function') {
-	          return action(dispatch, getState, extraArgument);
-	        }
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 
-	        return next(action);
-	      };
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(168);
+
+	var _reactRedux = __webpack_require__(247);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var MovieDetails = function (_Component) {
+	    _inherits(MovieDetails, _Component);
+
+	    function MovieDetails() {
+	        _classCallCheck(this, MovieDetails);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(MovieDetails).apply(this, arguments));
+	    }
+
+	    _createClass(MovieDetails, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {}
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                'In MovieDetails',
+	                _react2.default.createElement('hr', null),
+	                _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: 'list' },
+	                    'List'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return MovieDetails;
+	}(_react.Component);
+
+	function mapStateToProps(state, ownProps) {
+	    return {
+	        id: ownProps.params.id
 	    };
-	  };
 	}
 
-	var thunk = createThunkMiddleware();
-	thunk.withExtraArgument = createThunkMiddleware;
-
-	exports['default'] = thunk;
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(MovieDetails);
 
 /***/ },
 /* 261 */

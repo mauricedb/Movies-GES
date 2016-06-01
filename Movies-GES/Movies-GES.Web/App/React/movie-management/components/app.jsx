@@ -1,12 +1,16 @@
-import React, {Component} from 'react';
+import React, { PropTypes } from 'react';
 
-export default class App extends Component {
-    render() {
-        var {children} = this.props;
-        return (<div>
-            <h2>Movie Management using React</h2>
-            <hr/>
-            {children}
-        </div>);
-    }
-}
+const App = (props) => {
+    const { children } = props;
+    return (<div>
+        <h2>Movie Management using React</h2>
+        <hr />
+        {children}
+    </div>);
+};
+
+App.propTypes = {
+    children: PropTypes.array.isRequired,
+};
+
+export default App;

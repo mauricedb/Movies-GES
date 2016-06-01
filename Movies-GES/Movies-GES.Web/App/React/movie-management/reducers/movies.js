@@ -5,6 +5,6 @@ const movies = (state = [], action) => {
         default:
             return state;
     }
-}
+};
 
 export default movies;

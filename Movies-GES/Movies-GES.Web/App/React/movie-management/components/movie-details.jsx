@@ -1,14 +1,16 @@
-import React, {Component} from 'react';
-import { Link  } from 'react-router';
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import { Link } from 'react-router';
+import { connect } from 'react-redux';
 
 class MovieDetails extends Component {
-    render() {
-        console.log(this.props)
+    componentWillMount() {
+    }
 
+
+    render() {
         return (<div>
             In MovieDetails
-            <hr/>
+            <hr />
             <Link to="list">List</Link>
         </div>);
     }
@@ -16,9 +18,9 @@ class MovieDetails extends Component {
 
 function mapStateToProps(state, ownProps) {
     return {
-        id: ownProps.params.id
+        id: ownProps.params.id,
     };
 }
 
-export default connect(mapStateToProps)(MovieDetails)
+export default connect(mapStateToProps)(MovieDetails);
 

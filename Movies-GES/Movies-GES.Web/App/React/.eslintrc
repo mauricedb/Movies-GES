@@ -1,0 +1,21 @@
+{
+    "extends": "airbnb",
+    "parser": "babel-eslint",
+    "ecmaFeatures": {
+        "arrowFunctions": true,
+        "classes": true,
+        "defaultParams": true,
+        "destructuring": true,
+        "experimentalObjectRestSpread": true,
+        "modules": true,
+        "objectLiteralShorthandMethods": true,
+        "objectLiteralShorthandProperties": true,
+        "spread": true,
+        "superInFunctions": true,
+        "templateStrings": true
+    },
+    "rules":{
+        "indent": [2, 4, { "SwitchCase": 1 }],
+        "react/jsx-indent": [2, 4]
+    }
+}

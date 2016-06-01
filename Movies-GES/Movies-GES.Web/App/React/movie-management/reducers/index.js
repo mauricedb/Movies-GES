@@ -1,1 +1,1 @@
-export movies from './movies'
+export movies from './movies';
