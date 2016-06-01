@@ -23,13 +23,13 @@ mod.config(function ($routeProvider) {
 	$routeProvider.when('/list', {
 		controller: 'movie-list-controller',
 		controllerAs: 'ctrl',
-		templateUrl: '/app/movie-management/movie-list.html'
+		templateUrl: '/app/angular1/movie-management/movie-list.html'
 	});
 
 	$routeProvider.when('/details/:id', {
 		controller: 'movie-details-controller',
 		controllerAs: 'ctrl',
-		templateUrl: '/app/movie-management/movie-details.html'
+		templateUrl: '/app/angular1/movie-management/movie-details.html'
 	});
 
 	$routeProvider.otherwise({

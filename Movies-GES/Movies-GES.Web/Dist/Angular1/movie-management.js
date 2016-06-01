@@ -69,13 +69,13 @@
 		$routeProvider.when('/list', {
 			controller: 'movie-list-controller',
 			controllerAs: 'ctrl',
-			templateUrl: '/app/movie-management/movie-list.html'
+			templateUrl: '/app/angular1/movie-management/movie-list.html'
 		});
 
 		$routeProvider.when('/details/:id', {
 			controller: 'movie-details-controller',
 			controllerAs: 'ctrl',
-			templateUrl: '/app/movie-management/movie-details.html'
+			templateUrl: '/app/angular1/movie-management/movie-details.html'
 		});
 
 		$routeProvider.otherwise({
@@ -36590,7 +36590,7 @@
 	MovieListController.prototype.addMovie = function () {
 		var that = this;
 		var modalInstance = this.$modal.open({
-			templateUrl: '/app/movie-management/add-movie.html',
+			templateUrl: '/app/angular1/movie-management/add-movie.html',
 			controller: 'add-movie-controller',
 			controllerAs: 'ctrl'
 		});

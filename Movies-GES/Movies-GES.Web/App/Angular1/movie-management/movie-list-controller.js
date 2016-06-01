@@ -24,7 +24,7 @@ MovieListController.prototype.movieDetails = function (movie) {
 MovieListController.prototype.addMovie = function () {
 	var that = this;
 	var modalInstance = this.$modal.open({
-		templateUrl: '/app/movie-management/add-movie.html',
+		templateUrl: '/app/angular1/movie-management/add-movie.html',
 		controller: 'add-movie-controller',
 		controllerAs: 'ctrl'
 	});
