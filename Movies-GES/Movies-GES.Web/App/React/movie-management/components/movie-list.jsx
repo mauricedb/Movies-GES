@@ -5,22 +5,22 @@ import {loadMovies} from '../actions';
 
 class MovieList extends Component {
 
-    componentWillMount () {
+    componentWillMount() {
         this.props.loadMovies();
     }
 
     render() {
         console.table(this.props.movies);
-        
+
         const rows = this.props.movies.map(movie => (
-            <tr key={movie.id}> 
-            <td>{movie.title}</td>
-            <td>{movie.abridgedDirectors.join(', ')}</td>
+            <tr key={movie.id}>
+                <td>{movie.title}</td>
+                <td>{movie.abridgedDirectors.join(', ')}</td>
                 <td style={{width:1}}>
                     <Link to={`details/${movie.id}`}
-                      className='btn btn-default'>
+                          className='btn btn-default'>
                         Details
-                    </Link> 
+                    </Link>
                 </td>
             </tr>
         ));
@@ -30,17 +30,17 @@ class MovieList extends Component {
                     Add movie
                 </button>
             </p>
-            
+
             <table className='table table-bordered table-striped table-condensed'>
                 <thead>
-                    <tr>
+                <tr>
                     <th>Title</th>
                     <th>Directed by</th>
                     <th></th>
-                    </tr>
+                </tr>
                 </thead>
                 <tbody>
-                    {rows}
+                {rows}
                 </tbody>
             </table>
         </div>);
@@ -48,15 +48,15 @@ class MovieList extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {
-    movies: state.movies
-  }
+    return {
+        movies: state.movies
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-      loadMovies: () => dispatch(loadMovies())
-  };
+    return {
+        loadMovies: () => dispatch(loadMovies())
+    };
 };
 
 export default connect(

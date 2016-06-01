@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 class MovieDetails extends Component {
     render() {
         console.log(this.props)
-        
+
         return (<div>
             In MovieDetails
             <hr/>
@@ -15,9 +15,9 @@ class MovieDetails extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  return {
-    id: ownProps.params.id
-  };
+    return {
+        id: ownProps.params.id
+    };
 }
 
 export default connect(mapStateToProps)(MovieDetails)

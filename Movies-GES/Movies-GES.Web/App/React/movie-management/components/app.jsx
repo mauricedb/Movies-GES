@@ -6,7 +6,7 @@ export default class App extends Component {
         return (<div>
             <h2>Movie Management using React</h2>
             <hr/>
-            {children}        
+            {children}
         </div>);
     }
 }

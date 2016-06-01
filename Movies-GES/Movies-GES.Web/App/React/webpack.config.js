@@ -4,8 +4,8 @@ module.exports = {
         path: '../../Dist/React',
         filename: 'movie-management.js'
     },
-    module:{
-        loaders:[
+    module: {
+        loaders: [
             {
                 test: /\.jsx?$/,
                 exclude: [/node_modules/],

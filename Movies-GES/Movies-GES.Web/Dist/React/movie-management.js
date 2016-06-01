@@ -28051,14 +28051,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.movies = _movies3.default; // import { combineReducers } from 'redux'
-	// import movies from './movies'
-
-	// const moviesApp = combineReducers({
-	//   movies
-	// })
-
-	// export default moviesApp
+	exports.movies = _movies3.default;
 
 /***/ },
 /* 262 */
@@ -28067,18 +28060,18 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	var movies = function movies() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-	  var action = arguments[1];
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	    var action = arguments[1];
 
-	  switch (action.type) {
-	    case 'MOVIES-LOADED':
-	      return action.movies;
-	    default:
-	      return state;
-	  }
+	    switch (action.type) {
+	        case 'MOVIES-LOADED':
+	            return action.movies;
+	        default:
+	            return state;
+	    }
 	};
 
 	exports.default = movies;
