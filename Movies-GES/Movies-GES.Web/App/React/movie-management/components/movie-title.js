@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 export default class MovieTitle extends Component {
     constructor() {
         super();
         this.state = {
             title: '',
-            editMode: true,
+            editMode: false,
         };
 
 
         this.toEditMode = () => {
             this.setState({
-                editMode: true
+                editMode: true,
             });
         };
 
@@ -28,7 +28,7 @@ export default class MovieTitle extends Component {
                     this.setState({
                         editMode: false,
                     });
-                })
+                });
         };
 
         this.titleChanged = (e) => {
@@ -45,39 +45,55 @@ export default class MovieTitle extends Component {
     }
 
     render() {
-        var buttons;
+        let buttons;
+
         if (this.state.editMode) {
-            buttons = <div>
-                <button className="btn btn-xs btn-default pull-right"
-                        onClick={this.cancelEdit}>
+            buttons = (<div>
+                <button
+                  className="btn btn-xs btn-default pull-right"
+                  onClick={this.cancelEdit}
+                >
                     Cancel
                 </button>
-                <button className="btn btn-xs btn-default pull-right"
-                        onClick={this.updateTitle}>
+                <button
+                  className="btn btn-xs btn-default pull-right"
+                  onClick={this.updateTitle}
+                >
                     Save
                 </button>
-            </div>
+            </div>);
         } else {
-            buttons = <button className="btn btn-xs btn-default btn-edit pull-right"
-                        onClick={this.toEditMode}>
-                    Edit
-                </button>;
-
+            buttons = (<button
+              className="btn btn-xs btn-default btn-edit pull-right"
+              onClick={this.toEditMode}
+            >
+                Edit
+            </button>);
         }
 
         return (
             <div>
                 {buttons}
                 <div className="form-group">
-                    <label htmlFor="title">Title</label>
-                    <input type="text"
-                           className="form-control"
-                           disabled={!this.state.editMode}
-                           onChange={this.titleChanged}
-                           value={this.state.title}
+                    <label
+                      htmlFor="title"
+                    >
+                        Title
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      disabled={!this.state.editMode}
+                      onChange={this.titleChanged}
+                      value={this.state.title}
                     />
                 </div>
             </div>);
     }
 }
 
+MovieTitle.propTypes = {
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    updateTitle: PropTypes.func.isRequired,
+};

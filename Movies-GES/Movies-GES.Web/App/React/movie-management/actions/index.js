@@ -24,7 +24,7 @@ export const titleUpdated = (id, title) => ({
     type: 'TITLE-UPDATED',
     payload: {
         id,
-        title
+        title,
     },
 });
 

@@ -1,17 +1,13 @@
 import uuid from 'uuid';
-import {execute} from './cedar';
+import { execute } from './cedar';
 
-export const updateTitle = (id, title) => {
-
+export const updateTitle = (movieId, title) => {
     const command = {
         commandName: 'TitleMovie',
         commandId: uuid.v4(),
-        movieId: id,
-        title: title
+        movieId,
+        title,
     };
 
     return execute(command);
-    //.then( () => {
-    //
-    //})
 };

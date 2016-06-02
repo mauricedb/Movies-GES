@@ -4,7 +4,7 @@ const movie = (state = {}, action) => {
             return action.movie;
         case 'TITLE-UPDATED':
             if (state.id === action.payload.id) {
-                return {...state, title: action.payload.title};
+                return { ...state, title: action.payload.title };
             }
             return state;
         default:
