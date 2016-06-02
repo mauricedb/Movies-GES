@@ -5,7 +5,7 @@ export default class MovieTitle extends Component {
         super();
         this.state = {
             title: '',
-            editMode: false,
+            editMode: true,
         };
 
 
@@ -22,6 +22,15 @@ export default class MovieTitle extends Component {
             });
         };
 
+        this.updateTitle = () => {
+            this.props.updateTitle(this.props.id, this.state.title)
+                .then(() => {
+                    this.setState({
+                        editMode: false,
+                    });
+                })
+        };
+
         this.titleChanged = (e) => {
             this.setState({
                 title: e.target.value,
@@ -36,22 +45,29 @@ export default class MovieTitle extends Component {
     }
 
     render() {
-
-        return (
-            <div>
-                <button className="btn btn-xs btn-default btn-edit pull-right"
-                        onClick={this.toEditMode}
-                >
-                    Edit
-                </button>
+        var buttons;
+        if (this.state.editMode) {
+            buttons = <div>
                 <button className="btn btn-xs btn-default pull-right"
                         onClick={this.cancelEdit}>
                     Cancel
                 </button>
-                <button className="btn btn-xs btn-default pull-right">
+                <button className="btn btn-xs btn-default pull-right"
+                        onClick={this.updateTitle}>
                     Save
                 </button>
+            </div>
+        } else {
+            buttons = <button className="btn btn-xs btn-default btn-edit pull-right"
+                        onClick={this.toEditMode}>
+                    Edit
+                </button>;
 
+        }
+
+        return (
+            <div>
+                {buttons}
                 <div className="form-group">
                     <label htmlFor="title">Title</label>
                     <input type="text"

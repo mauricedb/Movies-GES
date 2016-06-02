@@ -70,7 +70,7 @@
 
 	var _components = __webpack_require__(255);
 
-	var _reducers = __webpack_require__(261);
+	var _reducers = __webpack_require__(264);
 
 	var reducers = _interopRequireWildcard(_reducers);
 
@@ -27724,7 +27724,7 @@
 
 	var _movieList2 = _interopRequireDefault(_movieList);
 
-	var _movieDetails = __webpack_require__(260);
+	var _movieDetails = __webpack_require__(262);
 
 	var _movieDetails2 = _interopRequireDefault(_movieDetails);
 
@@ -27767,7 +27767,7 @@
 	};
 
 	App.propTypes = {
-	    children: _react.PropTypes.array.isRequired
+	    children: _react.PropTypes.object.isRequired
 	};
 
 	exports.default = App;
@@ -27924,7 +27924,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.loadMovies = undefined;
+	exports.titleUpdated = exports.loadMovie = exports.loadMovies = undefined;
 
 	var _jquery = __webpack_require__(259);
 
@@ -27947,6 +27947,31 @@
 	    };
 	};
 
+	var movieLoaded = function movieLoaded(movie) {
+	    return {
+	        type: 'MOVIE-LOADED',
+	        movie: movie
+	    };
+	};
+
+	var loadMovie = exports.loadMovie = function loadMovie(id) {
+	    return function (dispatch) {
+	        _jquery2.default.getJSON('/api/movies/' + id).then(function (movie) {
+	            return dispatch(movieLoaded(movie));
+	        });
+	    };
+	};
+
+	var titleUpdated = exports.titleUpdated = function titleUpdated(id, title) {
+	    return {
+	        type: 'TITLE-UPDATED',
+	        payload: {
+	            id: id,
+	            title: title
+	        }
+	    };
+	};
+
 /***/ },
 /* 259 */
 /***/ function(module, exports) {
@@ -27955,6 +27980,233 @@
 
 /***/ },
 /* 260 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//     uuid.js
+	//
+	//     Copyright (c) 2010-2012 Robert Kieffer
+	//     MIT License - http://opensource.org/licenses/mit-license.php
+
+	// Unique ID creation requires a high quality random # generator.  We feature
+	// detect to determine the best RNG source, normalizing to a function that
+	// returns 128-bits of randomness, since that's what's usually required
+	var _rng = __webpack_require__(261);
+
+	// Maps for number <-> hex string conversion
+	var _byteToHex = [];
+	var _hexToByte = {};
+	for (var i = 0; i < 256; i++) {
+	  _byteToHex[i] = (i + 0x100).toString(16).substr(1);
+	  _hexToByte[_byteToHex[i]] = i;
+	}
+
+	// **`parse()` - Parse a UUID into it's component bytes**
+	function parse(s, buf, offset) {
+	  var i = (buf && offset) || 0, ii = 0;
+
+	  buf = buf || [];
+	  s.toLowerCase().replace(/[0-9a-f]{2}/g, function(oct) {
+	    if (ii < 16) { // Don't overflow!
+	      buf[i + ii++] = _hexToByte[oct];
+	    }
+	  });
+
+	  // Zero out remaining bytes if string was short
+	  while (ii < 16) {
+	    buf[i + ii++] = 0;
+	  }
+
+	  return buf;
+	}
+
+	// **`unparse()` - Convert UUID byte array (ala parse()) into a string**
+	function unparse(buf, offset) {
+	  var i = offset || 0, bth = _byteToHex;
+	  return  bth[buf[i++]] + bth[buf[i++]] +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] +
+	          bth[buf[i++]] + bth[buf[i++]] +
+	          bth[buf[i++]] + bth[buf[i++]];
+	}
+
+	// **`v1()` - Generate time-based UUID**
+	//
+	// Inspired by https://github.com/LiosK/UUID.js
+	// and http://docs.python.org/library/uuid.html
+
+	// random #'s we need to init node and clockseq
+	var _seedBytes = _rng();
+
+	// Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
+	var _nodeId = [
+	  _seedBytes[0] | 0x01,
+	  _seedBytes[1], _seedBytes[2], _seedBytes[3], _seedBytes[4], _seedBytes[5]
+	];
+
+	// Per 4.2.2, randomize (14 bit) clockseq
+	var _clockseq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3fff;
+
+	// Previous uuid creation time
+	var _lastMSecs = 0, _lastNSecs = 0;
+
+	// See https://github.com/broofa/node-uuid for API details
+	function v1(options, buf, offset) {
+	  var i = buf && offset || 0;
+	  var b = buf || [];
+
+	  options = options || {};
+
+	  var clockseq = options.clockseq !== undefined ? options.clockseq : _clockseq;
+
+	  // UUID timestamps are 100 nano-second units since the Gregorian epoch,
+	  // (1582-10-15 00:00).  JSNumbers aren't precise enough for this, so
+	  // time is handled internally as 'msecs' (integer milliseconds) and 'nsecs'
+	  // (100-nanoseconds offset from msecs) since unix epoch, 1970-01-01 00:00.
+	  var msecs = options.msecs !== undefined ? options.msecs : new Date().getTime();
+
+	  // Per 4.2.1.2, use count of uuid's generated during the current clock
+	  // cycle to simulate higher resolution clock
+	  var nsecs = options.nsecs !== undefined ? options.nsecs : _lastNSecs + 1;
+
+	  // Time since last uuid creation (in msecs)
+	  var dt = (msecs - _lastMSecs) + (nsecs - _lastNSecs)/10000;
+
+	  // Per 4.2.1.2, Bump clockseq on clock regression
+	  if (dt < 0 && options.clockseq === undefined) {
+	    clockseq = clockseq + 1 & 0x3fff;
+	  }
+
+	  // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
+	  // time interval
+	  if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === undefined) {
+	    nsecs = 0;
+	  }
+
+	  // Per 4.2.1.2 Throw error if too many uuids are requested
+	  if (nsecs >= 10000) {
+	    throw new Error('uuid.v1(): Can\'t create more than 10M uuids/sec');
+	  }
+
+	  _lastMSecs = msecs;
+	  _lastNSecs = nsecs;
+	  _clockseq = clockseq;
+
+	  // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
+	  msecs += 12219292800000;
+
+	  // `time_low`
+	  var tl = ((msecs & 0xfffffff) * 10000 + nsecs) % 0x100000000;
+	  b[i++] = tl >>> 24 & 0xff;
+	  b[i++] = tl >>> 16 & 0xff;
+	  b[i++] = tl >>> 8 & 0xff;
+	  b[i++] = tl & 0xff;
+
+	  // `time_mid`
+	  var tmh = (msecs / 0x100000000 * 10000) & 0xfffffff;
+	  b[i++] = tmh >>> 8 & 0xff;
+	  b[i++] = tmh & 0xff;
+
+	  // `time_high_and_version`
+	  b[i++] = tmh >>> 24 & 0xf | 0x10; // include version
+	  b[i++] = tmh >>> 16 & 0xff;
+
+	  // `clock_seq_hi_and_reserved` (Per 4.2.2 - include variant)
+	  b[i++] = clockseq >>> 8 | 0x80;
+
+	  // `clock_seq_low`
+	  b[i++] = clockseq & 0xff;
+
+	  // `node`
+	  var node = options.node || _nodeId;
+	  for (var n = 0; n < 6; n++) {
+	    b[i + n] = node[n];
+	  }
+
+	  return buf ? buf : unparse(b);
+	}
+
+	// **`v4()` - Generate random UUID**
+
+	// See https://github.com/broofa/node-uuid for API details
+	function v4(options, buf, offset) {
+	  // Deprecated - 'format' argument, as supported in v1.2
+	  var i = buf && offset || 0;
+
+	  if (typeof(options) == 'string') {
+	    buf = options == 'binary' ? new Array(16) : null;
+	    options = null;
+	  }
+	  options = options || {};
+
+	  var rnds = options.random || (options.rng || _rng)();
+
+	  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+	  rnds[6] = (rnds[6] & 0x0f) | 0x40;
+	  rnds[8] = (rnds[8] & 0x3f) | 0x80;
+
+	  // Copy bytes to buffer, if provided
+	  if (buf) {
+	    for (var ii = 0; ii < 16; ii++) {
+	      buf[i + ii] = rnds[ii];
+	    }
+	  }
+
+	  return buf || unparse(rnds);
+	}
+
+	// Export public API
+	var uuid = v4;
+	uuid.v1 = v1;
+	uuid.v4 = v4;
+	uuid.parse = parse;
+	uuid.unparse = unparse;
+
+	module.exports = uuid;
+
+
+/***/ },
+/* 261 */
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {
+	var rng;
+
+	if (global.crypto && crypto.getRandomValues) {
+	  // WHATWG crypto-based RNG - http://wiki.whatwg.org/wiki/Crypto
+	  // Moderately fast, high quality
+	  var _rnds8 = new Uint8Array(16);
+	  rng = function whatwgRNG() {
+	    crypto.getRandomValues(_rnds8);
+	    return _rnds8;
+	  };
+	}
+
+	if (!rng) {
+	  // Math.random()-based (RNG)
+	  //
+	  // If all else fails, use Math.random().  It's fast, but is of unspecified
+	  // quality.
+	  var  _rnds = new Array(16);
+	  rng = function() {
+	    for (var i = 0, r; i < 16; i++) {
+	      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
+	      _rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
+	    }
+
+	    return _rnds;
+	  };
+	}
+
+	module.exports = rng;
+
+
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27972,6 +28224,14 @@
 	var _reactRouter = __webpack_require__(168);
 
 	var _reactRedux = __webpack_require__(247);
+
+	var _actions = __webpack_require__(258);
+
+	var _commands = __webpack_require__(268);
+
+	var _movieTitle = __webpack_require__(263);
+
+	var _movieTitle2 = _interopRequireDefault(_movieTitle);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27992,14 +28252,25 @@
 
 	    _createClass(MovieDetails, [{
 	        key: 'componentWillMount',
-	        value: function componentWillMount() {}
+	        value: function componentWillMount() {
+	            this.props.loadMovie(this.props.movieId);
+	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'div',
+	                'form',
 	                null,
+	                _react2.default.createElement(_movieTitle2.default, { title: this.props.movie.title,
+	                    id: this.props.movie.id,
+	                    updateTitle: this.props.updateTitle }),
 	                'In MovieDetails',
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'Title: ',
+	                    this.props.movie.title
+	                ),
 	                _react2.default.createElement('hr', null),
 	                _react2.default.createElement(
 	                    _reactRouter.Link,
@@ -28015,14 +28286,232 @@
 
 	function mapStateToProps(state, ownProps) {
 	    return {
-	        id: ownProps.params.id
+	        movie: state.movie,
+	        movieId: ownProps.params.id
 	    };
 	}
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(MovieDetails);
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	    return {
+	        loadMovie: function loadMovie(id) {
+	            return dispatch((0, _actions.loadMovie)(id));
+	        },
+	        updateTitle: function updateTitle(id, title) {
+	            return (0, _commands.updateTitle)(id, title).then(dispatch((0, _actions.titleUpdated)(id, title)));
+	        }
+	    };
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(MovieDetails);
+
+	// <form>
+	//
+	//    <div ng-controller="movie-description-controller">
+	//        <button class="btn btn-xs btn-default btn-edit pull-right" ng-show="readonly" ng-click="readonly=false;">Edit</button>
+	//        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="readonly=true;">Cancel</button>
+	//        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="save()">Save</button>
+	//
+	//        <div class="form-group">
+	//            <label for="synopsis">Synopsis</label>
+	//            <input type="text" class="form-control" id="synopsis" ng-model="ctrl.movie.synopsis" ng-disabled="readonly">
+	//        </div>
+	//
+	//        <div class="form-group">
+	//            <label for="criticsConsensus">Critics Consensus</label>
+	//            <input type="text" class="form-control" id="criticsConsensus" ng-model="ctrl.movie.criticsConsensus" ng-disabled="readonly">
+	//        </div>
+	//
+	//        <div class="form-group">
+	//            <label for="year">Year</label>
+	//            <input type="text" class="form-control" id="year" ng-model="ctrl.movie.year" ng-disabled="readonly">
+	//        </div>
+	//
+	//        <div class="form-group">
+	//            <label for="mpaaRating">MPAA Rating</label>
+	//            <input type="text" class="form-control" id="mpaaRating" ng-model="ctrl.movie.mpaaRating" ng-disabled="readonly">
+	//        </div>
+	//
+	//    </div>
+	//
+	//    <div class="form-group">
+	//        <label for="title">Directors</label>
+	//        <button class="btn btn-default"
+	//                ng-click="ctrl.addDirector(ctrl.movie)">
+	//            Add
+	//        </button>
+	//        <ul>
+	//            <li ng-repeat="director in ctrl.movie.abridgedDirectors">
+	//                {{director}}
+	//            </li>
+	//        </ul>
+	//    </div>
+	//
+	//    <div class="form-group">
+	//        <label for="criticsScore">CriticsScore:</label>
+	//        {{ctrl.movie.criticsScore}}
+	//        <button class="btn btn-xs" ng-click="ctrl.rateCritics(ctrl.movie)">Score</button>
+	//    </div>
+	//
+	//    <div class="form-group">
+	//        <label for="audienceScore">AudienceScore</label>
+	//        {{ctrl.movie.audienceScore}}
+	//        <button class="btn btn-xs" ng-click="ctrl.rateAudience(ctrl.movie)">Score</button>
+	//    </div>
+	//
+	//
+	//
+	//    <!--<div class="form-group">
+	//        <label for="title">Genres</label>
+	//        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.Genres">
+	//    </div>
+	//
+	//    <div class="form-group">
+	//        <label for="title">Posters</label>
+	//        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.Posters">
+	//    </div>
+	//
+	//    <div class="form-group">
+	//        <label for="title">AbridgedCast</label>
+	//        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.AbridgedCast">
+	//    </div>-->
+	//
+	//
+	//
+	// </form>
 
 /***/ },
-/* 261 */
+/* 263 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var MovieTitle = function (_Component) {
+	    _inherits(MovieTitle, _Component);
+
+	    function MovieTitle() {
+	        _classCallCheck(this, MovieTitle);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MovieTitle).call(this));
+
+	        _this.state = {
+	            title: '',
+	            editMode: true
+	        };
+
+	        _this.toEditMode = function () {
+	            _this.setState({
+	                editMode: true
+	            });
+	        };
+
+	        _this.cancelEdit = function () {
+	            _this.setState({
+	                editMode: false,
+	                title: _this.props.title
+	            });
+	        };
+
+	        _this.updateTitle = function () {
+	            _this.props.updateTitle(_this.props.id, _this.state.title).then(function () {
+	                _this.setState({
+	                    editMode: false
+	                });
+	            });
+	        };
+
+	        _this.titleChanged = function (e) {
+	            _this.setState({
+	                title: e.target.value
+	            });
+	        };
+	        return _this;
+	    }
+
+	    _createClass(MovieTitle, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(newProps) {
+	            this.setState({
+	                title: newProps.title
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var buttons;
+	            if (this.state.editMode) {
+	                buttons = _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: 'btn btn-xs btn-default pull-right',
+	                            onClick: this.cancelEdit },
+	                        'Cancel'
+	                    ),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: 'btn btn-xs btn-default pull-right',
+	                            onClick: this.updateTitle },
+	                        'Save'
+	                    )
+	                );
+	            } else {
+	                buttons = _react2.default.createElement(
+	                    'button',
+	                    { className: 'btn btn-xs btn-default btn-edit pull-right',
+	                        onClick: this.toEditMode },
+	                    'Edit'
+	                );
+	            }
+
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                buttons,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'form-group' },
+	                    _react2.default.createElement(
+	                        'label',
+	                        { htmlFor: 'title' },
+	                        'Title'
+	                    ),
+	                    _react2.default.createElement('input', { type: 'text',
+	                        className: 'form-control',
+	                        disabled: !this.state.editMode,
+	                        onChange: this.titleChanged,
+	                        value: this.state.title
+	                    })
+	                )
+	            );
+	        }
+	    }]);
+
+	    return MovieTitle;
+	}(_react.Component);
+
+	exports.default = MovieTitle;
+
+/***/ },
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28030,18 +28519,23 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.movies = undefined;
+	exports.movie = exports.movies = undefined;
 
-	var _movies2 = __webpack_require__(262);
+	var _movies2 = __webpack_require__(265);
 
 	var _movies3 = _interopRequireDefault(_movies2);
+
+	var _movie2 = __webpack_require__(266);
+
+	var _movie3 = _interopRequireDefault(_movie2);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.movies = _movies3.default;
+	exports.movie = _movie3.default;
 
 /***/ },
-/* 262 */
+/* 265 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28062,6 +28556,108 @@
 	};
 
 	exports.default = movies;
+
+/***/ },
+/* 266 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var movie = function movie() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	    var action = arguments[1];
+
+	    switch (action.type) {
+	        case 'MOVIE-LOADED':
+	            return action.movie;
+	        case 'TITLE-UPDATED':
+	            if (state.id === action.payload.id) {
+	                return _extends({}, state, { title: action.payload.title });
+	            }
+	            return state;
+	        default:
+	            return state;
+	    }
+	};
+
+	exports.default = movie;
+
+/***/ },
+/* 267 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.execute = undefined;
+
+	var _jquery = __webpack_require__(259);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var execute = exports.execute = function execute(command) {
+	    var deferred = new _jquery2.default.Deferred();
+
+	    _jquery2.default.ajax({
+	        url: '/api/commands/' + command.commandId,
+	        type: 'PUT',
+	        contentType: 'application/vnd.movies_ges.domain.commands.' + command.commandName.toLowerCase() + '+json',
+	        accepts: 'application/problem+json',
+	        data: JSON.stringify(command),
+	        error: function error(data) {
+	            deferred.reject(data);
+	        },
+	        success: function success(data) {
+	            deferred.resolve(data);
+	        }
+	    });
+
+	    return deferred.promise();
+	};
+
+/***/ },
+/* 268 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.updateTitle = undefined;
+
+	var _uuid = __webpack_require__(260);
+
+	var _uuid2 = _interopRequireDefault(_uuid);
+
+	var _cedar = __webpack_require__(267);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var updateTitle = exports.updateTitle = function updateTitle(id, title) {
+
+	    var command = {
+	        commandName: 'TitleMovie',
+	        commandId: _uuid2.default.v4(),
+	        movieId: id,
+	        title: title
+	    };
+
+	    return (0, _cedar.execute)(command);
+	    //.then( () => {
+	    //
+	    //})
+	};
 
 /***/ }
 /******/ ]);

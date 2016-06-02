@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { loadMovie } from '../actions';
+import { loadMovie, titleUpdated } from '../actions';
+import { updateTitle } from '../actions/commands';
+
 import MovieTitle from './movie-title';
 
 
@@ -14,7 +16,9 @@ class MovieDetails extends Component {
 
     render() {
         return (<form>
-            <MovieTitle title={this.props.movie.title} />
+            <MovieTitle title={this.props.movie.title}
+                        id={this.props.movie.id}
+                        updateTitle={this.props.updateTitle }/>
             In MovieDetails
             <p>
                 Title: {this.props.movie.title}
@@ -34,6 +38,10 @@ function mapStateToProps(state, ownProps) {
 
 const mapDispatchToProps = (dispatch) => ({
     loadMovie: (id) => dispatch(loadMovie(id)),
+    updateTitle: (id, title) => {
+        return updateTitle(id, title)
+            .then(dispatch(titleUpdated(id, title)))
+    }
 });
 
 export default connect(
