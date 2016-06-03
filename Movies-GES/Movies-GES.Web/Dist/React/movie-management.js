@@ -27928,7 +27928,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.titleUpdated = exports.loadMovie = exports.loadMovies = undefined;
+	exports.descriptionUpdated = exports.titleUpdated = exports.loadMovie = exports.loadMovies = undefined;
 
 	var _jquery = __webpack_require__(259);
 
@@ -27972,6 +27972,16 @@
 	        payload: {
 	            id: id,
 	            title: title
+	        }
+	    };
+	};
+
+	var descriptionUpdated = exports.descriptionUpdated = function descriptionUpdated(id, description) {
+	    return {
+	        type: 'DESCRIPTION-UPDATED',
+	        payload: {
+	            id: id,
+	            description: description
 	        }
 	    };
 	};
@@ -28703,6 +28713,11 @@
 	        case 'TITLE-UPDATED':
 	            if (state.id === action.payload.id) {
 	                return _extends({}, state, { title: action.payload.title });
+	            }
+	            return state;
+	        case 'DESCRIPTION-UPDATED':
+	            if (state.id === action.payload.id) {
+	                return _extends({}, state, action.payload.description);
 	            }
 	            return state;
 	        default:

@@ -10,6 +10,11 @@ const movie = (state = {status: ''}, action) => {
                 return {...state, title: action.payload.title};
             }
             return state;
+        case 'DESCRIPTION-UPDATED':
+            if (state.id === action.payload.id) {
+                return {...state, ...action.payload.description};
+            }
+            return state;
         default:
             return state;
     }

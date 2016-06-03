@@ -28,3 +28,11 @@ export const titleUpdated = (id, title) => ({
     },
 });
 
+export const descriptionUpdated = (id, description) => ({
+    type: 'DESCRIPTION-UPDATED',
+    payload: {
+        id,
+        description,
+    },
+});
+
