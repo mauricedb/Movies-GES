@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { loadMovie, titleUpdated, descriptionUpdated, criticsScoreUpdated, audienceScoreUpdated } from '../actions';
-import { updateTitle, describeMovie, updateCriticsScore, updateAudienceScore } from '../actions/commands';
+import { updateTitle, describeMovie, updateCriticsScore, updateAudienceScore } from '../commands';
 
 import { Modal, OverlayTrigger } from 'react-bootstrap';
 
@@ -30,7 +30,7 @@ class MovieDetails extends Component {
             year: movie.year || 0,
             mpaaRating: movie.mpaaRating,
         };
-console.log(movie)
+
         return (<form>
             <MovieTitle
               title={movie.title}

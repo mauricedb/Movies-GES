@@ -19,7 +19,9 @@ export default class EditScore extends Component {
 
         };
 
-        this.toEditMode = () => {
+        this.toEditMode = (e) => {
+            e.preventDefault();
+
             this.setState({
                 editMode: true
             });

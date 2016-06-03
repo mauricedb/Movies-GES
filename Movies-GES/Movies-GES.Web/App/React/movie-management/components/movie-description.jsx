@@ -27,7 +27,9 @@ export default class MovieDescription extends Component {
             });
         };
 
-        this.updateDescription = () => {
+        this.updateDescription = (e) => {
+            e.preventDefault();
+
             this.props.updateDescription(this.props.id, this.state.description)
                 .then(() => {
                     this.setState({

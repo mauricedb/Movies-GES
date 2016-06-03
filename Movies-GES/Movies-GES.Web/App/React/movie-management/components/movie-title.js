@@ -22,7 +22,9 @@ export default class MovieTitle extends Component {
             });
         };
 
-        this.updateTitle = () => {
+        this.updateTitle = (e) => {
+            e.preventDefault();
+
             this.props.updateTitle(this.props.id, this.state.title)
                 .then(() => {
                     this.setState({
