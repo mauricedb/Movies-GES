@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import { Modal, OverlayTrigger } from 'react-bootstrap';
 
-export default class CriticsScore extends Component {
+export default class EditScore extends Component {
 
     constructor() {
         super();

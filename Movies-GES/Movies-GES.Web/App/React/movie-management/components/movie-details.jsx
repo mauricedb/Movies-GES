@@ -8,7 +8,7 @@ import { Modal, OverlayTrigger } from 'react-bootstrap';
 
 import MovieTitle from './movie-title';
 import MovieDescription from './movie-description.jsx';
-import CriticsScore from './critics-score.jsx';
+import EditScore from './edit-score.jsx';
 
 
 class MovieDetails extends Component {
@@ -42,13 +42,13 @@ console.log(movie)
                 description={description}
                 updateDescription={this.props.updateDescription}
             />
-            <CriticsScore
+            <EditScore
                 label="Critics Score:"
               id={movie.id}
               score={movie.criticsScore}
               updateScore={this.props.updateCriticsScore}
             />
-            <CriticsScore
+            <EditScore
                 label="Audience Score:"
                 id={movie.id}
                 score={movie.audienceScore}
@@ -108,34 +108,6 @@ export default connect(
 //        </ul>
 //    </div>
 //
-//    <div class="form-group">
-//        <label for="criticsScore">CriticsScore:</label>
-//        {{ctrl.movie.criticsScore}}
-//        <button class="btn btn-xs" ng-click="ctrl.rateCritics(ctrl.movie)">Score</button>
-//    </div>
-//
-//    <div class="form-group">
-//        <label for="audienceScore">AudienceScore</label>
-//        {{ctrl.movie.audienceScore}}
-//        <button class="btn btn-xs" ng-click="ctrl.rateAudience(ctrl.movie)">Score</button>
-//    </div>
-//
-//
-//
-//    <!--<div class="form-group">
-//        <label for="title">Genres</label>
-//        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.Genres">
-//    </div>
-//
-//    <div class="form-group">
-//        <label for="title">Posters</label>
-//        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.Posters">
-//    </div>
-//
-//    <div class="form-group">
-//        <label for="title">AbridgedCast</label>
-//        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.AbridgedCast">
-//    </div>-->
 //
 //
 //
