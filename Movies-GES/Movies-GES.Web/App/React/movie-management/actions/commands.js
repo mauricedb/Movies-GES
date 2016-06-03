@@ -26,3 +26,14 @@ export const describeMovie = (movieId, description) => {
     return execute(command);
 };
 
+export const updateCriticsScore = (movieId, criticsScore) => {
+    const command = {
+        commandName: 'RateMovieByCrictics',
+        commandId: uuid.v4(),
+        movieId,
+        criticsScore
+    };
+
+    return execute(command);
+};
+

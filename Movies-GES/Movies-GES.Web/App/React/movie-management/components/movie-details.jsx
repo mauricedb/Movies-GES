@@ -1,11 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { loadMovie, titleUpdated, descriptionUpdated } from '../actions';
-import { updateTitle, describeMovie } from '../actions/commands';
+import { loadMovie, titleUpdated, descriptionUpdated, criticsScoreUpdated } from '../actions';
+import { updateTitle, describeMovie, updateCriticsScore } from '../actions/commands';
+
+import { Modal, OverlayTrigger } from 'react-bootstrap';
 
 import MovieTitle from './movie-title';
 import MovieDescription from './movie-description.jsx';
+import CriticsScore from './critics-score.jsx';
+
 
 class MovieDetails extends Component {
 
@@ -26,18 +30,24 @@ class MovieDetails extends Component {
             year: movie.year || 0,
             mpaaRating: movie.mpaaRating,
         };
-
+console.log(movie)
         return (<form>
             <MovieTitle
               title={movie.title}
-              id={this.props.movie.id}
+              id={movie.id}
               updateTitle={this.props.updateTitle}
             />
             <MovieDescription
-                id={this.props.movie.id}
+                id={movie.id}
                 description={description}
                 updateDescription={this.props.updateDescription}
             />
+            <CriticsScore
+              id={movie.id}
+              score={movie.criticsScore}
+              updateScore={this.props.updateCriticsScore}
+            />
+
             In MovieDetails
             <p>
                 Title: {movie.title}
@@ -68,6 +78,8 @@ const mapDispatchToProps = (dispatch) => ({
             .then(dispatch(titleUpdated(id, title))),
     updateDescription: (id, description) => describeMovie(id, description)
         .then(dispatch(descriptionUpdated(id, description))),
+    updateCriticsScore: (id, score) => updateCriticsScore(id, score)
+        .then(dispatch(criticsScoreUpdated(id, score))),
 });
 
 export default connect(

@@ -36,3 +36,11 @@ export const descriptionUpdated = (id, description) => ({
     },
 });
 
+export const criticsScoreUpdated = (id, criticsScore) => ({
+    type: 'CRITICS-SCORE-UPDATED',
+    payload: {
+        id,
+        criticsScore,
+    },
+});
+

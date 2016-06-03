@@ -97,7 +97,6 @@ export default class MovieDescription extends Component {
         let buttons;
         const {editMode, description} = this.state;
         const {synopsis, criticsConsensus, year, mpaaRating} = description;
-console.log(description)
 
         if (editMode) {
             buttons = (<div>
@@ -134,7 +133,7 @@ console.log(description)
                         className="form-control"
                         disabled={!editMode}
                         onChange={this.synopsisChanged}
-                        value={synopsis}
+                        value={synopsis || ''}
                     />
                 </div>
 
@@ -145,7 +144,7 @@ console.log(description)
                       className="form-control"
                       disabled={!editMode}
                       onChange={this.criticsConsensusChanged}
-                      value={criticsConsensus}
+                      value={criticsConsensus || ''}
                     />
                 </div>
 
@@ -156,7 +155,7 @@ console.log(description)
                       className="form-control"
                       disabled={!editMode}
                       onChange={this.yearChanged}
-                      value={year}
+                      value={year || 0}
                     />
                 </div>
 
@@ -167,7 +166,7 @@ console.log(description)
                       className="form-control"
                       disabled={!editMode}
                       onChange={this.mpaaRatingChanged}
-                      value={mpaaRating}
+                      value={mpaaRating || ''}
                     />
                 </div>
 

@@ -26,6 +26,7 @@
     "eslint-config-airbnb": "^9.0.1",
     "jquery": "^2.2.4",
     "react": "^15.1.0",
+    "react-bootstrap": "^0.29.4",
     "react-dom": "^15.1.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.4.1",
