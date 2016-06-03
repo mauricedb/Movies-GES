@@ -23,7 +23,7 @@ class MovieDetails extends Component {
         const description = {
             synopsis: movie.synopsis,
             criticsConsensus: movie.criticsConsensus,
-            year: movie.year,
+            year: movie.year || 0,
             mpaaRating: movie.mpaaRating,
         };
 

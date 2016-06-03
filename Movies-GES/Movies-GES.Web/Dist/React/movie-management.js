@@ -28049,7 +28049,7 @@
 	            var description = {
 	                synopsis: movie.synopsis,
 	                criticsConsensus: movie.criticsConsensus,
-	                year: movie.year,
+	                year: movie.year || 0,
 	                mpaaRating: movie.mpaaRating
 	            };
 
@@ -28748,7 +28748,10 @@
 
 	        _this.state = {
 	            description: {
-	                synopsis: ''
+	                synopsis: '',
+	                criticsConsensus: '',
+	                year: 0,
+	                mpaaRating: ''
 	            },
 	            editMode: false
 	        };
@@ -28803,6 +28806,16 @@
 	                description: description
 	            });
 	        };
+
+	        _this.mpaaRatingChanged = function (e) {
+	            var description = _extends({}, _this.state.description, {
+	                mpaaRating: e.target.value
+	            });
+
+	            _this.setState({
+	                description: description
+	            });
+	        };
 	        return _this;
 	    }
 
@@ -28830,7 +28843,9 @@
 	            var synopsis = description.synopsis;
 	            var criticsConsensus = description.criticsConsensus;
 	            var year = description.year;
+	            var mpaaRating = description.mpaaRating;
 
+	            console.log(description);
 
 	            if (editMode) {
 	                buttons = _react2.default.createElement(
@@ -28873,7 +28888,7 @@
 	                    { className: 'form-group' },
 	                    _react2.default.createElement(
 	                        'label',
-	                        { htmlFor: 'synopsis' },
+	                        null,
 	                        'Synopsis'
 	                    ),
 	                    _react2.default.createElement('input', {
@@ -28889,7 +28904,7 @@
 	                    { className: 'form-group' },
 	                    _react2.default.createElement(
 	                        'label',
-	                        { htmlFor: 'criticsConsensus' },
+	                        null,
 	                        'Critics Consensus'
 	                    ),
 	                    _react2.default.createElement('input', {
@@ -28905,7 +28920,7 @@
 	                    { 'class': 'form-group' },
 	                    _react2.default.createElement(
 	                        'label',
-	                        { 'for': 'year' },
+	                        null,
 	                        'Year'
 	                    ),
 	                    _react2.default.createElement('input', {
@@ -28914,6 +28929,22 @@
 	                        disabled: !editMode,
 	                        onChange: this.yearChanged,
 	                        value: year
+	                    })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { 'class': 'form-group' },
+	                    _react2.default.createElement(
+	                        'label',
+	                        null,
+	                        'MPAA Rating'
+	                    ),
+	                    _react2.default.createElement('input', {
+	                        type: 'text',
+	                        className: 'form-control',
+	                        disabled: !editMode,
+	                        onChange: this.mpaaRatingChanged,
+	                        value: mpaaRating
 	                    })
 	                )
 	            );
@@ -28936,10 +28967,6 @@
 	//
 	//
 	//
-	//        <div class="form-group">
-	//            <label for="mpaaRating">MPAA Rating</label>
-	//            <input type="text" class="form-control" id="mpaaRating" ng-model="ctrl.movie.mpaaRating" ng-disabled="readonly">
-	//        </div>
 	//
 	//    </div>
 

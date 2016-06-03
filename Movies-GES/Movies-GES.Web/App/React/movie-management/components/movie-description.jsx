@@ -5,7 +5,10 @@ export default class MovieDescription extends Component {
         super();
         this.state = {
             description: {
-                synopsis: ''
+                synopsis: '',
+                criticsConsensus:'',
+                year:0,
+                mpaaRating:''
             },
             editMode: false,
         };
@@ -65,6 +68,17 @@ export default class MovieDescription extends Component {
                 description,
             });
         };
+
+        this.mpaaRatingChanged = (e) => {
+            const description = {
+                ...this.state.description,
+                mpaaRating: e.target.value
+            };
+
+            this.setState({
+                description,
+            });
+        };
     }
 
     componentDidMount() {
@@ -82,7 +96,8 @@ export default class MovieDescription extends Component {
     render() {
         let buttons;
         const {editMode, description} = this.state;
-        const {synopsis, criticsConsensus, year} = description;
+        const {synopsis, criticsConsensus, year, mpaaRating} = description;
+console.log(description)
 
         if (editMode) {
             buttons = (<div>
@@ -113,7 +128,7 @@ export default class MovieDescription extends Component {
                 {buttons}
 
                 <div className="form-group">
-                    <label htmlFor="synopsis">Synopsis</label>
+                    <label>Synopsis</label>
                     <input
                         type="text"
                         className="form-control"
@@ -124,7 +139,7 @@ export default class MovieDescription extends Component {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="criticsConsensus">Critics Consensus</label>
+                    <label>Critics Consensus</label>
                     <input
                       type="text"
                       className="form-control"
@@ -135,13 +150,24 @@ export default class MovieDescription extends Component {
                 </div>
 
                 <div class="form-group">
-                    <label for="year">Year</label>
+                    <label>Year</label>
                     <input
                       type="text"
                       className="form-control"
                       disabled={!editMode}
                       onChange={this.yearChanged}
                       value={year}
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label>MPAA Rating</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      disabled={!editMode}
+                      onChange={this.mpaaRatingChanged}
+                      value={mpaaRating}
                     />
                 </div>
 
@@ -156,13 +182,10 @@ MovieDescription.propTypes = {
 };
 
 
+
 //    <div ng-controller="movie-description-controller">
 //
 //
 //
-//        <div class="form-group">
-//            <label for="mpaaRating">MPAA Rating</label>
-//            <input type="text" class="form-control" id="mpaaRating" ng-model="ctrl.movie.mpaaRating" ng-disabled="readonly">
-//        </div>
 //
 //    </div>
