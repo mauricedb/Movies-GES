@@ -13,17 +13,22 @@ class MovieDetails extends Component {
         this.props.loadMovie(this.props.movieId);
     }
 
-
     render() {
+        const {movie} = this.props;
+
+        if (movie.status !== 'LOADED'){
+            return (<div />)
+        }
+
         return (<form>
             <MovieTitle
-              title={this.props.movie.title}
+              title={movie.title}
               id={this.props.movie.id}
               updateTitle={this.props.updateTitle}
             />
             In MovieDetails
             <p>
-                Title: {this.props.movie.title}
+                Title: {movie.title}
             </p>
             <hr />
             <Link to="list">List</Link>

@@ -10,7 +10,9 @@ class MovieList extends Component {
     }
 
     render() {
-        const rows = this.props.movies.map(movie => (
+        const {movies} = this.props;
+
+        const rows = movies.map(movie => (
             <tr key={movie.id}>
                 <td>{movie.title}</td>
                 <td>{movie.abridgedDirectors.join(', ')}</td>

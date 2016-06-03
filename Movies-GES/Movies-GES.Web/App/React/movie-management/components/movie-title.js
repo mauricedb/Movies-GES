@@ -38,6 +38,12 @@ export default class MovieTitle extends Component {
         };
     }
 
+    componentDidMount() {
+        this.setState({
+            title: this.props.title,
+        });
+    }
+
     componentWillReceiveProps(newProps) {
         this.setState({
             title: newProps.title,
@@ -46,8 +52,9 @@ export default class MovieTitle extends Component {
 
     render() {
         let buttons;
+        const {editMode, title} = this.state;
 
-        if (this.state.editMode) {
+        if (editMode) {
             buttons = (<div>
                 <button
                   className="btn btn-xs btn-default pull-right"
@@ -83,9 +90,9 @@ export default class MovieTitle extends Component {
                     <input
                       type="text"
                       className="form-control"
-                      disabled={!this.state.editMode}
+                      disabled={!editMode}
                       onChange={this.titleChanged}
-                      value={this.state.title}
+                      value={title}
                     />
                 </div>
             </div>);

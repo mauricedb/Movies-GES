@@ -70,7 +70,7 @@
 
 	var _components = __webpack_require__(255);
 
-	var _reducers = __webpack_require__(264);
+	var _reducers = __webpack_require__(266);
 
 	var reducers = _interopRequireWildcard(_reducers);
 
@@ -27724,7 +27724,7 @@
 
 	var _movieList2 = _interopRequireDefault(_movieList);
 
-	var _movieDetails = __webpack_require__(262);
+	var _movieDetails = __webpack_require__(260);
 
 	var _movieDetails2 = _interopRequireDefault(_movieDetails);
 
@@ -27752,6 +27752,7 @@
 
 	var App = function App(props) {
 	    var children = props.children;
+
 
 	    return _react2.default.createElement(
 	        'div',
@@ -27819,7 +27820,10 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var rows = this.props.movies.map(function (movie) {
+	            var movies = this.props.movies;
+
+
+	            var rows = movies.map(function (movie) {
 	                return _react2.default.createElement(
 	                    'tr',
 	                    { key: movie.id },
@@ -27982,6 +27986,226 @@
 /* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(168);
+
+	var _reactRedux = __webpack_require__(247);
+
+	var _actions = __webpack_require__(258);
+
+	var _commands = __webpack_require__(261);
+
+	var _movieTitle = __webpack_require__(265);
+
+	var _movieTitle2 = _interopRequireDefault(_movieTitle);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var MovieDetails = function (_Component) {
+	    _inherits(MovieDetails, _Component);
+
+	    function MovieDetails() {
+	        _classCallCheck(this, MovieDetails);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(MovieDetails).apply(this, arguments));
+	    }
+
+	    _createClass(MovieDetails, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.props.loadMovie(this.props.movieId);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var movie = this.props.movie;
+
+
+	            if (movie.status !== 'LOADED') {
+	                return _react2.default.createElement('div', null);
+	            }
+
+	            return _react2.default.createElement(
+	                'form',
+	                null,
+	                _react2.default.createElement(_movieTitle2.default, {
+	                    title: movie.title,
+	                    id: this.props.movie.id,
+	                    updateTitle: this.props.updateTitle
+	                }),
+	                'In MovieDetails',
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'Title: ',
+	                    movie.title
+	                ),
+	                _react2.default.createElement('hr', null),
+	                _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: 'list' },
+	                    'List'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return MovieDetails;
+	}(_react.Component);
+
+	MovieDetails.propTypes = {
+	    movie: _react.PropTypes.object.isRequired,
+	    movieId: _react.PropTypes.string.isRequired,
+	    loadMovie: _react.PropTypes.func.isRequired,
+	    updateTitle: _react.PropTypes.func.isRequired
+	};
+
+	function mapStateToProps(state, ownProps) {
+	    return {
+	        movie: state.movie,
+	        movieId: ownProps.params.id
+	    };
+	}
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	    return {
+	        loadMovie: function loadMovie(id) {
+	            return dispatch((0, _actions.loadMovie)(id));
+	        },
+	        updateTitle: function updateTitle(id, title) {
+	            return (0, _commands.updateTitle)(id, title).then(dispatch((0, _actions.titleUpdated)(id, title)));
+	        }
+	    };
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(MovieDetails);
+
+	// <form>
+	//
+	//    <div ng-controller="movie-description-controller">
+	//        <button class="btn btn-xs btn-default btn-edit pull-right" ng-show="readonly" ng-click="readonly=false;">Edit</button>
+	//        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="readonly=true;">Cancel</button>
+	//        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="save()">Save</button>
+	//
+	//        <div class="form-group">
+	//            <label for="synopsis">Synopsis</label>
+	//            <input type="text" class="form-control" id="synopsis" ng-model="ctrl.movie.synopsis" ng-disabled="readonly">
+	//        </div>
+	//
+	//        <div class="form-group">
+	//            <label for="criticsConsensus">Critics Consensus</label>
+	//            <input type="text" class="form-control" id="criticsConsensus" ng-model="ctrl.movie.criticsConsensus" ng-disabled="readonly">
+	//        </div>
+	//
+	//        <div class="form-group">
+	//            <label for="year">Year</label>
+	//            <input type="text" class="form-control" id="year" ng-model="ctrl.movie.year" ng-disabled="readonly">
+	//        </div>
+	//
+	//        <div class="form-group">
+	//            <label for="mpaaRating">MPAA Rating</label>
+	//            <input type="text" class="form-control" id="mpaaRating" ng-model="ctrl.movie.mpaaRating" ng-disabled="readonly">
+	//        </div>
+	//
+	//    </div>
+	//
+	//    <div class="form-group">
+	//        <label for="title">Directors</label>
+	//        <button class="btn btn-default"
+	//                ng-click="ctrl.addDirector(ctrl.movie)">
+	//            Add
+	//        </button>
+	//        <ul>
+	//            <li ng-repeat="director in ctrl.movie.abridgedDirectors">
+	//                {{director}}
+	//            </li>
+	//        </ul>
+	//    </div>
+	//
+	//    <div class="form-group">
+	//        <label for="criticsScore">CriticsScore:</label>
+	//        {{ctrl.movie.criticsScore}}
+	//        <button class="btn btn-xs" ng-click="ctrl.rateCritics(ctrl.movie)">Score</button>
+	//    </div>
+	//
+	//    <div class="form-group">
+	//        <label for="audienceScore">AudienceScore</label>
+	//        {{ctrl.movie.audienceScore}}
+	//        <button class="btn btn-xs" ng-click="ctrl.rateAudience(ctrl.movie)">Score</button>
+	//    </div>
+	//
+	//
+	//
+	//    <!--<div class="form-group">
+	//        <label for="title">Genres</label>
+	//        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.Genres">
+	//    </div>
+	//
+	//    <div class="form-group">
+	//        <label for="title">Posters</label>
+	//        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.Posters">
+	//    </div>
+	//
+	//    <div class="form-group">
+	//        <label for="title">AbridgedCast</label>
+	//        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.AbridgedCast">
+	//    </div>-->
+	//
+	//
+	//
+	// </form>
+
+/***/ },
+/* 261 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.updateTitle = undefined;
+
+	var _uuid = __webpack_require__(262);
+
+	var _uuid2 = _interopRequireDefault(_uuid);
+
+	var _cedar = __webpack_require__(264);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var updateTitle = exports.updateTitle = function updateTitle(movieId, title) {
+	    var command = {
+	        commandName: 'TitleMovie',
+	        commandId: _uuid2.default.v4(),
+	        movieId: movieId,
+	        title: title
+	    };
+
+	    return (0, _cedar.execute)(command);
+	};
+
+/***/ },
+/* 262 */
+/***/ function(module, exports, __webpack_require__) {
+
 	//     uuid.js
 	//
 	//     Copyright (c) 2010-2012 Robert Kieffer
@@ -27990,7 +28214,7 @@
 	// Unique ID creation requires a high quality random # generator.  We feature
 	// detect to determine the best RNG source, normalizing to a function that
 	// returns 128-bits of randomness, since that's what's usually required
-	var _rng = __webpack_require__(261);
+	var _rng = __webpack_require__(263);
 
 	// Maps for number <-> hex string conversion
 	var _byteToHex = [];
@@ -28168,7 +28392,7 @@
 
 
 /***/ },
-/* 261 */
+/* 263 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -28206,7 +28430,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 262 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28214,173 +28438,36 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.execute = undefined;
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _jquery = __webpack_require__(259);
 
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(168);
-
-	var _reactRedux = __webpack_require__(247);
-
-	var _actions = __webpack_require__(258);
-
-	var _commands = __webpack_require__(268);
-
-	var _movieTitle = __webpack_require__(263);
-
-	var _movieTitle2 = _interopRequireDefault(_movieTitle);
+	var _jquery2 = _interopRequireDefault(_jquery);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var execute = exports.execute = function execute(command) {
+	    var deferred = new _jquery2.default.Deferred();
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var MovieDetails = function (_Component) {
-	    _inherits(MovieDetails, _Component);
-
-	    function MovieDetails() {
-	        _classCallCheck(this, MovieDetails);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(MovieDetails).apply(this, arguments));
-	    }
-
-	    _createClass(MovieDetails, [{
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            this.props.loadMovie(this.props.movieId);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'form',
-	                null,
-	                _react2.default.createElement(_movieTitle2.default, { title: this.props.movie.title,
-	                    id: this.props.movie.id,
-	                    updateTitle: this.props.updateTitle }),
-	                'In MovieDetails',
-	                _react2.default.createElement(
-	                    'p',
-	                    null,
-	                    'Title: ',
-	                    this.props.movie.title
-	                ),
-	                _react2.default.createElement('hr', null),
-	                _react2.default.createElement(
-	                    _reactRouter.Link,
-	                    { to: 'list' },
-	                    'List'
-	                )
-	            );
-	        }
-	    }]);
-
-	    return MovieDetails;
-	}(_react.Component);
-
-	function mapStateToProps(state, ownProps) {
-	    return {
-	        movie: state.movie,
-	        movieId: ownProps.params.id
-	    };
-	}
-
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	    return {
-	        loadMovie: function loadMovie(id) {
-	            return dispatch((0, _actions.loadMovie)(id));
+	    _jquery2.default.ajax({
+	        url: '/api/commands/' + command.commandId,
+	        type: 'PUT',
+	        contentType: 'application/vnd.movies_ges.domain.commands.' + (command.commandName.toLowerCase() + '+json'),
+	        accepts: 'application/problem+json',
+	        data: JSON.stringify(command),
+	        error: function error(data) {
+	            deferred.reject(data);
 	        },
-	        updateTitle: function updateTitle(id, title) {
-	            return (0, _commands.updateTitle)(id, title).then(dispatch((0, _actions.titleUpdated)(id, title)));
+	        success: function success(data) {
+	            deferred.resolve(data);
 	        }
-	    };
+	    });
+
+	    return deferred.promise();
 	};
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(MovieDetails);
-
-	// <form>
-	//
-	//    <div ng-controller="movie-description-controller">
-	//        <button class="btn btn-xs btn-default btn-edit pull-right" ng-show="readonly" ng-click="readonly=false;">Edit</button>
-	//        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="readonly=true;">Cancel</button>
-	//        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="save()">Save</button>
-	//
-	//        <div class="form-group">
-	//            <label for="synopsis">Synopsis</label>
-	//            <input type="text" class="form-control" id="synopsis" ng-model="ctrl.movie.synopsis" ng-disabled="readonly">
-	//        </div>
-	//
-	//        <div class="form-group">
-	//            <label for="criticsConsensus">Critics Consensus</label>
-	//            <input type="text" class="form-control" id="criticsConsensus" ng-model="ctrl.movie.criticsConsensus" ng-disabled="readonly">
-	//        </div>
-	//
-	//        <div class="form-group">
-	//            <label for="year">Year</label>
-	//            <input type="text" class="form-control" id="year" ng-model="ctrl.movie.year" ng-disabled="readonly">
-	//        </div>
-	//
-	//        <div class="form-group">
-	//            <label for="mpaaRating">MPAA Rating</label>
-	//            <input type="text" class="form-control" id="mpaaRating" ng-model="ctrl.movie.mpaaRating" ng-disabled="readonly">
-	//        </div>
-	//
-	//    </div>
-	//
-	//    <div class="form-group">
-	//        <label for="title">Directors</label>
-	//        <button class="btn btn-default"
-	//                ng-click="ctrl.addDirector(ctrl.movie)">
-	//            Add
-	//        </button>
-	//        <ul>
-	//            <li ng-repeat="director in ctrl.movie.abridgedDirectors">
-	//                {{director}}
-	//            </li>
-	//        </ul>
-	//    </div>
-	//
-	//    <div class="form-group">
-	//        <label for="criticsScore">CriticsScore:</label>
-	//        {{ctrl.movie.criticsScore}}
-	//        <button class="btn btn-xs" ng-click="ctrl.rateCritics(ctrl.movie)">Score</button>
-	//    </div>
-	//
-	//    <div class="form-group">
-	//        <label for="audienceScore">AudienceScore</label>
-	//        {{ctrl.movie.audienceScore}}
-	//        <button class="btn btn-xs" ng-click="ctrl.rateAudience(ctrl.movie)">Score</button>
-	//    </div>
-	//
-	//
-	//
-	//    <!--<div class="form-group">
-	//        <label for="title">Genres</label>
-	//        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.Genres">
-	//    </div>
-	//
-	//    <div class="form-group">
-	//        <label for="title">Posters</label>
-	//        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.Posters">
-	//    </div>
-	//
-	//    <div class="form-group">
-	//        <label for="title">AbridgedCast</label>
-	//        <input type="text" class="form-control" id="title" ng-model="ctrl.movie.AbridgedCast">
-	//    </div>-->
-	//
-	//
-	//
-	// </form>
-
 /***/ },
-/* 263 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28413,7 +28500,7 @@
 
 	        _this.state = {
 	            title: '',
-	            editMode: true
+	            editMode: false
 	        };
 
 	        _this.toEditMode = function () {
@@ -28446,6 +28533,13 @@
 	    }
 
 	    _createClass(MovieTitle, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.setState({
+	                title: this.props.title
+	            });
+	        }
+	    }, {
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(newProps) {
 	            this.setState({
@@ -28455,29 +28549,40 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var buttons;
-	            if (this.state.editMode) {
+	            var buttons = void 0;
+	            var _state = this.state;
+	            var editMode = _state.editMode;
+	            var title = _state.title;
+
+
+	            if (editMode) {
 	                buttons = _react2.default.createElement(
 	                    'div',
 	                    null,
 	                    _react2.default.createElement(
 	                        'button',
-	                        { className: 'btn btn-xs btn-default pull-right',
-	                            onClick: this.cancelEdit },
+	                        {
+	                            className: 'btn btn-xs btn-default pull-right',
+	                            onClick: this.cancelEdit
+	                        },
 	                        'Cancel'
 	                    ),
 	                    _react2.default.createElement(
 	                        'button',
-	                        { className: 'btn btn-xs btn-default pull-right',
-	                            onClick: this.updateTitle },
+	                        {
+	                            className: 'btn btn-xs btn-default pull-right',
+	                            onClick: this.updateTitle
+	                        },
 	                        'Save'
 	                    )
 	                );
 	            } else {
 	                buttons = _react2.default.createElement(
 	                    'button',
-	                    { className: 'btn btn-xs btn-default btn-edit pull-right',
-	                        onClick: this.toEditMode },
+	                    {
+	                        className: 'btn btn-xs btn-default btn-edit pull-right',
+	                        onClick: this.toEditMode
+	                    },
 	                    'Edit'
 	                );
 	            }
@@ -28491,14 +28596,17 @@
 	                    { className: 'form-group' },
 	                    _react2.default.createElement(
 	                        'label',
-	                        { htmlFor: 'title' },
+	                        {
+	                            htmlFor: 'title'
+	                        },
 	                        'Title'
 	                    ),
-	                    _react2.default.createElement('input', { type: 'text',
+	                    _react2.default.createElement('input', {
+	                        type: 'text',
 	                        className: 'form-control',
-	                        disabled: !this.state.editMode,
+	                        disabled: !editMode,
 	                        onChange: this.titleChanged,
-	                        value: this.state.title
+	                        value: title
 	                    })
 	                )
 	            );
@@ -28510,8 +28618,15 @@
 
 	exports.default = MovieTitle;
 
+
+	MovieTitle.propTypes = {
+	    id: _react.PropTypes.string.isRequired,
+	    title: _react.PropTypes.string.isRequired,
+	    updateTitle: _react.PropTypes.func.isRequired
+	};
+
 /***/ },
-/* 264 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28521,11 +28636,11 @@
 	});
 	exports.movie = exports.movies = undefined;
 
-	var _movies2 = __webpack_require__(265);
+	var _movies2 = __webpack_require__(267);
 
 	var _movies3 = _interopRequireDefault(_movies2);
 
-	var _movie2 = __webpack_require__(266);
+	var _movie2 = __webpack_require__(268);
 
 	var _movie3 = _interopRequireDefault(_movie2);
 
@@ -28535,7 +28650,7 @@
 	exports.movie = _movie3.default;
 
 /***/ },
-/* 265 */
+/* 267 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28558,7 +28673,7 @@
 	exports.default = movies;
 
 /***/ },
-/* 266 */
+/* 268 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28570,12 +28685,14 @@
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var movie = function movie() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? { status: '' } : arguments[0];
 	    var action = arguments[1];
 
 	    switch (action.type) {
 	        case 'MOVIE-LOADED':
-	            return action.movie;
+	            return _extends({}, action.movie, {
+	                status: 'LOADED'
+	            });
 	        case 'TITLE-UPDATED':
 	            if (state.id === action.payload.id) {
 	                return _extends({}, state, { title: action.payload.title });
@@ -28587,77 +28704,6 @@
 	};
 
 	exports.default = movie;
-
-/***/ },
-/* 267 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.execute = undefined;
-
-	var _jquery = __webpack_require__(259);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var execute = exports.execute = function execute(command) {
-	    var deferred = new _jquery2.default.Deferred();
-
-	    _jquery2.default.ajax({
-	        url: '/api/commands/' + command.commandId,
-	        type: 'PUT',
-	        contentType: 'application/vnd.movies_ges.domain.commands.' + command.commandName.toLowerCase() + '+json',
-	        accepts: 'application/problem+json',
-	        data: JSON.stringify(command),
-	        error: function error(data) {
-	            deferred.reject(data);
-	        },
-	        success: function success(data) {
-	            deferred.resolve(data);
-	        }
-	    });
-
-	    return deferred.promise();
-	};
-
-/***/ },
-/* 268 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.updateTitle = undefined;
-
-	var _uuid = __webpack_require__(260);
-
-	var _uuid2 = _interopRequireDefault(_uuid);
-
-	var _cedar = __webpack_require__(267);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var updateTitle = exports.updateTitle = function updateTitle(id, title) {
-
-	    var command = {
-	        commandName: 'TitleMovie',
-	        commandId: _uuid2.default.v4(),
-	        movieId: id,
-	        title: title
-	    };
-
-	    return (0, _cedar.execute)(command);
-	    //.then( () => {
-	    //
-	    //})
-	};
 
 /***/ }
 /******/ ]);
