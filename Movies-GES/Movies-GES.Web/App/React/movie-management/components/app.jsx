@@ -5,7 +5,6 @@ const App = (props) => {
 
     return (<div>
         <h2>Movie Management using React</h2>
-        <hr />
         {children}
     </div>);
 };

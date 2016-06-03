@@ -44,3 +44,11 @@ export const criticsScoreUpdated = (id, criticsScore) => ({
     },
 });
 
+export const audienceScoreUpdated = (id, audienceScore) => ({
+    type: 'AUDIENCE-SCORE-UPDATED',
+    payload: {
+        id,
+        audienceScore,
+    },
+});
+

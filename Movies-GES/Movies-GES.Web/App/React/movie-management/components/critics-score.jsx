@@ -58,8 +58,8 @@ export default class CriticsScore extends Component {
     render() {
         return (
             <div className="form-group">
-                <label for="criticsScore">CriticsScore:</label>
-                {this.props.score}
+                <label for="criticsScore">{this.props.label}</label>
+                &nbsp;{this.props.score}&nbsp;
                 <button
                     className="btn btn-xs"
                     onClick={this.toEditMode}

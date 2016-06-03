@@ -40,6 +40,20 @@ const movie = (state = {status: ''}, action) => {
 
             return state;
 
+        case 'AUDIENCE-SCORE-UPDATED':
+            if (state.id === action.payload.id) {
+                const audienceScore = Math.round(
+                    0.9 * state.audienceScore +
+                    0.1 * action.payload.audienceScore);
+
+                return {
+                    ...state,
+                    audienceScore
+                };
+            }
+
+            return state;
+
         default:
             return state;
     }

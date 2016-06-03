@@ -148,7 +148,7 @@ export default class MovieDescription extends Component {
                     />
                 </div>
 
-                <div class="form-group">
+                <div className="form-group">
                     <label>Year</label>
                     <input
                       type="text"
@@ -159,7 +159,7 @@ export default class MovieDescription extends Component {
                     />
                 </div>
 
-                <div class="form-group">
+                <div className="form-group">
                     <label>MPAA Rating</label>
                     <input
                       type="text"

@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { loadMovie, titleUpdated, descriptionUpdated, criticsScoreUpdated } from '../actions';
-import { updateTitle, describeMovie, updateCriticsScore } from '../actions/commands';
+import { loadMovie, titleUpdated, descriptionUpdated, criticsScoreUpdated, audienceScoreUpdated } from '../actions';
+import { updateTitle, describeMovie, updateCriticsScore, updateAudienceScore } from '../actions/commands';
 
 import { Modal, OverlayTrigger } from 'react-bootstrap';
 
@@ -43,17 +43,19 @@ console.log(movie)
                 updateDescription={this.props.updateDescription}
             />
             <CriticsScore
+                label="Critics Score:"
               id={movie.id}
               score={movie.criticsScore}
               updateScore={this.props.updateCriticsScore}
             />
+            <CriticsScore
+                label="Audience Score:"
+                id={movie.id}
+                score={movie.audienceScore}
+                updateScore={this.props.updateAudienceScore}
+            />
 
-            In MovieDetails
-            <p>
-                Title: {movie.title}
-            </p>
-            <hr />
-            <Link to="list">List</Link>
+
         </form>);
     }
 }
@@ -80,6 +82,8 @@ const mapDispatchToProps = (dispatch) => ({
         .then(dispatch(descriptionUpdated(id, description))),
     updateCriticsScore: (id, score) => updateCriticsScore(id, score)
         .then(dispatch(criticsScoreUpdated(id, score))),
+    updateAudienceScore: (id, score) => updateAudienceScore(id, score)
+        .then(dispatch(audienceScoreUpdated(id, score))),
 });
 
 export default connect(
