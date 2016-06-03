@@ -1,95 +1,90 @@
 import React, { Component, PropTypes } from 'react';
 import { Modal, OverlayTrigger } from 'react-bootstrap';
 
-export default class EditScore extends Component {
+export default class MovieDirectors extends Component {
 
     constructor() {
         super();
 
         this.state = {
-            score: 0,
+            director: '',
             editMode: false,
         };
 
-        this.scoreChanged = (e) => {
+        this.toEditMode = () => {
             this.setState({
-                score: +e.target.value,
+                editMode: true,
             });
-
         };
 
-        this.toEditMode = (e) => {
-            e.preventDefault();
-
+        this.directorChanged = (e) => {
             this.setState({
-                editMode: true
+                director: e.target.value,
             });
+
         };
 
         this.cancelEdit = () => {
             this.setState({
-                score: this.props.score,
+                director: '',
                 editMode: false,
             });
         };
 
-        this.updateScore = () => {
-            this.props.updateScore(this.props.id, this.state.score)
+        this.addDirector = () => {
+            this.props.addDirector(this.props.id, this.state.director)
                 .then(() => {
                     this.setState({
                         editMode: false,
                     });
                 });
         };
-
-    }
-
-    componentDidMount() {
-        this.setState({
-            score: this.props.score,
-        });
-    }
-
-    componentWillReceiveProps(newProps) {
-        this.setState({
-            score: newProps.score,
-        });
     }
 
     render() {
+        const abridgedDirectors = this.props.abridgedDirectors.map((director, i) => (
+            <li
+                key={director + i}
+            >
+                {director}
+            </li>));
+
         return (
             <div className="form-group">
-                <label for="criticsScore">{this.props.label}</label>
-                &nbsp;{this.props.score}&nbsp;
+                <label>Directors</label>
+                &nbsp;
                 <button
-                    className="btn btn-xs"
+                    className="btn btn-default"
                     onClick={this.toEditMode}
                 >
-                    Score
+                    Add
                 </button>
+                <ul>
+                    {abridgedDirectors}
+                </ul>
 
                 <Modal show={this.state.editMode} onHide={this.cancelEdit}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Rate Movie</Modal.Title>
+                        <Modal.Title>Add Director</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <div className="form-group">
-                            <label>Rating</label>
+                            <label>Director</label>
                             <input
-                                type="range"
+                                type="text"
                                 className="form-control"
-                                onChange={this.scoreChanged}
-                                value={this.state.score}
-                                min="0"
-                                max="100"
+                                id="movieTitle"
+                                name="movieTitle"
+                                ng-model="ctrl.director"
+                                onChange={this.directorChanged}
+                                value={this.state.director}
                             />
-                            Rating: {this.state.score} out of 100
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
                         <button
                             className="btn btn-primary"
-                            onClick={this.updateScore}
+                            onClick={this.addDirector}
                         >
                             OK
                         </button>
@@ -101,6 +96,7 @@ export default class EditScore extends Component {
                         </button>
                     </Modal.Footer>
                 </Modal>
+
             </div>
         );
     }

@@ -1,13 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { loadMovie, titleUpdated, descriptionUpdated, criticsScoreUpdated, audienceScoreUpdated } from '../actions';
-import { updateTitle, describeMovie, updateCriticsScore, updateAudienceScore } from '../commands';
+import { loadMovie, titleUpdated, descriptionUpdated, directorAdded , criticsScoreUpdated, audienceScoreUpdated } from '../actions';
+import { updateTitle, describeMovie, addDirector, updateCriticsScore, updateAudienceScore } from '../commands';
 
 import { Modal, OverlayTrigger } from 'react-bootstrap';
 
 import MovieTitle from './movie-title';
 import MovieDescription from './movie-description.jsx';
+import MovieDirectors from './movie-directors.jsx';
 import EditScore from './edit-score.jsx';
 
 
@@ -41,6 +42,11 @@ class MovieDetails extends Component {
                 id={movie.id}
                 description={description}
                 updateDescription={this.props.updateDescription}
+            />
+            <MovieDirectors
+                abridgedDirectors={movie.abridgedDirectors}
+                id={movie.id}
+                addDirector={this.props.addDirector}
             />
             <EditScore
                 label="Critics Score:"
@@ -80,6 +86,8 @@ const mapDispatchToProps = (dispatch) => ({
             .then(dispatch(titleUpdated(id, title))),
     updateDescription: (id, description) => describeMovie(id, description)
         .then(dispatch(descriptionUpdated(id, description))),
+    addDirector: (id, director) => addDirector(id, director)
+        .then(dispatch(directorAdded(id, director))),
     updateCriticsScore: (id, score) => updateCriticsScore(id, score)
         .then(dispatch(criticsScoreUpdated(id, score))),
     updateAudienceScore: (id, score) => updateAudienceScore(id, score)
@@ -90,25 +98,3 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(MovieDetails);
-
-
-// <form>
-//
-//
-//    <div class="form-group">
-//        <label for="title">Directors</label>
-//        <button class="btn btn-default"
-//                ng-click="ctrl.addDirector(ctrl.movie)">
-//            Add
-//        </button>
-//        <ul>
-//            <li ng-repeat="director in ctrl.movie.abridgedDirectors">
-//                {{director}}
-//            </li>
-//        </ul>
-//    </div>
-//
-//
-//
-//
-// </form>

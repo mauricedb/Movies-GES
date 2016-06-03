@@ -26,6 +26,17 @@ export const describeMovie = (movieId, description) => {
     return execute(command);
 };
 
+export const addDirector = (movieId, director) => {
+    const command = {
+        commandName: 'AddDirectorToMovie',
+        commandId: uuid.v4(),
+        movieId,
+        director
+    };
+
+    return execute(command);
+};
+
 export const updateCriticsScore = (movieId, rating) => {
     const command = {
         commandName: 'RateMovieByCrictics',

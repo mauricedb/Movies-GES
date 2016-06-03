@@ -26,6 +26,16 @@ const movie = (state = {status: ''}, action) => {
 
             return state;
 
+        case 'DIRECTOR-ADDED':
+            if (state.id === action.payload.id) {
+                return {
+                    ...state,
+                    abridgedDirectors: [...state.abridgedDirectors, action.payload.director],
+                };
+            }
+
+            return state;
+
         case 'CRITICS-SCORE-UPDATED':
             if (state.id === action.payload.id) {
                 const criticsScore = Math.round(
