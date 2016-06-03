@@ -28793,6 +28793,16 @@
 	                description: description
 	            });
 	        };
+
+	        _this.yearChanged = function (e) {
+	            var description = _extends({}, _this.state.description, {
+	                year: +e.target.value
+	            });
+
+	            _this.setState({
+	                description: description
+	            });
+	        };
 	        return _this;
 	    }
 
@@ -28819,6 +28829,7 @@
 	            var description = _state.description;
 	            var synopsis = description.synopsis;
 	            var criticsConsensus = description.criticsConsensus;
+	            var year = description.year;
 
 
 	            if (editMode) {
@@ -28888,6 +28899,22 @@
 	                        onChange: this.criticsConsensusChanged,
 	                        value: criticsConsensus
 	                    })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { 'class': 'form-group' },
+	                    _react2.default.createElement(
+	                        'label',
+	                        { 'for': 'year' },
+	                        'Year'
+	                    ),
+	                    _react2.default.createElement('input', {
+	                        type: 'text',
+	                        className: 'form-control',
+	                        disabled: !editMode,
+	                        onChange: this.yearChanged,
+	                        value: year
+	                    })
 	                )
 	            );
 	        }
@@ -28908,10 +28935,6 @@
 	//    <div ng-controller="movie-description-controller">
 	//
 	//
-	//        <div class="form-group">
-	//            <label for="year">Year</label>
-	//            <input type="text" class="form-control" id="year" ng-model="ctrl.movie.year" ng-disabled="readonly">
-	//        </div>
 	//
 	//        <div class="form-group">
 	//            <label for="mpaaRating">MPAA Rating</label>

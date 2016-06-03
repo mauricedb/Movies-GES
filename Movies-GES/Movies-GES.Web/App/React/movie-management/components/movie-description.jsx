@@ -54,6 +54,17 @@ export default class MovieDescription extends Component {
                 description,
             });
         };
+
+        this.yearChanged = (e) => {
+            const description = {
+                ...this.state.description,
+                year: +e.target.value
+            };
+
+            this.setState({
+                description,
+            });
+        };
     }
 
     componentDidMount() {
@@ -71,7 +82,7 @@ export default class MovieDescription extends Component {
     render() {
         let buttons;
         const {editMode, description} = this.state;
-        const {synopsis, criticsConsensus} = description;
+        const {synopsis, criticsConsensus, year} = description;
 
         if (editMode) {
             buttons = (<div>
@@ -123,6 +134,17 @@ export default class MovieDescription extends Component {
                     />
                 </div>
 
+                <div class="form-group">
+                    <label for="year">Year</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      disabled={!editMode}
+                      onChange={this.yearChanged}
+                      value={year}
+                    />
+                </div>
+
             </div>);
     }
 }
@@ -137,10 +159,6 @@ MovieDescription.propTypes = {
 //    <div ng-controller="movie-description-controller">
 //
 //
-//        <div class="form-group">
-//            <label for="year">Year</label>
-//            <input type="text" class="form-control" id="year" ng-model="ctrl.movie.year" ng-disabled="readonly">
-//        </div>
 //
 //        <div class="form-group">
 //            <label for="mpaaRating">MPAA Rating</label>
