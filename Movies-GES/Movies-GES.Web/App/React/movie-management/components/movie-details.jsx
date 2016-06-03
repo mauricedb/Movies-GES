@@ -21,7 +21,10 @@ class MovieDetails extends Component {
         }
 
         const description = {
-            synopsis: movie.synopsis
+            synopsis: movie.synopsis,
+            criticsConsensus: movie.criticsConsensus,
+            year: movie.year,
+            mpaaRating: movie.mpaaRating,
         };
 
         return (<form>

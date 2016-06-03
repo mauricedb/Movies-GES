@@ -43,6 +43,17 @@ export default class MovieDescription extends Component {
                 description,
             });
         };
+
+        this.criticsConsensusChanged = (e) => {
+            const description = {
+                ...this.state.description,
+                criticsConsensus: e.target.value
+            };
+
+            this.setState({
+                description,
+            });
+        };
     }
 
     componentDidMount() {
@@ -60,7 +71,7 @@ export default class MovieDescription extends Component {
     render() {
         let buttons;
         const {editMode, description} = this.state;
-        const {synopsis} = description;
+        const {synopsis, criticsConsensus} = description;
 
         if (editMode) {
             buttons = (<div>
@@ -95,11 +106,20 @@ export default class MovieDescription extends Component {
                     <input
                         type="text"
                         className="form-control"
-                        id="synopsis"
-                        ng-model="ctrl.movie.synopsis"
                         disabled={!editMode}
                         onChange={this.synopsisChanged}
                         value={synopsis}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="criticsConsensus">Critics Consensus</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      disabled={!editMode}
+                      onChange={this.criticsConsensusChanged}
+                      value={criticsConsensus}
                     />
                 </div>
 
@@ -115,19 +135,7 @@ MovieDescription.propTypes = {
 
 
 //    <div ng-controller="movie-description-controller">
-//        <button class="btn btn-xs btn-default btn-edit pull-right" ng-show="readonly" ng-click="readonly=false;">Edit</button>
-//        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="readonly=true;">Cancel</button>
-//        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="save()">Save</button>
 //
-//        <div class="form-group">
-//            <label for="synopsis">Synopsis</label>
-//            <input type="text" class="form-control" id="synopsis" ng-model="ctrl.movie.synopsis" ng-disabled="readonly">
-//        </div>
-//
-//        <div class="form-group">
-//            <label for="criticsConsensus">Critics Consensus</label>
-//            <input type="text" class="form-control" id="criticsConsensus" ng-model="ctrl.movie.criticsConsensus" ng-disabled="readonly">
-//        </div>
 //
 //        <div class="form-group">
 //            <label for="year">Year</label>

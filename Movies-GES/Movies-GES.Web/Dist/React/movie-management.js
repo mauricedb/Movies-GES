@@ -28047,7 +28047,10 @@
 	            }
 
 	            var description = {
-	                synopsis: movie.synopsis
+	                synopsis: movie.synopsis,
+	                criticsConsensus: movie.criticsConsensus,
+	                year: movie.year,
+	                mpaaRating: movie.mpaaRating
 	            };
 
 	            return _react2.default.createElement(
@@ -28780,6 +28783,16 @@
 	                description: description
 	            });
 	        };
+
+	        _this.criticsConsensusChanged = function (e) {
+	            var description = _extends({}, _this.state.description, {
+	                criticsConsensus: e.target.value
+	            });
+
+	            _this.setState({
+	                description: description
+	            });
+	        };
 	        return _this;
 	    }
 
@@ -28805,6 +28818,7 @@
 	            var editMode = _state.editMode;
 	            var description = _state.description;
 	            var synopsis = description.synopsis;
+	            var criticsConsensus = description.criticsConsensus;
 
 
 	            if (editMode) {
@@ -28854,11 +28868,25 @@
 	                    _react2.default.createElement('input', {
 	                        type: 'text',
 	                        className: 'form-control',
-	                        id: 'synopsis',
-	                        'ng-model': 'ctrl.movie.synopsis',
 	                        disabled: !editMode,
 	                        onChange: this.synopsisChanged,
 	                        value: synopsis
+	                    })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'form-group' },
+	                    _react2.default.createElement(
+	                        'label',
+	                        { htmlFor: 'criticsConsensus' },
+	                        'Critics Consensus'
+	                    ),
+	                    _react2.default.createElement('input', {
+	                        type: 'text',
+	                        className: 'form-control',
+	                        disabled: !editMode,
+	                        onChange: this.criticsConsensusChanged,
+	                        value: criticsConsensus
 	                    })
 	                )
 	            );
@@ -28878,19 +28906,7 @@
 	};
 
 	//    <div ng-controller="movie-description-controller">
-	//        <button class="btn btn-xs btn-default btn-edit pull-right" ng-show="readonly" ng-click="readonly=false;">Edit</button>
-	//        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="readonly=true;">Cancel</button>
-	//        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="save()">Save</button>
 	//
-	//        <div class="form-group">
-	//            <label for="synopsis">Synopsis</label>
-	//            <input type="text" class="form-control" id="synopsis" ng-model="ctrl.movie.synopsis" ng-disabled="readonly">
-	//        </div>
-	//
-	//        <div class="form-group">
-	//            <label for="criticsConsensus">Critics Consensus</label>
-	//            <input type="text" class="form-control" id="criticsConsensus" ng-model="ctrl.movie.criticsConsensus" ng-disabled="readonly">
-	//        </div>
 	//
 	//        <div class="form-group">
 	//            <label for="year">Year</label>
