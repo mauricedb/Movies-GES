@@ -28010,6 +28010,10 @@
 
 	var _movieTitle2 = _interopRequireDefault(_movieTitle);
 
+	var _movieDescription = __webpack_require__(269);
+
+	var _movieDescription2 = _interopRequireDefault(_movieDescription);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28042,6 +28046,10 @@
 	                return _react2.default.createElement('div', null);
 	            }
 
+	            var description = {
+	                synopsis: movie.synopsis
+	            };
+
 	            return _react2.default.createElement(
 	                'form',
 	                null,
@@ -28049,6 +28057,11 @@
 	                    title: movie.title,
 	                    id: this.props.movie.id,
 	                    updateTitle: this.props.updateTitle
+	                }),
+	                _react2.default.createElement(_movieDescription2.default, {
+	                    id: this.props.movie.id,
+	                    description: description,
+	                    updateDescription: this.props.updateDescription
 	                }),
 	                'In MovieDetails',
 	                _react2.default.createElement(
@@ -28091,6 +28104,9 @@
 	        },
 	        updateTitle: function updateTitle(id, title) {
 	            return (0, _commands.updateTitle)(id, title).then(dispatch((0, _actions.titleUpdated)(id, title)));
+	        },
+	        updateDescription: function updateDescription(id, description) {
+	            return (0, _commands.describeMovie)(id, description).then(dispatch((0, _actions.descriptionUpdated)(id, description)));
 	        }
 	    };
 	};
@@ -28099,32 +28115,6 @@
 
 	// <form>
 	//
-	//    <div ng-controller="movie-description-controller">
-	//        <button class="btn btn-xs btn-default btn-edit pull-right" ng-show="readonly" ng-click="readonly=false;">Edit</button>
-	//        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="readonly=true;">Cancel</button>
-	//        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="save()">Save</button>
-	//
-	//        <div class="form-group">
-	//            <label for="synopsis">Synopsis</label>
-	//            <input type="text" class="form-control" id="synopsis" ng-model="ctrl.movie.synopsis" ng-disabled="readonly">
-	//        </div>
-	//
-	//        <div class="form-group">
-	//            <label for="criticsConsensus">Critics Consensus</label>
-	//            <input type="text" class="form-control" id="criticsConsensus" ng-model="ctrl.movie.criticsConsensus" ng-disabled="readonly">
-	//        </div>
-	//
-	//        <div class="form-group">
-	//            <label for="year">Year</label>
-	//            <input type="text" class="form-control" id="year" ng-model="ctrl.movie.year" ng-disabled="readonly">
-	//        </div>
-	//
-	//        <div class="form-group">
-	//            <label for="mpaaRating">MPAA Rating</label>
-	//            <input type="text" class="form-control" id="mpaaRating" ng-model="ctrl.movie.mpaaRating" ng-disabled="readonly">
-	//        </div>
-	//
-	//    </div>
 	//
 	//    <div class="form-group">
 	//        <label for="title">Directors</label>
@@ -28181,7 +28171,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.updateTitle = undefined;
+	exports.describeMovie = exports.updateTitle = undefined;
 
 	var _uuid = __webpack_require__(262);
 
@@ -28197,6 +28187,20 @@
 	        commandId: _uuid2.default.v4(),
 	        movieId: movieId,
 	        title: title
+	    };
+
+	    return (0, _cedar.execute)(command);
+	};
+
+	var describeMovie = exports.describeMovie = function describeMovie(movieId, description) {
+	    var command = {
+	        commandName: 'DescribeMovie',
+	        commandId: _uuid2.default.v4(),
+	        movieId: movieId,
+	        synopsis: description.synopsis,
+	        criticsConsensus: description.criticsConsensus,
+	        mpaaRating: description.mpaaRating,
+	        year: description.year || 0
 	    };
 
 	    return (0, _cedar.execute)(command);
@@ -28704,6 +28708,201 @@
 	};
 
 	exports.default = movie;
+
+/***/ },
+/* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var MovieDescription = function (_Component) {
+	    _inherits(MovieDescription, _Component);
+
+	    function MovieDescription() {
+	        _classCallCheck(this, MovieDescription);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MovieDescription).call(this));
+
+	        _this.state = {
+	            description: {
+	                synopsis: ''
+	            },
+	            editMode: false
+	        };
+
+	        _this.toEditMode = function () {
+	            _this.setState({
+	                editMode: true
+	            });
+	        };
+
+	        _this.cancelEdit = function () {
+	            _this.setState({
+	                editMode: false,
+	                description: _this.props.description
+	            });
+	        };
+
+	        _this.updateDescription = function () {
+	            _this.props.updateDescription(_this.props.id, _this.state.description).then(function () {
+	                _this.setState({
+	                    editMode: false
+	                });
+	            });
+	        };
+
+	        _this.synopsisChanged = function (e) {
+	            var description = _extends({}, _this.state.description, {
+	                synopsis: e.target.value
+	            });
+
+	            _this.setState({
+	                description: description
+	            });
+	        };
+	        return _this;
+	    }
+
+	    _createClass(MovieDescription, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.setState({
+	                description: this.props.description
+	            });
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(newProps) {
+	            this.setState({
+	                description: newProps.description
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var buttons = void 0;
+	            var _state = this.state;
+	            var editMode = _state.editMode;
+	            var description = _state.description;
+	            var synopsis = description.synopsis;
+
+
+	            if (editMode) {
+	                buttons = _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'button',
+	                        {
+	                            className: 'btn btn-xs btn-default pull-right',
+	                            onClick: this.cancelEdit
+	                        },
+	                        'Cancel'
+	                    ),
+	                    _react2.default.createElement(
+	                        'button',
+	                        {
+	                            className: 'btn btn-xs btn-default pull-right',
+	                            onClick: this.updateDescription
+	                        },
+	                        'Save'
+	                    )
+	                );
+	            } else {
+	                buttons = _react2.default.createElement(
+	                    'button',
+	                    {
+	                        className: 'btn btn-xs btn-default btn-edit pull-right',
+	                        onClick: this.toEditMode
+	                    },
+	                    'Edit'
+	                );
+	            }
+
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                buttons,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'form-group' },
+	                    _react2.default.createElement(
+	                        'label',
+	                        { htmlFor: 'synopsis' },
+	                        'Synopsis'
+	                    ),
+	                    _react2.default.createElement('input', {
+	                        type: 'text',
+	                        className: 'form-control',
+	                        id: 'synopsis',
+	                        'ng-model': 'ctrl.movie.synopsis',
+	                        disabled: !editMode,
+	                        onChange: this.synopsisChanged,
+	                        value: synopsis
+	                    })
+	                )
+	            );
+	        }
+	    }]);
+
+	    return MovieDescription;
+	}(_react.Component);
+
+	exports.default = MovieDescription;
+
+
+	MovieDescription.propTypes = {
+	    id: _react.PropTypes.string.isRequired,
+	    description: _react.PropTypes.object.isRequired,
+	    updateDescription: _react.PropTypes.func.isRequired
+	};
+
+	//    <div ng-controller="movie-description-controller">
+	//        <button class="btn btn-xs btn-default btn-edit pull-right" ng-show="readonly" ng-click="readonly=false;">Edit</button>
+	//        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="readonly=true;">Cancel</button>
+	//        <button class="btn btn-xs btn-default pull-right" ng-show="!readonly" ng-click="save()">Save</button>
+	//
+	//        <div class="form-group">
+	//            <label for="synopsis">Synopsis</label>
+	//            <input type="text" class="form-control" id="synopsis" ng-model="ctrl.movie.synopsis" ng-disabled="readonly">
+	//        </div>
+	//
+	//        <div class="form-group">
+	//            <label for="criticsConsensus">Critics Consensus</label>
+	//            <input type="text" class="form-control" id="criticsConsensus" ng-model="ctrl.movie.criticsConsensus" ng-disabled="readonly">
+	//        </div>
+	//
+	//        <div class="form-group">
+	//            <label for="year">Year</label>
+	//            <input type="text" class="form-control" id="year" ng-model="ctrl.movie.year" ng-disabled="readonly">
+	//        </div>
+	//
+	//        <div class="form-group">
+	//            <label for="mpaaRating">MPAA Rating</label>
+	//            <input type="text" class="form-control" id="mpaaRating" ng-model="ctrl.movie.mpaaRating" ng-disabled="readonly">
+	//        </div>
+	//
+	//    </div>
 
 /***/ }
 /******/ ]);

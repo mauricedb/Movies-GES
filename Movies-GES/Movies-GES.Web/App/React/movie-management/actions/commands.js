@@ -11,3 +11,18 @@ export const updateTitle = (movieId, title) => {
 
     return execute(command);
 };
+
+export const describeMovie = (movieId, description) => {
+    const command = {
+        commandName: 'DescribeMovie',
+        commandId: uuid.v4(),
+        movieId,
+        synopsis: description.synopsis,
+        criticsConsensus: description.criticsConsensus,
+        mpaaRating: description.mpaaRating,
+        year: description.year || 0
+    };
+
+    return execute(command);
+};
+
