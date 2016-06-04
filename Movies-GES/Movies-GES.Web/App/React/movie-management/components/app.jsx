@@ -1,16 +1,16 @@
 import React, { PropTypes } from 'react';
 
 const App = (props) => {
-    const { children } = props;
+  const { children } = props;
 
-    return (<div>
-        <h2>Movie Management using React</h2>
-        {children}
-    </div>);
+  return (<div>
+    <h2>Movie Management using React</h2>
+    {children}
+  </div>);
 };
 
 App.propTypes = {
-    children: PropTypes.object.isRequired,
+  children: PropTypes.object.isRequired,
 };
 
 export default App;

@@ -15,7 +15,6 @@
         "templateStrings": true
     },
     "rules":{
-        "indent": [2, 4, { "SwitchCase": 1 }],
-        "react/jsx-indent": [2, 4]
+        "indent": [2, 2, { "SwitchCase": 1 }]
     }
 }
