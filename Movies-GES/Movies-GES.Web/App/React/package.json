@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/mauricedb/Movies-GES#readme",
   "dependencies": {
-    "eslint-config-airbnb": "^9.0.1",
     "jquery": "^2.2.4",
     "react": "^15.1.0",
     "react-bootstrap": "^0.29.4",

@@ -1,8 +1,13 @@
+var webpack = require('webpack');
+
 module.exports = {
-    entry: './movie-management/app.jsx',
+    entry: {
+        'movie-management': ['./movie-management/app.jsx'],
+        'vendor-bundle': Object.keys(require('./package.json').dependencies)
+    },
     output: {
         path: '../../Dist/React',
-        filename: 'movie-management.js'
+        filename: '[name].js'
     },
     module: {
         preLoaders: [
@@ -20,7 +25,13 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+        new webpack.optimize.CommonsChunkPlugin({
+            name: ['vendor-bundle'],
+            filename: '[name].js',
+        }),
+    ],
     externals: {
-        "jquery": "jQuery"
+        'jquery': 'jQuery'
     }
 };
