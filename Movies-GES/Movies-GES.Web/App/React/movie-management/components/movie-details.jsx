@@ -13,11 +13,6 @@ import EditScore from './edit-score.jsx';
 
 
 class MovieDetails extends Component {
-
-    componentWillMount() {
-        this.props.loadMovie(this.props.movieId);
-    }
-
     render() {
         const {movie} = this.props;
 
@@ -69,7 +64,6 @@ class MovieDetails extends Component {
 MovieDetails.propTypes = {
     movie: PropTypes.object.isRequired,
     movieId: PropTypes.string.isRequired,
-    loadMovie: PropTypes.func.isRequired,
     updateTitle: PropTypes.func.isRequired,
 };
 
@@ -81,7 +75,6 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    loadMovie: (id) => dispatch(loadMovie(id)),
     updateTitle: (id, title) => updateTitle(id, title)
             .then(dispatch(titleUpdated(id, title))),
     updateDescription: (id, description) => describeMovie(id, description)

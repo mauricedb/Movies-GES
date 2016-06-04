@@ -36686,7 +36686,7 @@
 	MovieDetailsController.prototype.rateCritics = function (movie) {
 	    var that = this;
 	    var modalInstance = this.$modal.open({
-	        templateUrl: '/app/movie-management/rate-movie.html',
+	        templateUrl: '/app/angular1/movie-management/rate-movie.html',
 	        controller: 'rate-movie-controller',
 	        controllerAs: 'ctrl',
 	        resolve: {
@@ -36709,7 +36709,7 @@
 	MovieDetailsController.prototype.rateAudience = function (movie) {
 	    var that = this;
 	    var modalInstance = this.$modal.open({
-	        templateUrl: '/app/movie-management/rate-movie.html',
+	        templateUrl: '/app/angular1/movie-management/rate-movie.html',
 	        controller: 'rate-movie-controller',
 	        controllerAs: 'ctrl',
 	        resolve: {
@@ -36732,7 +36732,7 @@
 	MovieDetailsController.prototype.addDirector = function (movie) {
 	    var that = this;
 	    var modalInstance = this.$modal.open({
-	        templateUrl: '/app/movie-management/add-director.html',
+	        templateUrl: '/app/angular1/movie-management/add-director.html',
 	        controller: 'add-director-controller',
 	        controllerAs: 'ctrl'
 	    });

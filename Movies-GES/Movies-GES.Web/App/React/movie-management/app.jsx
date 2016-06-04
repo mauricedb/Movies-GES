@@ -11,6 +11,8 @@ import thunk from 'redux-thunk';
 import { App, MovieList, MovieDetails } from './components';
 import * as reducers from './reducers';
 
+import { loadMovies, loadMovie } from './actions';
+
 const store = createStore(
     combineReducers({
         ...reducers,
@@ -21,13 +23,30 @@ const store = createStore(
 
 const history = syncHistoryWithStore(hashHistory, store);
 
+store.dispatch(loadMovies());
+
+function onEnterDetails(nextState) {
+    store.dispatch(loadMovie(nextState.params.id));
+}
+
+
 ReactDOM.render(
-    <Provider store={store}>
-        <Router history={history}>
-            <Route path="/" component={App}>
-                <IndexRoute component={MovieList} />
-                <Route path="list" component={MovieList} />
-                <Route path="details/:id" component={MovieDetails} />
+    <Provider
+        store={store}>
+        <Router
+            history={history}>
+            <Route
+                path="/"
+                component={App}>
+                <IndexRoute
+                    component={MovieList}/>
+                <Route
+                    path="list"
+                    component={MovieList}/>
+                <Route
+                    path="details/:id"
+                    component={MovieDetails}
+                    onEnter={onEnterDetails}/>
             </Route>
         </Router>
     </Provider>,

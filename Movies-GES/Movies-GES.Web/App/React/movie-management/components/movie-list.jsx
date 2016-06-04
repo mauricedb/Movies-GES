@@ -5,10 +5,6 @@ import { loadMovies } from '../actions';
 
 class MovieList extends Component {
 
-    componentWillMount() {
-        this.props.loadMovies();
-    }
-
     render() {
         const {movies} = this.props;
 
@@ -51,18 +47,12 @@ class MovieList extends Component {
 
 MovieList.propTypes = {
     movies: PropTypes.array.isRequired,
-    loadMovies: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
     movies: state.movies,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    loadMovies: () => dispatch(loadMovies()),
-});
-
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
 )(MovieList);
