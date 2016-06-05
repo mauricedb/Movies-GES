@@ -13,6 +13,8 @@ import * as reducers from './reducers';
 
 import { loadMovies, loadMovie } from './actions';
 
+import {subscribe} from './notifications';
+
 const store = createStore(
   combineReducers({
     ...reducers,
@@ -24,6 +26,8 @@ const store = createStore(
 const history = syncHistoryWithStore(hashHistory, store);
 
 store.dispatch(loadMovies());
+
+subscribe(store.dispatch);
 
 function onEnterDetails(nextState) {
   store.dispatch(loadMovie(nextState.params.id));

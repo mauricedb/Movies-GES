@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNet.SignalR;
 using Movies_GES.Domain.Domain;
+using Movies_GES.Web.Hubs;
 using Movies_GES.Web.Infrastructure;
 using Movies_GES.Web.Models;
 
@@ -25,6 +27,9 @@ namespace Movies_GES.Web.Projections
 
             movie.Title = movieTitled.Title;
             _repository.Store(movie);
+
+            var context = GlobalHost.ConnectionManager.GetHubContext<MoviesHub>();
+            context.Clients.All.movieTitled(movieTitled);
         }
 
         public void Handle(MovieDescribed movieDescribed)
