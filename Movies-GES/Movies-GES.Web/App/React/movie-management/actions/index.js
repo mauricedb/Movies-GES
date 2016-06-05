@@ -36,7 +36,7 @@ export const movieDescribed = (id, description) => ({
   },
 });
 
-export const directorAdded = (id, director) => ({
+export const directorAddedToMovie = (id, director) => ({
   type: 'DIRECTOR-ADDED',
   payload: {
     id,
@@ -44,7 +44,7 @@ export const directorAdded = (id, director) => ({
   },
 });
 
-export const criticsScoreUpdated = (id, criticsScore) => ({
+export const movieRatedByCritics = (id, criticsScore) => ({
   type: 'CRITICS-SCORE-UPDATED',
   payload: {
     id,
@@ -52,7 +52,7 @@ export const criticsScoreUpdated = (id, criticsScore) => ({
   },
 });
 
-export const audienceScoreUpdated = (id, audienceScore) => ({
+export const movieRatedByAudience = (id, audienceScore) => ({
   type: 'AUDIENCE-SCORE-UPDATED',
   payload: {
     id,

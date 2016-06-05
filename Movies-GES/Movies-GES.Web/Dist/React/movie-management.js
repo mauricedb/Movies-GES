@@ -431,13 +431,13 @@ webpackJsonp([0],{
 	      return (0, _commands.describeMovie)(id, description).then(dispatch((0, _actions.movieDescribed)(id, description)));
 	    },
 	    addDirectorToMovie: function addDirectorToMovie(id, director) {
-	      return (0, _commands.addDirectorToMovie)(id, director).then(dispatch((0, _actions.directorAdded)(id, director)));
+	      return (0, _commands.addDirectorToMovie)(id, director).then(dispatch((0, _actions.directorAddedToMovie)(id, director)));
 	    },
 	    rateMovieByCrictics: function rateMovieByCrictics(id, score) {
-	      return (0, _commands.rateMovieByCrictics)(id, score).then(dispatch((0, _actions.criticsScoreUpdated)(id, score)));
+	      return (0, _commands.rateMovieByCrictics)(id, score).then(dispatch((0, _actions.movieRatedByCritics)(id, score)));
 	    },
 	    rateMovieByAudience: function rateMovieByAudience(id, score) {
-	      return (0, _commands.rateMovieByAudience)(id, score).then(dispatch((0, _actions.audienceScoreUpdated)(id, score)));
+	      return (0, _commands.rateMovieByAudience)(id, score).then(dispatch((0, _actions.movieRatedByAudience)(id, score)));
 	    }
 	  };
 	};
@@ -454,7 +454,7 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.audienceScoreUpdated = exports.criticsScoreUpdated = exports.directorAdded = exports.movieDescribed = exports.movieTitled = exports.loadMovie = exports.loadMovies = undefined;
+	exports.movieRatedByAudience = exports.movieRatedByCritics = exports.directorAddedToMovie = exports.movieDescribed = exports.movieTitled = exports.loadMovie = exports.loadMovies = undefined;
 
 	var _jquery = __webpack_require__(261);
 
@@ -512,7 +512,7 @@ webpackJsonp([0],{
 	  };
 	};
 
-	var directorAdded = exports.directorAdded = function directorAdded(id, director) {
+	var directorAddedToMovie = exports.directorAddedToMovie = function directorAddedToMovie(id, director) {
 	  return {
 	    type: 'DIRECTOR-ADDED',
 	    payload: {
@@ -522,7 +522,7 @@ webpackJsonp([0],{
 	  };
 	};
 
-	var criticsScoreUpdated = exports.criticsScoreUpdated = function criticsScoreUpdated(id, criticsScore) {
+	var movieRatedByCritics = exports.movieRatedByCritics = function movieRatedByCritics(id, criticsScore) {
 	  return {
 	    type: 'CRITICS-SCORE-UPDATED',
 	    payload: {
@@ -532,7 +532,7 @@ webpackJsonp([0],{
 	  };
 	};
 
-	var audienceScoreUpdated = exports.audienceScoreUpdated = function audienceScoreUpdated(id, audienceScore) {
+	var movieRatedByAudience = exports.movieRatedByAudience = function movieRatedByAudience(id, audienceScore) {
 	  return {
 	    type: 'AUDIENCE-SCORE-UPDATED',
 	    payload: {
