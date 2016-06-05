@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { movieTitled, movieDescribed, directorAdded, criticsScoreUpdated, audienceScoreUpdated } from '../actions';
-import { titleMovie, describeMovie, addDirectorToMovie, updateCriticsScore, updateAudienceScore } from '../commands';
+import { titleMovie, describeMovie, addDirectorToMovie, rateMovieByCrictics, rateMovieByAudience } from '../commands';
 
 
 import MovieTitle from './movie-title';
@@ -45,13 +45,13 @@ class MovieDetails extends Component {
         label="Critics Score:"
         id={movie.id}
         score={movie.criticsScore}
-        updateScore={this.props.updateCriticsScore}
+        updateScore={this.props.rateMovieByCrictics}
       />
       <EditScore
         label="Audience Score:"
         id={movie.id}
         score={movie.audienceScore}
-        updateScore={this.props.updateAudienceScore}
+        updateScore={this.props.rateMovieByAudience}
       />
 
 
@@ -65,8 +65,8 @@ MovieDetails.propTypes = {
   titleMovie: PropTypes.func.isRequired,
   updateDescription: PropTypes.func.isRequired,
   addDirectorToMovie: PropTypes.func.isRequired,
-  updateCriticsScore: PropTypes.func.isRequired,
-  updateAudienceScore: PropTypes.func.isRequired,
+  rateMovieByCrictics: PropTypes.func.isRequired,
+  rateMovieByAudience: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state, ownProps) {
@@ -83,9 +83,9 @@ const mapDispatchToProps = (dispatch) => ({
     .then(dispatch(movieDescribed(id, description))),
   addDirectorToMovie: (id, director) => addDirectorToMovie(id, director)
     .then(dispatch(directorAdded(id, director))),
-  updateCriticsScore: (id, score) => updateCriticsScore(id, score)
+  rateMovieByCrictics: (id, score) => rateMovieByCrictics(id, score)
     .then(dispatch(criticsScoreUpdated(id, score))),
-  updateAudienceScore: (id, score) => updateAudienceScore(id, score)
+  rateMovieByAudience: (id, score) => rateMovieByAudience(id, score)
     .then(dispatch(audienceScoreUpdated(id, score))),
 });
 

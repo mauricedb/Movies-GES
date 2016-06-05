@@ -390,13 +390,13 @@ webpackJsonp([0],{
 	          label: 'Critics Score:',
 	          id: movie.id,
 	          score: movie.criticsScore,
-	          updateScore: this.props.updateCriticsScore
+	          updateScore: this.props.rateMovieByCrictics
 	        }),
 	        _react2.default.createElement(_editScore2.default, {
 	          label: 'Audience Score:',
 	          id: movie.id,
 	          score: movie.audienceScore,
-	          updateScore: this.props.updateAudienceScore
+	          updateScore: this.props.rateMovieByAudience
 	        })
 	      );
 	    }
@@ -411,8 +411,8 @@ webpackJsonp([0],{
 	  titleMovie: _react.PropTypes.func.isRequired,
 	  updateDescription: _react.PropTypes.func.isRequired,
 	  addDirectorToMovie: _react.PropTypes.func.isRequired,
-	  updateCriticsScore: _react.PropTypes.func.isRequired,
-	  updateAudienceScore: _react.PropTypes.func.isRequired
+	  rateMovieByCrictics: _react.PropTypes.func.isRequired,
+	  rateMovieByAudience: _react.PropTypes.func.isRequired
 	};
 
 	function mapStateToProps(state, ownProps) {
@@ -433,11 +433,11 @@ webpackJsonp([0],{
 	    addDirectorToMovie: function addDirectorToMovie(id, director) {
 	      return (0, _commands.addDirectorToMovie)(id, director).then(dispatch((0, _actions.directorAdded)(id, director)));
 	    },
-	    updateCriticsScore: function updateCriticsScore(id, score) {
-	      return (0, _commands.updateCriticsScore)(id, score).then(dispatch((0, _actions.criticsScoreUpdated)(id, score)));
+	    rateMovieByCrictics: function rateMovieByCrictics(id, score) {
+	      return (0, _commands.rateMovieByCrictics)(id, score).then(dispatch((0, _actions.criticsScoreUpdated)(id, score)));
 	    },
-	    updateAudienceScore: function updateAudienceScore(id, score) {
-	      return (0, _commands.updateAudienceScore)(id, score).then(dispatch((0, _actions.audienceScoreUpdated)(id, score)));
+	    rateMovieByAudience: function rateMovieByAudience(id, score) {
+	      return (0, _commands.rateMovieByAudience)(id, score).then(dispatch((0, _actions.audienceScoreUpdated)(id, score)));
 	    }
 	  };
 	};
@@ -552,7 +552,7 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.updateAudienceScore = exports.updateCriticsScore = exports.addDirectorToMovie = exports.describeMovie = exports.titleMovie = undefined;
+	exports.rateMovieByAudience = exports.rateMovieByCrictics = exports.addDirectorToMovie = exports.describeMovie = exports.titleMovie = undefined;
 
 	var _uuid = __webpack_require__(263);
 
@@ -598,7 +598,7 @@ webpackJsonp([0],{
 	  return (0, _cedar.execute)(command);
 	};
 
-	var updateCriticsScore = exports.updateCriticsScore = function updateCriticsScore(movieId, rating) {
+	var rateMovieByCrictics = exports.rateMovieByCrictics = function rateMovieByCrictics(movieId, rating) {
 	  var command = {
 	    commandName: 'RateMovieByCrictics',
 	    commandId: _uuid2.default.v4(),
@@ -609,7 +609,7 @@ webpackJsonp([0],{
 	  return (0, _cedar.execute)(command);
 	};
 
-	var updateAudienceScore = exports.updateAudienceScore = function updateAudienceScore(movieId, rating) {
+	var rateMovieByAudience = exports.rateMovieByAudience = function rateMovieByAudience(movieId, rating) {
 	  var command = {
 	    commandName: 'RateMovieByAudience',
 	    commandId: _uuid2.default.v4(),

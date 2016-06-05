@@ -37,7 +37,7 @@ export const addDirectorToMovie = (movieId, director) => {
   return execute(command);
 };
 
-export const updateCriticsScore = (movieId, rating) => {
+export const rateMovieByCrictics = (movieId, rating) => {
   const command = {
     commandName: 'RateMovieByCrictics',
     commandId: uuid.v4(),
@@ -48,7 +48,7 @@ export const updateCriticsScore = (movieId, rating) => {
   return execute(command);
 };
 
-export const updateAudienceScore = (movieId, rating) => {
+export const rateMovieByAudience = (movieId, rating) => {
   const command = {
     commandName: 'RateMovieByAudience',
     commandId: uuid.v4(),
