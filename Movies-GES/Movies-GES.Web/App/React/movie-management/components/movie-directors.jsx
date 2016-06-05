@@ -30,8 +30,8 @@ export default class MovieDirectors extends Component {
       });
     };
 
-    this.addDirector = () => {
-      this.props.addDirector(this.props.id, this.state.director)
+    this.addDirectorToMovie = () => {
+      this.props.addDirectorToMovie(this.props.id, this.state.director)
         .then(() => {
           this.setState({
             editMode: false,
@@ -83,7 +83,7 @@ export default class MovieDirectors extends Component {
           <Modal.Footer>
             <button
               className="btn btn-primary"
-              onClick={this.addDirector}
+              onClick={this.addDirectorToMovie}
             >
               OK
             </button>
@@ -101,9 +101,8 @@ export default class MovieDirectors extends Component {
   }
 }
 
-
 MovieDirectors.propTypes = {
   id: PropTypes.string.isRequired,
   abridgedDirectors: PropTypes.array.isRequired,
-  addDirector: PropTypes.func.isRequired,
+  addDirectorToMovie: PropTypes.func.isRequired,
 };

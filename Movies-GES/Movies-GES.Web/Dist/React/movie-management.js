@@ -384,7 +384,7 @@ webpackJsonp([0],{
 	        _react2.default.createElement(_movieDirectors2.default, {
 	          abridgedDirectors: movie.abridgedDirectors,
 	          id: movie.id,
-	          addDirector: this.props.addDirector
+	          addDirectorToMovie: this.props.addDirectorToMovie
 	        }),
 	        _react2.default.createElement(_editScore2.default, {
 	          label: 'Critics Score:',
@@ -410,7 +410,7 @@ webpackJsonp([0],{
 	  movieId: _react.PropTypes.string.isRequired,
 	  titleMovie: _react.PropTypes.func.isRequired,
 	  updateDescription: _react.PropTypes.func.isRequired,
-	  addDirector: _react.PropTypes.func.isRequired,
+	  addDirectorToMovie: _react.PropTypes.func.isRequired,
 	  updateCriticsScore: _react.PropTypes.func.isRequired,
 	  updateAudienceScore: _react.PropTypes.func.isRequired
 	};
@@ -430,8 +430,8 @@ webpackJsonp([0],{
 	    updateDescription: function updateDescription(id, description) {
 	      return (0, _commands.describeMovie)(id, description).then(dispatch((0, _actions.movieDescribed)(id, description)));
 	    },
-	    addDirector: function addDirector(id, director) {
-	      return (0, _commands.addDirector)(id, director).then(dispatch((0, _actions.directorAdded)(id, director)));
+	    addDirectorToMovie: function addDirectorToMovie(id, director) {
+	      return (0, _commands.addDirectorToMovie)(id, director).then(dispatch((0, _actions.directorAdded)(id, director)));
 	    },
 	    updateCriticsScore: function updateCriticsScore(id, score) {
 	      return (0, _commands.updateCriticsScore)(id, score).then(dispatch((0, _actions.criticsScoreUpdated)(id, score)));
@@ -552,7 +552,7 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.updateAudienceScore = exports.updateCriticsScore = exports.addDirector = exports.describeMovie = exports.titleMovie = undefined;
+	exports.updateAudienceScore = exports.updateCriticsScore = exports.addDirectorToMovie = exports.describeMovie = exports.titleMovie = undefined;
 
 	var _uuid = __webpack_require__(263);
 
@@ -587,7 +587,7 @@ webpackJsonp([0],{
 	  return (0, _cedar.execute)(command);
 	};
 
-	var addDirector = exports.addDirector = function addDirector(movieId, director) {
+	var addDirectorToMovie = exports.addDirectorToMovie = function addDirectorToMovie(movieId, director) {
 	  var command = {
 	    commandName: 'AddDirectorToMovie',
 	    commandId: _uuid2.default.v4(),
@@ -1139,8 +1139,8 @@ webpackJsonp([0],{
 	      });
 	    };
 
-	    _this.addDirector = function () {
-	      _this.props.addDirector(_this.props.id, _this.state.director).then(function () {
+	    _this.addDirectorToMovie = function () {
+	      _this.props.addDirectorToMovie(_this.props.id, _this.state.director).then(function () {
 	        _this.setState({
 	          editMode: false
 	        });
@@ -1225,7 +1225,7 @@ webpackJsonp([0],{
 	              'button',
 	              {
 	                className: 'btn btn-primary',
-	                onClick: this.addDirector
+	                onClick: this.addDirectorToMovie
 	              },
 	              'OK'
 	            ),
@@ -1252,7 +1252,7 @@ webpackJsonp([0],{
 	MovieDirectors.propTypes = {
 	  id: _react.PropTypes.string.isRequired,
 	  abridgedDirectors: _react.PropTypes.array.isRequired,
-	  addDirector: _react.PropTypes.func.isRequired
+	  addDirectorToMovie: _react.PropTypes.func.isRequired
 	};
 
 /***/ },

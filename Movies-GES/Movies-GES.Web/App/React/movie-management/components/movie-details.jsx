@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { movieTitled, movieDescribed, directorAdded, criticsScoreUpdated, audienceScoreUpdated } from '../actions';
-import { titleMovie, describeMovie, addDirector, updateCriticsScore, updateAudienceScore } from '../commands';
+import { titleMovie, describeMovie, addDirectorToMovie, updateCriticsScore, updateAudienceScore } from '../commands';
 
 
 import MovieTitle from './movie-title';
@@ -39,7 +39,7 @@ class MovieDetails extends Component {
       <MovieDirectors
         abridgedDirectors={movie.abridgedDirectors}
         id={movie.id}
-        addDirector={this.props.addDirector}
+        addDirectorToMovie={this.props.addDirectorToMovie}
       />
       <EditScore
         label="Critics Score:"
@@ -64,7 +64,7 @@ MovieDetails.propTypes = {
   movieId: PropTypes.string.isRequired,
   titleMovie: PropTypes.func.isRequired,
   updateDescription: PropTypes.func.isRequired,
-  addDirector: PropTypes.func.isRequired,
+  addDirectorToMovie: PropTypes.func.isRequired,
   updateCriticsScore: PropTypes.func.isRequired,
   updateAudienceScore: PropTypes.func.isRequired,
 };
@@ -81,7 +81,7 @@ const mapDispatchToProps = (dispatch) => ({
     .then(dispatch(movieTitled(id, title))),
   updateDescription: (id, description) => describeMovie(id, description)
     .then(dispatch(movieDescribed(id, description))),
-  addDirector: (id, director) => addDirector(id, director)
+  addDirectorToMovie: (id, director) => addDirectorToMovie(id, director)
     .then(dispatch(directorAdded(id, director))),
   updateCriticsScore: (id, score) => updateCriticsScore(id, score)
     .then(dispatch(criticsScoreUpdated(id, score))),

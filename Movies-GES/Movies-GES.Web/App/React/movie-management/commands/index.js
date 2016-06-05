@@ -26,7 +26,7 @@ export const describeMovie = (movieId, description) => {
   return execute(command);
 };
 
-export const addDirector = (movieId, director) => {
+export const addDirectorToMovie = (movieId, director) => {
   const command = {
     commandName: 'AddDirectorToMovie',
     commandId: uuid.v4(),
