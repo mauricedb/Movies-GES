@@ -1,12 +1,13 @@
+import * as constants from '../constants';
 import movie from './movie';
 
 const movies = (state = [], action) => {
   switch (action.type) {
-    case 'MOVIES-LOADED':
+    case constants.moviesLoaded:
       return action.movies;
-    case 'TITLE-UPDATED':
+    case constants.movieTitled:
       return state.map(m => movie(m, action));
-    case 'DESCRIPTION-UPDATED':
+    case constants.movieDescribed:
       return state.map(m => movie(m, action));
     default:
       return state;

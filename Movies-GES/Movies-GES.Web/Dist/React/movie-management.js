@@ -460,11 +460,17 @@ webpackJsonp([0],{
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
+	var _constants = __webpack_require__(537);
+
+	var constants = _interopRequireWildcard(_constants);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var moviesLoaded = function moviesLoaded(movies) {
 	  return {
-	    type: 'MOVIES-LOADED',
+	    type: constants.moviesLoaded,
 	    movies: movies
 	  };
 	};
@@ -479,7 +485,7 @@ webpackJsonp([0],{
 
 	var movieLoaded = function movieLoaded(movie) {
 	  return {
-	    type: 'MOVIE-LOADED',
+	    type: constants.movieLoaded,
 	    movie: movie
 	  };
 	};
@@ -494,7 +500,7 @@ webpackJsonp([0],{
 
 	var movieTitled = exports.movieTitled = function movieTitled(id, title) {
 	  return {
-	    type: 'TITLE-UPDATED',
+	    type: constants.movieTitled,
 	    payload: {
 	      id: id,
 	      title: title
@@ -504,7 +510,7 @@ webpackJsonp([0],{
 
 	var movieDescribed = exports.movieDescribed = function movieDescribed(id, description) {
 	  return {
-	    type: 'DESCRIPTION-UPDATED',
+	    type: constants.movieDescribed,
 	    payload: {
 	      id: id,
 	      description: description
@@ -514,7 +520,7 @@ webpackJsonp([0],{
 
 	var directorAddedToMovie = exports.directorAddedToMovie = function directorAddedToMovie(id, director) {
 	  return {
-	    type: 'DIRECTOR-ADDED',
+	    type: constants.directorAddedToMovie,
 	    payload: {
 	      id: id,
 	      director: director
@@ -524,7 +530,7 @@ webpackJsonp([0],{
 
 	var movieRatedByCritics = exports.movieRatedByCritics = function movieRatedByCritics(id, criticsScore) {
 	  return {
-	    type: 'CRITICS-SCORE-UPDATED',
+	    type: constants.movieRatedByCritics,
 	    payload: {
 	      id: id,
 	      criticsScore: criticsScore
@@ -534,7 +540,7 @@ webpackJsonp([0],{
 
 	var movieRatedByAudience = exports.movieRatedByAudience = function movieRatedByAudience(id, audienceScore) {
 	  return {
-	    type: 'AUDIENCE-SCORE-UPDATED',
+	    type: constants.movieRatedByAudience,
 	    payload: {
 	      id: id,
 	      audienceScore: audienceScore
@@ -1472,24 +1478,30 @@ webpackJsonp([0],{
 	  value: true
 	});
 
+	var _constants = __webpack_require__(537);
+
+	var constants = _interopRequireWildcard(_constants);
+
 	var _movie = __webpack_require__(535);
 
 	var _movie2 = _interopRequireDefault(_movie);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 	var movies = function movies() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 	  var action = arguments[1];
 
 	  switch (action.type) {
-	    case 'MOVIES-LOADED':
+	    case constants.moviesLoaded:
 	      return action.movies;
-	    case 'TITLE-UPDATED':
+	    case constants.movieTitled:
 	      return state.map(function (m) {
 	        return (0, _movie2.default)(m, action);
 	      });
-	    case 'DESCRIPTION-UPDATED':
+	    case constants.movieDescribed:
 	      return state.map(function (m) {
 	        return (0, _movie2.default)(m, action);
 	      });
@@ -1503,7 +1515,7 @@ webpackJsonp([0],{
 /***/ },
 
 /***/ 535:
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -1513,6 +1525,12 @@ webpackJsonp([0],{
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+	var _constants = __webpack_require__(537);
+
+	var constants = _interopRequireWildcard(_constants);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 	var movie = function movie() {
@@ -1520,12 +1538,12 @@ webpackJsonp([0],{
 	  var action = arguments[1];
 
 	  switch (action.type) {
-	    case 'MOVIE-LOADED':
+	    case constants.movieLoaded:
 	      return _extends({}, action.movie, {
 	        status: 'LOADED'
 	      });
 
-	    case 'TITLE-UPDATED':
+	    case constants.movieTitled:
 	      if (state.id === action.payload.id) {
 	        return _extends({}, state, {
 	          title: action.payload.title
@@ -1534,14 +1552,14 @@ webpackJsonp([0],{
 
 	      return state;
 
-	    case 'DESCRIPTION-UPDATED':
+	    case constants.movieDescribed:
 	      if (state.id === action.payload.id) {
 	        return _extends({}, state, action.payload.description);
 	      }
 
 	      return state;
 
-	    case 'DIRECTOR-ADDED':
+	    case constants.directorAddedToMovie:
 	      if (state.id === action.payload.id) {
 	        return _extends({}, state, {
 	          abridgedDirectors: [].concat(_toConsumableArray(state.abridgedDirectors), [action.payload.director])
@@ -1550,7 +1568,7 @@ webpackJsonp([0],{
 
 	      return state;
 
-	    case 'CRITICS-SCORE-UPDATED':
+	    case constants.movieRatedByCritics:
 	      if (state.id === action.payload.id) {
 	        var criticsScore = Math.round(0.9 * state.criticsScore + 0.1 * action.payload.criticsScore);
 
@@ -1561,7 +1579,7 @@ webpackJsonp([0],{
 
 	      return state;
 
-	    case 'AUDIENCE-SCORE-UPDATED':
+	    case constants.movieRatedByAudience:
 	      if (state.id === action.payload.id) {
 	        var audienceScore = Math.round(0.9 * state.audienceScore + 0.1 * action.payload.audienceScore);
 
@@ -1606,6 +1624,24 @@ webpackJsonp([0],{
 	  };
 	  _jquery2.default.connection.hub.start();
 	};
+
+/***/ },
+
+/***/ 537:
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var moviesLoaded = exports.moviesLoaded = 'MOVIES-LOADED';
+	var movieLoaded = exports.movieLoaded = 'MOVIE-LOADED';
+	var movieTitled = exports.movieTitled = 'MOVIE-TITLED';
+	var movieDescribed = exports.movieDescribed = 'DESCRIPTION-UPDATED';
+	var directorAddedToMovie = exports.directorAddedToMovie = 'DIRECTOR-ADDED';
+	var movieRatedByCritics = exports.movieRatedByCritics = 'CRITICS-SCORE-UPDATED';
+	var movieRatedByAudience = exports.movieRatedByAudience = 'AUDIENCE-SCORE-UPDATED';
 
 /***/ }
 

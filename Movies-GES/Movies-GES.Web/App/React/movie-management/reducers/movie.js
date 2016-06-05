@@ -1,12 +1,14 @@
+import * as constants from '../constants';
+
 const movie = (state = { status: '' }, action) => {
   switch (action.type) {
-    case 'MOVIE-LOADED':
+    case constants.movieLoaded:
       return {
         ...action.movie,
         status: 'LOADED',
       };
 
-    case 'TITLE-UPDATED':
+    case constants.movieTitled:
       if (state.id === action.payload.id) {
         return {
           ...state,
@@ -16,7 +18,7 @@ const movie = (state = { status: '' }, action) => {
 
       return state;
 
-    case 'DESCRIPTION-UPDATED':
+    case constants.movieDescribed:
       if (state.id === action.payload.id) {
         return {
           ...state,
@@ -26,7 +28,7 @@ const movie = (state = { status: '' }, action) => {
 
       return state;
 
-    case 'DIRECTOR-ADDED':
+    case constants.directorAddedToMovie:
       if (state.id === action.payload.id) {
         return {
           ...state,
@@ -36,7 +38,7 @@ const movie = (state = { status: '' }, action) => {
 
       return state;
 
-    case 'CRITICS-SCORE-UPDATED':
+    case constants.movieRatedByCritics:
       if (state.id === action.payload.id) {
         const criticsScore = Math.round(
                     0.9 * state.criticsScore +
@@ -50,7 +52,7 @@ const movie = (state = { status: '' }, action) => {
 
       return state;
 
-    case 'AUDIENCE-SCORE-UPDATED':
+    case constants.movieRatedByAudience:
       if (state.id === action.payload.id) {
         const audienceScore = Math.round(
                     0.9 * state.audienceScore +

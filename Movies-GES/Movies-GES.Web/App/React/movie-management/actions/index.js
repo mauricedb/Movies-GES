@@ -1,7 +1,8 @@
 import $ from 'jquery';
+import * as constants from '../constants';
 
 const moviesLoaded = movies => ({
-  type: 'MOVIES-LOADED',
+  type: constants.moviesLoaded,
   movies,
 });
 
@@ -12,7 +13,7 @@ export const loadMovies = () => dispatch => {
 
 
 const movieLoaded = movie => ({
-  type: 'MOVIE-LOADED',
+  type: constants.movieLoaded,
   movie,
 });
 
@@ -21,7 +22,7 @@ export const loadMovie = (id) => dispatch => {
 };
 
 export const movieTitled = (id, title) => ({
-  type: 'TITLE-UPDATED',
+  type: constants.movieTitled,
   payload: {
     id,
     title,
@@ -29,7 +30,7 @@ export const movieTitled = (id, title) => ({
 });
 
 export const movieDescribed = (id, description) => ({
-  type: 'DESCRIPTION-UPDATED',
+  type: constants.movieDescribed,
   payload: {
     id,
     description,
@@ -37,7 +38,7 @@ export const movieDescribed = (id, description) => ({
 });
 
 export const directorAddedToMovie = (id, director) => ({
-  type: 'DIRECTOR-ADDED',
+  type: constants.directorAddedToMovie,
   payload: {
     id,
     director,
@@ -45,7 +46,7 @@ export const directorAddedToMovie = (id, director) => ({
 });
 
 export const movieRatedByCritics = (id, criticsScore) => ({
-  type: 'CRITICS-SCORE-UPDATED',
+  type: constants.movieRatedByCritics,
   payload: {
     id,
     criticsScore,
@@ -53,7 +54,7 @@ export const movieRatedByCritics = (id, criticsScore) => ({
 });
 
 export const movieRatedByAudience = (id, audienceScore) => ({
-  type: 'AUDIENCE-SCORE-UPDATED',
+  type: constants.movieRatedByAudience,
   payload: {
     id,
     audienceScore,
