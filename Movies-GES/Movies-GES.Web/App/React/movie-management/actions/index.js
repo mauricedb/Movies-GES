@@ -20,7 +20,7 @@ export const loadMovie = (id) => dispatch => {
   $.getJSON(`/api/movies/${id}`).then(movie => dispatch(movieLoaded(movie)));
 };
 
-export const titleUpdated = (id, title) => ({
+export const movieTitled = (id, title) => ({
   type: 'TITLE-UPDATED',
   payload: {
     id,

@@ -374,7 +374,7 @@ webpackJsonp([0],{
 	        _react2.default.createElement(_movieTitle2.default, {
 	          title: movie.title,
 	          id: movie.id,
-	          updateTitle: this.props.updateTitle
+	          titleMovie: this.props.titleMovie
 	        }),
 	        _react2.default.createElement(_movieDescription2.default, {
 	          id: movie.id,
@@ -408,7 +408,7 @@ webpackJsonp([0],{
 	MovieDetails.propTypes = {
 	  movie: _react.PropTypes.object.isRequired,
 	  movieId: _react.PropTypes.string.isRequired,
-	  updateTitle: _react.PropTypes.func.isRequired,
+	  titleMovie: _react.PropTypes.func.isRequired,
 	  updateDescription: _react.PropTypes.func.isRequired,
 	  addDirector: _react.PropTypes.func.isRequired,
 	  updateCriticsScore: _react.PropTypes.func.isRequired,
@@ -424,8 +424,8 @@ webpackJsonp([0],{
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    updateTitle: function updateTitle(id, title) {
-	      return (0, _commands.updateTitle)(id, title).then(dispatch((0, _actions.titleUpdated)(id, title)));
+	    titleMovie: function titleMovie(id, title) {
+	      return (0, _commands.titleMovie)(id, title).then(dispatch((0, _actions.movieTitled)(id, title)));
 	    },
 	    updateDescription: function updateDescription(id, description) {
 	      return (0, _commands.describeMovie)(id, description).then(dispatch((0, _actions.descriptionUpdated)(id, description)));
@@ -454,7 +454,7 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.audienceScoreUpdated = exports.criticsScoreUpdated = exports.directorAdded = exports.descriptionUpdated = exports.titleUpdated = exports.loadMovie = exports.loadMovies = undefined;
+	exports.audienceScoreUpdated = exports.criticsScoreUpdated = exports.directorAdded = exports.descriptionUpdated = exports.movieTitled = exports.loadMovie = exports.loadMovies = undefined;
 
 	var _jquery = __webpack_require__(261);
 
@@ -492,7 +492,7 @@ webpackJsonp([0],{
 	  };
 	};
 
-	var titleUpdated = exports.titleUpdated = function titleUpdated(id, title) {
+	var movieTitled = exports.movieTitled = function movieTitled(id, title) {
 	  return {
 	    type: 'TITLE-UPDATED',
 	    payload: {
@@ -552,7 +552,7 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.updateAudienceScore = exports.updateCriticsScore = exports.addDirector = exports.describeMovie = exports.updateTitle = undefined;
+	exports.updateAudienceScore = exports.updateCriticsScore = exports.addDirector = exports.describeMovie = exports.titleMovie = undefined;
 
 	var _uuid = __webpack_require__(263);
 
@@ -562,7 +562,7 @@ webpackJsonp([0],{
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var updateTitle = exports.updateTitle = function updateTitle(movieId, title) {
+	var titleMovie = exports.titleMovie = function titleMovie(movieId, title) {
 	  var command = {
 	    commandName: 'TitleMovie',
 	    commandId: _uuid2.default.v4(),
@@ -709,10 +709,10 @@ webpackJsonp([0],{
 	      });
 	    };
 
-	    _this.updateTitle = function (e) {
+	    _this.titleMovie = function (e) {
 	      e.preventDefault();
 
-	      _this.props.updateTitle(_this.props.id, _this.state.title).then(function () {
+	      _this.props.titleMovie(_this.props.id, _this.state.title).then(function () {
 	        _this.setState({
 	          editMode: false
 	        });
@@ -766,7 +766,7 @@ webpackJsonp([0],{
 	            'button',
 	            {
 	              className: 'btn btn-xs btn-default pull-right',
-	              onClick: this.updateTitle
+	              onClick: this.titleMovie
 	            },
 	            'Save'
 	          )
@@ -817,7 +817,7 @@ webpackJsonp([0],{
 	MovieTitle.propTypes = {
 	  id: _react.PropTypes.string.isRequired,
 	  title: _react.PropTypes.string.isRequired,
-	  updateTitle: _react.PropTypes.func.isRequired
+	  titleMovie: _react.PropTypes.func.isRequired
 	};
 
 /***/ },
@@ -1602,7 +1602,7 @@ webpackJsonp([0],{
 	var subscribe = exports.subscribe = function subscribe(dispatch) {
 	  var moviesHub = _jquery2.default.connection.moviesHub;
 	  moviesHub.client.movieTitled = function (e) {
-	    dispatch((0, _actions.titleUpdated)(e.MovieId, e.Title));
+	    dispatch((0, _actions.movieTitled)(e.MovieId, e.Title));
 	  };
 	  _jquery2.default.connection.hub.start();
 	};

@@ -1,7 +1,7 @@
 import uuid from 'uuid';
 import { execute } from './cedar';
 
-export const updateTitle = (movieId, title) => {
+export const titleMovie = (movieId, title) => {
   const command = {
     commandName: 'TitleMovie',
     commandId: uuid.v4(),

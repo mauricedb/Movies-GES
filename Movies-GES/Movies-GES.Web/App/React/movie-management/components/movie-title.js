@@ -22,10 +22,10 @@ export default class MovieTitle extends Component {
       });
     };
 
-    this.updateTitle = (e) => {
+    this.titleMovie = (e) => {
       e.preventDefault();
 
-      this.props.updateTitle(this.props.id, this.state.title)
+      this.props.titleMovie(this.props.id, this.state.title)
         .then(() => {
           this.setState({
             editMode: false,
@@ -66,7 +66,7 @@ export default class MovieTitle extends Component {
         </button>
         <button
           className="btn btn-xs btn-default pull-right"
-          onClick={this.updateTitle}
+          onClick={this.titleMovie}
         >
           Save
         </button>
@@ -104,5 +104,5 @@ export default class MovieTitle extends Component {
 MovieTitle.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  updateTitle: PropTypes.func.isRequired,
+  titleMovie: PropTypes.func.isRequired,
 };
