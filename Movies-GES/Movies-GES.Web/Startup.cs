@@ -21,6 +21,8 @@ namespace Movies_GES.Web
 
                 var commandHandlingMiddleware = CommandHandlingMiddleware.HandleCommands(settings);
                 builder.Use(commandHandlingMiddleware);
+
+                app.MapSignalR();
             });
         }
     }
