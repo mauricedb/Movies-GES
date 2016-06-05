@@ -428,7 +428,7 @@ webpackJsonp([0],{
 	      return (0, _commands.titleMovie)(id, title).then(dispatch((0, _actions.movieTitled)(id, title)));
 	    },
 	    updateDescription: function updateDescription(id, description) {
-	      return (0, _commands.describeMovie)(id, description).then(dispatch((0, _actions.descriptionUpdated)(id, description)));
+	      return (0, _commands.describeMovie)(id, description).then(dispatch((0, _actions.movieDescribed)(id, description)));
 	    },
 	    addDirector: function addDirector(id, director) {
 	      return (0, _commands.addDirector)(id, director).then(dispatch((0, _actions.directorAdded)(id, director)));
@@ -454,7 +454,7 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.audienceScoreUpdated = exports.criticsScoreUpdated = exports.directorAdded = exports.descriptionUpdated = exports.movieTitled = exports.loadMovie = exports.loadMovies = undefined;
+	exports.audienceScoreUpdated = exports.criticsScoreUpdated = exports.directorAdded = exports.movieDescribed = exports.movieTitled = exports.loadMovie = exports.loadMovies = undefined;
 
 	var _jquery = __webpack_require__(261);
 
@@ -502,7 +502,7 @@ webpackJsonp([0],{
 	  };
 	};
 
-	var descriptionUpdated = exports.descriptionUpdated = function descriptionUpdated(id, description) {
+	var movieDescribed = exports.movieDescribed = function movieDescribed(id, description) {
 	  return {
 	    type: 'DESCRIPTION-UPDATED',
 	    payload: {

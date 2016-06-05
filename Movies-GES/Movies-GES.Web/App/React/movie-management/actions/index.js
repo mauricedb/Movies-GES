@@ -28,7 +28,7 @@ export const movieTitled = (id, title) => ({
   },
 });
 
-export const descriptionUpdated = (id, description) => ({
+export const movieDescribed = (id, description) => ({
   type: 'DESCRIPTION-UPDATED',
   payload: {
     id,

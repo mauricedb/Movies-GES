@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { movieTitled, descriptionUpdated, directorAdded, criticsScoreUpdated, audienceScoreUpdated } from '../actions';
+import { movieTitled, movieDescribed, directorAdded, criticsScoreUpdated, audienceScoreUpdated } from '../actions';
 import { titleMovie, describeMovie, addDirector, updateCriticsScore, updateAudienceScore } from '../commands';
 
 
@@ -80,7 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
   titleMovie: (id, title) => titleMovie(id, title)
     .then(dispatch(movieTitled(id, title))),
   updateDescription: (id, description) => describeMovie(id, description)
-    .then(dispatch(descriptionUpdated(id, description))),
+    .then(dispatch(movieDescribed(id, description))),
   addDirector: (id, director) => addDirector(id, director)
     .then(dispatch(directorAdded(id, director))),
   updateCriticsScore: (id, score) => updateCriticsScore(id, score)
