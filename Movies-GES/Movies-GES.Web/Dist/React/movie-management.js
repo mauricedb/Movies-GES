@@ -391,12 +391,6 @@ webpackJsonp([0],{
 	          id: movie.id,
 	          score: movie.criticsScore,
 	          updateScore: this.props.rateMovieByCrictics
-	        }),
-	        _react2.default.createElement(_editScore2.default, {
-	          label: 'Audience Score:',
-	          id: movie.id,
-	          score: movie.audienceScore,
-	          updateScore: this.props.rateMovieByAudience
 	        })
 	      );
 	    }
@@ -405,16 +399,23 @@ webpackJsonp([0],{
 	  return MovieDetails;
 	}(_react.Component);
 
+	//<EditScore
+	//  label="Audience Score:"
+	//  id={movie.id}
+	//  score={movie.audienceScore}
+	//  updateScore={this.props.rateMovieByAudience}
+	///>
+
 	MovieDetails.propTypes = {
 	  movie: _react.PropTypes.object.isRequired,
 	  movieId: _react.PropTypes.string.isRequired,
 	  titleMovie: _react.PropTypes.func.isRequired,
 	  updateDescription: _react.PropTypes.func.isRequired,
 	  addDirectorToMovie: _react.PropTypes.func.isRequired,
-	  rateMovieByCrictics: _react.PropTypes.func.isRequired,
-	  rateMovieByAudience: _react.PropTypes.func.isRequired
+	  rateMovieByCrictics: _react.PropTypes.func.isRequired
 	};
 
+	//rateMovieByAudience: PropTypes.func.isRequired,
 	function mapStateToProps(state, ownProps) {
 	  return {
 	    movie: state.movie,
@@ -435,13 +436,12 @@ webpackJsonp([0],{
 	    },
 	    rateMovieByCrictics: function rateMovieByCrictics(id, score) {
 	      return (0, _commands.rateMovieByCrictics)(id, score).then(dispatch((0, _actions.movieRatedByCritics)(id, score)));
-	    },
-	    rateMovieByAudience: function rateMovieByAudience(id, score) {
-	      return (0, _commands.rateMovieByAudience)(id, score).then(dispatch((0, _actions.movieRatedByAudience)(id, score)));
 	    }
 	  };
 	};
 
+	//rateMovieByAudience: (id, score) => rateMovieByAudience(id, score)
+	//  .then(dispatch(movieRatedByAudience(id, score))),
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(MovieDetails);
 
 /***/ },
@@ -454,7 +454,7 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.movieRatedByAudience = exports.movieRatedByCritics = exports.directorAddedToMovie = exports.movieDescribed = exports.movieTitled = exports.loadMovie = exports.loadMovies = undefined;
+	exports.movieRatedByCritics = exports.directorAddedToMovie = exports.movieDescribed = exports.movieTitled = exports.loadMovie = exports.loadMovies = undefined;
 
 	var _jquery = __webpack_require__(261);
 
@@ -538,15 +538,13 @@ webpackJsonp([0],{
 	  };
 	};
 
-	var movieRatedByAudience = exports.movieRatedByAudience = function movieRatedByAudience(id, audienceScore) {
-	  return {
-	    type: constants.movieRatedByAudience,
-	    payload: {
-	      id: id,
-	      audienceScore: audienceScore
-	    }
-	  };
-	};
+	//export const movieRatedByAudience = (id, audienceScore) => ({
+	//  type: constants.movieRatedByAudience,
+	//  payload: {
+	//    id,
+	//    audienceScore,
+	//  },
+	//});
 
 /***/ },
 
@@ -576,7 +574,7 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.rateMovieByAudience = exports.rateMovieByCrictics = exports.addDirectorToMovie = exports.describeMovie = exports.titleMovie = undefined;
+	exports.rateMovieByCrictics = exports.addDirectorToMovie = exports.describeMovie = exports.titleMovie = undefined;
 
 	var _uuid = __webpack_require__(264);
 
@@ -633,16 +631,16 @@ webpackJsonp([0],{
 	  return (0, _cedar.execute)(command);
 	};
 
-	var rateMovieByAudience = exports.rateMovieByAudience = function rateMovieByAudience(movieId, rating) {
-	  var command = {
-	    commandName: 'RateMovieByAudience',
-	    commandId: _uuid2.default.v4(),
-	    movieId: movieId,
-	    rating: rating
-	  };
-
-	  return (0, _cedar.execute)(command);
-	};
+	//export const rateMovieByAudience = (movieId, rating) => {
+	//  const command = {
+	//    commandName: 'RateMovieByAudience',
+	//    commandId: uuid.v4(),
+	//    movieId,
+	//    rating,
+	//  };
+	//
+	//  return execute(command);
+	//};
 
 /***/ },
 
@@ -1597,16 +1595,19 @@ webpackJsonp([0],{
 
 	      return state;
 
-	    case constants.movieRatedByAudience:
-	      if (state.id === action.payload.id) {
-	        var audienceScore = Math.round(0.9 * state.audienceScore + 0.1 * action.payload.audienceScore);
-
-	        return _extends({}, state, {
-	          audienceScore: audienceScore
-	        });
-	      }
-
-	      return state;
+	    //case constants.movieRatedByAudience:
+	    //  if (state.id === action.payload.id) {
+	    //    const audienceScore = Math.round(
+	    //                0.9 * state.audienceScore +
+	    //                0.1 * action.payload.audienceScore);
+	    //
+	    //    return {
+	    //      ...state,
+	    //      audienceScore,
+	    //    };
+	    //  }
+	    //
+	    //  return state;
 
 	    default:
 	      return state;

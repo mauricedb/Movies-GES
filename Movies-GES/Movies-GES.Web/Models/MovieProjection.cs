@@ -11,7 +11,7 @@ namespace Movies_GES.Web.Models
 
         public int? Year { get; set; }
         public int? CriticsScore { get; set; }
-        public int? AudienceScore { get; set; }
+        //public int? AudienceScore { get; set; }
         public string CriticsConsensus { get; set; }
         public string Synopsis { get; set; }
         public IList<string> AbridgedDirectors { get; set; }

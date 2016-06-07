@@ -53,10 +53,10 @@ export const movieRatedByCritics = (id, criticsScore) => ({
   },
 });
 
-export const movieRatedByAudience = (id, audienceScore) => ({
-  type: constants.movieRatedByAudience,
-  payload: {
-    id,
-    audienceScore,
-  },
-});
+//export const movieRatedByAudience = (id, audienceScore) => ({
+//  type: constants.movieRatedByAudience,
+//  payload: {
+//    id,
+//    audienceScore,
+//  },
+//});

@@ -1,7 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { movieTitled, movieDescribed, directorAddedToMovie, movieRatedByCritics, movieRatedByAudience } from '../actions';
-import { titleMovie, describeMovie, addDirectorToMovie, rateMovieByCrictics, rateMovieByAudience } from '../commands';
+import {
+  movieTitled,
+  movieDescribed,
+  directorAddedToMovie,
+  movieRatedByCritics,
+  //movieRatedByAudience
+} from '../actions';
+import {
+  titleMovie,
+  describeMovie,
+  addDirectorToMovie,
+  rateMovieByCrictics,
+  //rateMovieByAudience
+} from '../commands';
 
 
 import MovieTitle from './movie-title';
@@ -47,17 +59,19 @@ class MovieDetails extends Component {
         score={movie.criticsScore}
         updateScore={this.props.rateMovieByCrictics}
       />
-      <EditScore
-        label="Audience Score:"
-        id={movie.id}
-        score={movie.audienceScore}
-        updateScore={this.props.rateMovieByAudience}
-      />
 
 
     </form>);
   }
 }
+
+//<EditScore
+//  label="Audience Score:"
+//  id={movie.id}
+//  score={movie.audienceScore}
+//  updateScore={this.props.rateMovieByAudience}
+///>
+
 
 MovieDetails.propTypes = {
   movie: PropTypes.object.isRequired,
@@ -66,7 +80,7 @@ MovieDetails.propTypes = {
   updateDescription: PropTypes.func.isRequired,
   addDirectorToMovie: PropTypes.func.isRequired,
   rateMovieByCrictics: PropTypes.func.isRequired,
-  rateMovieByAudience: PropTypes.func.isRequired,
+  //rateMovieByAudience: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state, ownProps) {
@@ -85,8 +99,8 @@ const mapDispatchToProps = (dispatch) => ({
     .then(dispatch(directorAddedToMovie(id, director))),
   rateMovieByCrictics: (id, score) => rateMovieByCrictics(id, score)
     .then(dispatch(movieRatedByCritics(id, score))),
-  rateMovieByAudience: (id, score) => rateMovieByAudience(id, score)
-    .then(dispatch(movieRatedByAudience(id, score))),
+  //rateMovieByAudience: (id, score) => rateMovieByAudience(id, score)
+  //  .then(dispatch(movieRatedByAudience(id, score))),
 });
 
 export default connect(
