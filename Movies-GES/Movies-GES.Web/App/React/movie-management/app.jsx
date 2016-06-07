@@ -13,7 +13,7 @@ import * as reducers from './reducers';
 
 import { loadMovies, loadMovie } from './actions';
 
-import {subscribe} from './notifications';
+import { subscribe } from './notifications';
 
 const store = createStore(
   combineReducers({

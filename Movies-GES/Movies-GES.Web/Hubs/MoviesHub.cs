@@ -8,6 +8,5 @@ namespace Movies_GES.Web.Hubs
 {
     public class MoviesHub: Hub
     {
-
     }
 }

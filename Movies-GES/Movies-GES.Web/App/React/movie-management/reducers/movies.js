@@ -4,7 +4,7 @@ import movie from './movie';
 const movies = (state = [], action) => {
   switch (action.type) {
     case constants.moviesLoaded:
-      return action.movies;
+      return action.payload;
     case constants.movieTitled:
       return state.map(m => movie(m, action));
     case constants.movieDescribed:

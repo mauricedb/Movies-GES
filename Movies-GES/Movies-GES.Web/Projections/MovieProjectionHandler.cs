@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNet.SignalR;
 using Movies_GES.Domain.Domain;
-using Movies_GES.Web.Hubs;
 using Movies_GES.Web.Infrastructure;
 using Movies_GES.Web.Models;
 
@@ -27,9 +25,6 @@ namespace Movies_GES.Web.Projections
 
             movie.Title = movieTitled.Title;
             _repository.Store(movie);
-
-            var context = GlobalHost.ConnectionManager.GetHubContext<MoviesHub>();
-            context.Clients.All.movieTitled(movieTitled);
         }
 
         public void Handle(MovieDescribed movieDescribed)
@@ -67,7 +62,7 @@ namespace Movies_GES.Web.Projections
                 {
                     if (m.CriticsScore.HasValue)
                     {
-                        m.CriticsScore = (int) Math.Round(0.9*m.CriticsScore.Value + 0.1*movieRated.Rating, 0);
+                        m.CriticsScore = (int)Math.Round(0.9 * m.CriticsScore.Value + 0.1 * movieRated.Rating, 0);
                     }
                     else
                     {
@@ -83,7 +78,7 @@ namespace Movies_GES.Web.Projections
                 {
                     if (m.AbridgedDirectors == null)
                     {
-                        m.AbridgedDirectors=new List<string>();
+                        m.AbridgedDirectors = new List<string>();
                     }
 
                     m.AbridgedDirectors.Add(isDirectedBy.Director);

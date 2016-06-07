@@ -1,9 +1,9 @@
 import $ from 'jquery';
 import * as constants from '../constants';
 
-const moviesLoaded = movies => ({
+const moviesLoaded = (movies) => ({
   type: constants.moviesLoaded,
-  movies,
+  payload: movies,
 });
 
 
@@ -12,9 +12,9 @@ export const loadMovies = () => dispatch => {
 };
 
 
-const movieLoaded = movie => ({
+const movieLoaded = (movie) => ({
   type: constants.movieLoaded,
-  movie,
+  payload: movie,
 });
 
 export const loadMovie = (id) => dispatch => {
@@ -60,4 +60,3 @@ export const movieRatedByAudience = (id, audienceScore) => ({
     audienceScore,
   },
 });
-

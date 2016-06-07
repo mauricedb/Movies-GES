@@ -4,7 +4,7 @@ const movie = (state = { status: '' }, action) => {
   switch (action.type) {
     case constants.movieLoaded:
       return {
-        ...action.movie,
+        ...action.payload,
         status: 'LOADED',
       };
 

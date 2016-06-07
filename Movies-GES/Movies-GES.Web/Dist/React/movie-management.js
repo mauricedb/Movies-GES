@@ -37,13 +37,13 @@ webpackJsonp([0],{
 
 	var _components = __webpack_require__(256);
 
-	var _reducers = __webpack_require__(533);
+	var _reducers = __webpack_require__(534);
 
 	var reducers = _interopRequireWildcard(_reducers);
 
 	var _actions = __webpack_require__(260);
 
-	var _notifications = __webpack_require__(536);
+	var _notifications = __webpack_require__(537);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -316,21 +316,21 @@ webpackJsonp([0],{
 
 	var _actions = __webpack_require__(260);
 
-	var _commands = __webpack_require__(262);
+	var _commands = __webpack_require__(263);
 
-	var _movieTitle = __webpack_require__(266);
+	var _movieTitle = __webpack_require__(267);
 
 	var _movieTitle2 = _interopRequireDefault(_movieTitle);
 
-	var _movieDescription = __webpack_require__(267);
+	var _movieDescription = __webpack_require__(268);
 
 	var _movieDescription2 = _interopRequireDefault(_movieDescription);
 
-	var _movieDirectors = __webpack_require__(268);
+	var _movieDirectors = __webpack_require__(269);
 
 	var _movieDirectors2 = _interopRequireDefault(_movieDirectors);
 
-	var _editScore = __webpack_require__(532);
+	var _editScore = __webpack_require__(533);
 
 	var _editScore2 = _interopRequireDefault(_editScore);
 
@@ -460,7 +460,7 @@ webpackJsonp([0],{
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _constants = __webpack_require__(537);
+	var _constants = __webpack_require__(262);
 
 	var constants = _interopRequireWildcard(_constants);
 
@@ -471,7 +471,7 @@ webpackJsonp([0],{
 	var moviesLoaded = function moviesLoaded(movies) {
 	  return {
 	    type: constants.moviesLoaded,
-	    movies: movies
+	    payload: movies
 	  };
 	};
 
@@ -486,7 +486,7 @@ webpackJsonp([0],{
 	var movieLoaded = function movieLoaded(movie) {
 	  return {
 	    type: constants.movieLoaded,
-	    movie: movie
+	    payload: movie
 	  };
 	};
 
@@ -551,6 +551,24 @@ webpackJsonp([0],{
 /***/ },
 
 /***/ 262:
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var moviesLoaded = exports.moviesLoaded = 'MOVIES-LOADED';
+	var movieLoaded = exports.movieLoaded = 'MOVIE-LOADED';
+	var movieTitled = exports.movieTitled = 'MOVIE-TITLED';
+	var movieDescribed = exports.movieDescribed = 'MOVIE-DESCRIBED';
+	var directorAddedToMovie = exports.directorAddedToMovie = 'DIRECTOR-ADDED-TO-MOVIE';
+	var movieRatedByCritics = exports.movieRatedByCritics = 'MOVIE-RATED-BY-CRITICS';
+	var movieRatedByAudience = exports.movieRatedByAudience = 'MOVIE-RATED-BY-AUDIENCE';
+
+/***/ },
+
+/***/ 263:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -560,11 +578,11 @@ webpackJsonp([0],{
 	});
 	exports.rateMovieByAudience = exports.rateMovieByCrictics = exports.addDirectorToMovie = exports.describeMovie = exports.titleMovie = undefined;
 
-	var _uuid = __webpack_require__(263);
+	var _uuid = __webpack_require__(264);
 
 	var _uuid2 = _interopRequireDefault(_uuid);
 
-	var _cedar = __webpack_require__(265);
+	var _cedar = __webpack_require__(266);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -628,7 +646,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 265:
+/***/ 266:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -666,7 +684,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 266:
+/***/ 267:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -828,7 +846,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 267:
+/***/ 268:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1088,7 +1106,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 268:
+/***/ 269:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1103,7 +1121,7 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactBootstrap = __webpack_require__(269);
+	var _reactBootstrap = __webpack_require__(270);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1263,7 +1281,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 532:
+/***/ 533:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1278,7 +1296,7 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactBootstrap = __webpack_require__(269);
+	var _reactBootstrap = __webpack_require__(270);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1444,7 +1462,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 533:
+/***/ 534:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1454,11 +1472,11 @@ webpackJsonp([0],{
 	});
 	exports.movie = exports.movies = undefined;
 
-	var _movies2 = __webpack_require__(534);
+	var _movies2 = __webpack_require__(535);
 
 	var _movies3 = _interopRequireDefault(_movies2);
 
-	var _movie2 = __webpack_require__(535);
+	var _movie2 = __webpack_require__(536);
 
 	var _movie3 = _interopRequireDefault(_movie2);
 
@@ -1469,7 +1487,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 534:
+/***/ 535:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1478,11 +1496,11 @@ webpackJsonp([0],{
 	  value: true
 	});
 
-	var _constants = __webpack_require__(537);
+	var _constants = __webpack_require__(262);
 
 	var constants = _interopRequireWildcard(_constants);
 
-	var _movie = __webpack_require__(535);
+	var _movie = __webpack_require__(536);
 
 	var _movie2 = _interopRequireDefault(_movie);
 
@@ -1496,7 +1514,7 @@ webpackJsonp([0],{
 
 	  switch (action.type) {
 	    case constants.moviesLoaded:
-	      return action.movies;
+	      return action.payload;
 	    case constants.movieTitled:
 	      return state.map(function (m) {
 	        return (0, _movie2.default)(m, action);
@@ -1514,7 +1532,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 535:
+/***/ 536:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1525,7 +1543,7 @@ webpackJsonp([0],{
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _constants = __webpack_require__(537);
+	var _constants = __webpack_require__(262);
 
 	var constants = _interopRequireWildcard(_constants);
 
@@ -1539,7 +1557,7 @@ webpackJsonp([0],{
 
 	  switch (action.type) {
 	    case constants.movieLoaded:
-	      return _extends({}, action.movie, {
+	      return _extends({}, action.payload, {
 	        status: 'LOADED'
 	      });
 
@@ -1599,7 +1617,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 536:
+/***/ 537:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1624,24 +1642,6 @@ webpackJsonp([0],{
 	  };
 	  _jquery2.default.connection.hub.start();
 	};
-
-/***/ },
-
-/***/ 537:
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var moviesLoaded = exports.moviesLoaded = 'MOVIES-LOADED';
-	var movieLoaded = exports.movieLoaded = 'MOVIE-LOADED';
-	var movieTitled = exports.movieTitled = 'MOVIE-TITLED';
-	var movieDescribed = exports.movieDescribed = 'DESCRIPTION-UPDATED';
-	var directorAddedToMovie = exports.directorAddedToMovie = 'DIRECTOR-ADDED';
-	var movieRatedByCritics = exports.movieRatedByCritics = 'CRITICS-SCORE-UPDATED';
-	var movieRatedByAudience = exports.movieRatedByAudience = 'AUDIENCE-SCORE-UPDATED';
 
 /***/ }
 

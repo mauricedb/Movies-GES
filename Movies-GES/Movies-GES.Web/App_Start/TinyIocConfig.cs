@@ -50,6 +50,7 @@ namespace Movies_GES.Web
             container.Register<IProjectionRepository<MovieProjection>, MovieProjectionRepository>();
 
             container.Register<MovieProjectionHandlers>();
+            container.Register<EventPushHandlers>();
 
            container.Resolve<EventStoreProjector>().Start();
         }
@@ -85,8 +86,10 @@ namespace Movies_GES.Web
         {
             var messengerHub = container.Resolve<ITinyMessengerHub>();
             var movieProjectionHandlers = container.Resolve<MovieProjectionHandlers>();
-
+            var eventPushHandlers = container.Resolve<EventPushHandlers>();
+            
             messengerHub.Subscribe<MovieTitled>(movieProjectionHandlers.Handle);
+            messengerHub.Subscribe<MovieTitled>(eventPushHandlers.Handle);
             messengerHub.Subscribe<MovieDescribed>(movieProjectionHandlers.Handle);
             messengerHub.Subscribe<MovieRatedByAudience>(movieProjectionHandlers.Handle);
             messengerHub.Subscribe<MovieRatedByCritics>(movieProjectionHandlers.Handle);

@@ -58,4 +58,3 @@ export const rateMovieByAudience = (movieId, rating) => {
 
   return execute(command);
 };
-

@@ -197,6 +197,7 @@
     <Compile Include="Infrastructure\EventStoreProjector.cs" />
     <Compile Include="Models\MovieProjection.cs" />
     <Compile Include="Infrastructure\IProjectionRepository.cs" />
+    <Compile Include="Projections\EventPushHandlers.cs" />
     <Compile Include="Projections\MovieProjectionHandler.cs" />
     <Compile Include="Infrastructure\MovieProjectionRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
