@@ -39,21 +39,21 @@ namespace Movies_GES.Web.Projections
             });
         }
 
-        //public void Handle(MovieRatedByAudience movieRated)
-        //{
-        //    UpdateMovie(movieRated.MovieId,
-        //        m =>
-        //        {
-        //            if (m.AudienceScore.HasValue)
-        //            {
-        //                m.AudienceScore = (int)Math.Round(0.9 * m.AudienceScore.Value + 0.1 * movieRated.Rating, 0);
-        //            }
-        //            else
-        //            {
-        //                m.AudienceScore = movieRated.Rating;
-        //            }
-        //        });
-        //}
+        public void Handle(MovieRatedByAudience movieRated)
+        {
+            UpdateMovie(movieRated.MovieId,
+                m =>
+                {
+                    if (m.AudienceScore.HasValue)
+                    {
+                        m.AudienceScore = (int)Math.Round(0.9 * m.AudienceScore.Value + 0.1 * movieRated.Rating, 0);
+                    }
+                    else
+                    {
+                        m.AudienceScore = movieRated.Rating;
+                    }
+                });
+        }
 
         public void Handle(MovieRatedByCritics movieRated)
         {

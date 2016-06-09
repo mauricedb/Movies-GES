@@ -48,13 +48,13 @@ export const rateMovieByCrictics = (movieId, rating) => {
   return execute(command);
 };
 
-//export const rateMovieByAudience = (movieId, rating) => {
-//  const command = {
-//    commandName: 'RateMovieByAudience',
-//    commandId: uuid.v4(),
-//    movieId,
-//    rating,
-//  };
-//
-//  return execute(command);
-//};
+export const rateMovieByAudience = (movieId, rating) => {
+  const command = {
+    commandName: 'RateMovieByAudience',
+    commandId: uuid.v4(),
+    movieId,
+    rating,
+  };
+
+  return execute(command);
+};
