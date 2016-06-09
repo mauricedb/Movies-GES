@@ -1,7 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { movieTitled, movieDescribed, directorAddedToMovie, movieRatedByCritics, movieRatedByAudience } from '../actions';
-import { titleMovie, describeMovie, addDirectorToMovie, rateMovieByCrictics, rateMovieByAudience } from '../commands';
+import {
+  movieTitled,
+  movieDescribed,
+  directorAddedToMovie,
+  movieRatedByCritics,
+  movieRatedByAudience
+} from '../actions';
+import {
+  titleMovie,
+  describeMovie,
+  addDirectorToMovie,
+  rateMovieByCrictics,
+  rateMovieByAudience
+} from '../commands';
 
 
 import MovieTitle from './movie-title';
@@ -47,6 +59,7 @@ class MovieDetails extends Component {
         score={movie.criticsScore}
         updateScore={this.props.rateMovieByCrictics}
       />
+
       <EditScore
         label="Audience Score:"
         id={movie.id}
@@ -54,10 +67,11 @@ class MovieDetails extends Component {
         updateScore={this.props.rateMovieByAudience}
       />
 
-
     </form>);
   }
 }
+
+
 
 MovieDetails.propTypes = {
   movie: PropTypes.object.isRequired,

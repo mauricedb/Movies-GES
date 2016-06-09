@@ -85,10 +85,10 @@ namespace Movies_GES.Domain.Tests.Handlers
             var handler = new MovieHandlers(repository);
 
             handler.Awaiting(h => h.Handle(new RateMovieByAudience
-              {
-                  MovieId = movieId,
-                  Rating = 50
-              }, Guid.NewGuid())).ShouldNotThrow();
+            {
+                MovieId = movieId,
+                Rating = 50
+            }, Guid.NewGuid())).ShouldNotThrow();
         }
 
         [Fact]
