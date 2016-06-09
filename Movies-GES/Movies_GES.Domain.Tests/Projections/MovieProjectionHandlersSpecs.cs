@@ -157,77 +157,77 @@ namespace Movies_GES.Domain.Tests.Projections
             });
         }
 
-        //[Fact]
-        //public void The_MovieRatedByAudience_event_should_keep_a_roling_average()
-        //{
-        //    var movieId = Guid.NewGuid();
-        //    var ratedByCritics = new MovieRatedByAudience(movieId, 60);
+        [Fact]
+        public void The_MovieRatedByAudience_event_should_keep_a_roling_average()
+        {
+            var movieId = Guid.NewGuid();
+            var ratedByCritics = new MovieRatedByAudience(movieId, 60);
 
-        //    var repo = new DummyMovieProjectionRepository();
-        //    repo.List[movieId] = new MovieProjection { Id = movieId, AudienceScore = 50 };
+            var repo = new DummyMovieProjectionRepository();
+            repo.List[movieId] = new MovieProjection { Id = movieId, AudienceScore = 50 };
 
-        //    var handler = new MovieProjectionHandlers(repo);
+            var handler = new MovieProjectionHandlers(repo);
 
-        //    handler.Handle(ratedByCritics);
+            handler.Handle(ratedByCritics);
 
-        //    repo.List.Count.Should().Be(1);
-        //    repo.List.Values.ShouldBeEquivalentTo(new[]
-        //    {
-        //        new MovieProjection
-        //        {
-        //            Id = movieId,
-        //            AudienceScore = 51
-        //        }
-        //    });
-        //}
+            repo.List.Count.Should().Be(1);
+            repo.List.Values.ShouldBeEquivalentTo(new[]
+            {
+                new MovieProjection
+                {
+                    Id = movieId,
+                    AudienceScore = 51
+                }
+            });
+        }
 
-        //[Fact]
-        //public void The_MovieRatedByAudience_event_should_be_unchanged_with_the_same_rating()
-        //{
-        //    var movieId = Guid.NewGuid();
-        //    var ratedByCritics = new MovieRatedByAudience(movieId, 60);
+        [Fact]
+        public void The_MovieRatedByAudience_event_should_be_unchanged_with_the_same_rating()
+        {
+            var movieId = Guid.NewGuid();
+            var ratedByCritics = new MovieRatedByAudience(movieId, 60);
 
-        //    var repo = new DummyMovieProjectionRepository();
-        //    repo.List[movieId] = new MovieProjection { Id = movieId, AudienceScore = 60 };
+            var repo = new DummyMovieProjectionRepository();
+            repo.List[movieId] = new MovieProjection { Id = movieId, AudienceScore = 60 };
 
-        //    var handler = new MovieProjectionHandlers(repo);
+            var handler = new MovieProjectionHandlers(repo);
 
-        //    handler.Handle(ratedByCritics);
+            handler.Handle(ratedByCritics);
 
-        //    repo.List.Count.Should().Be(1);
-        //    repo.List.Values.ShouldBeEquivalentTo(new[]
-        //    {
-        //        new MovieProjection
-        //        {
-        //            Id = movieId,
-        //            AudienceScore = 60
-        //        }
-        //    });
-        //}
+            repo.List.Count.Should().Be(1);
+            repo.List.Values.ShouldBeEquivalentTo(new[]
+            {
+                new MovieProjection
+                {
+                    Id = movieId,
+                    AudienceScore = 60
+                }
+            });
+        }
 
-        //[Fact]
-        //public void The_first_MovieRatedByAudience_event_should_set_the_rating()
-        //{
-        //    var movieId = Guid.NewGuid();
-        //    var ratedByCritics = new MovieRatedByAudience(movieId, 60);
+        [Fact]
+        public void The_first_MovieRatedByAudience_event_should_set_the_rating()
+        {
+            var movieId = Guid.NewGuid();
+            var ratedByCritics = new MovieRatedByAudience(movieId, 60);
 
-        //    var repo = new DummyMovieProjectionRepository();
-        //    repo.List[movieId] = new MovieProjection { Id = movieId };
+            var repo = new DummyMovieProjectionRepository();
+            repo.List[movieId] = new MovieProjection { Id = movieId };
 
-        //    var handler = new MovieProjectionHandlers(repo);
+            var handler = new MovieProjectionHandlers(repo);
 
-        //    handler.Handle(ratedByCritics);
+            handler.Handle(ratedByCritics);
 
-        //    repo.List.Count.Should().Be(1);
-        //    repo.List.Values.ShouldBeEquivalentTo(new[]
-        //    {
-        //        new MovieProjection
-        //        {
-        //            Id = movieId,
-        //            AudienceScore = 60
-        //        }
-        //    });
-        //}
+            repo.List.Count.Should().Be(1);
+            repo.List.Values.ShouldBeEquivalentTo(new[]
+            {
+                new MovieProjection
+                {
+                    Id = movieId,
+                    AudienceScore = 60
+                }
+            });
+        }
 
     }
 }
