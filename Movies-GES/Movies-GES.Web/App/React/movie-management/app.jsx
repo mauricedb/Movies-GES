@@ -2,29 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { Router, Route, hashHistory, IndexRoute } from 'react-router';
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
-
-import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
 
 import { App, MovieList, MovieDetails } from './components';
-import * as reducers from './reducers';
-
 import { loadMovies, loadMovie } from './actions';
-
 import { subscribe } from './notifications';
+import {createMovieStore} from './store';
 
-const store = createStore(
-  combineReducers({
-    ...reducers,
-    routing: routerReducer,
-  }),
-  applyMiddleware(thunk)
-);
-
-const history = syncHistoryWithStore(hashHistory, store);
-
+const store = createMovieStore();
 store.dispatch(loadMovies());
 
 subscribe(store.dispatch);
@@ -33,13 +18,12 @@ function onEnterDetails(nextState) {
   store.dispatch(loadMovie(nextState.params.id));
 }
 
-
 ReactDOM.render(
   <Provider
     store={store}
   >
     <Router
-      history={history}
+      history={hashHistory}
     >
       <Route
         path="/"

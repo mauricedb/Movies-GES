@@ -13,8 +13,6 @@ webpackJsonp([0],{
 
 	'use strict';
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -25,36 +23,19 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(169);
 
-	var _reactRouterRedux = __webpack_require__(230);
+	var _reactRedux = __webpack_require__(230);
 
-	var _redux = __webpack_require__(235);
+	var _components = __webpack_require__(250);
 
-	var _reactRedux = __webpack_require__(248);
+	var _actions = __webpack_require__(254);
 
-	var _reduxThunk = __webpack_require__(255);
+	var _notifications = __webpack_require__(528);
 
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-	var _components = __webpack_require__(256);
-
-	var _reducers = __webpack_require__(534);
-
-	var reducers = _interopRequireWildcard(_reducers);
-
-	var _actions = __webpack_require__(260);
-
-	var _notifications = __webpack_require__(537);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	var _store = __webpack_require__(529);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var store = (0, _redux.createStore)((0, _redux.combineReducers)(_extends({}, reducers, {
-	  routing: _reactRouterRedux.routerReducer
-	})), (0, _redux.applyMiddleware)(_reduxThunk2.default));
-
-	var history = (0, _reactRouterRedux.syncHistoryWithStore)(_reactRouter.hashHistory, store);
-
+	var store = (0, _store.createMovieStore)();
 	store.dispatch((0, _actions.loadMovies)());
 
 	(0, _notifications.subscribe)(store.dispatch);
@@ -71,7 +52,7 @@ webpackJsonp([0],{
 	  _react2.default.createElement(
 	    _reactRouter.Router,
 	    {
-	      history: history
+	      history: _reactRouter.hashHistory
 	    },
 	    _react2.default.createElement(
 	      _reactRouter.Route,
@@ -97,7 +78,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 256:
+/***/ 250:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -107,15 +88,15 @@ webpackJsonp([0],{
 	});
 	exports.MovieDetails = exports.MovieList = exports.App = undefined;
 
-	var _app = __webpack_require__(257);
+	var _app = __webpack_require__(251);
 
 	var _app2 = _interopRequireDefault(_app);
 
-	var _movieList = __webpack_require__(258);
+	var _movieList = __webpack_require__(252);
 
 	var _movieList2 = _interopRequireDefault(_movieList);
 
-	var _movieDetails = __webpack_require__(259);
+	var _movieDetails = __webpack_require__(253);
 
 	var _movieDetails2 = _interopRequireDefault(_movieDetails);
 
@@ -127,7 +108,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 257:
+/***/ 251:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -166,7 +147,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 258:
+/***/ 252:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -183,7 +164,7 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(169);
 
-	var _reactRedux = __webpack_require__(248);
+	var _reactRedux = __webpack_require__(230);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -297,7 +278,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 259:
+/***/ 253:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -312,25 +293,25 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRedux = __webpack_require__(248);
+	var _reactRedux = __webpack_require__(230);
 
-	var _actions = __webpack_require__(260);
+	var _actions = __webpack_require__(254);
 
-	var _commands = __webpack_require__(263);
+	var _commands = __webpack_require__(257);
 
-	var _movieTitle = __webpack_require__(267);
+	var _movieTitle = __webpack_require__(261);
 
 	var _movieTitle2 = _interopRequireDefault(_movieTitle);
 
-	var _movieDescription = __webpack_require__(268);
+	var _movieDescription = __webpack_require__(262);
 
 	var _movieDescription2 = _interopRequireDefault(_movieDescription);
 
-	var _movieDirectors = __webpack_require__(269);
+	var _movieDirectors = __webpack_require__(263);
 
 	var _movieDirectors2 = _interopRequireDefault(_movieDirectors);
 
-	var _editScore = __webpack_require__(533);
+	var _editScore = __webpack_require__(527);
 
 	var _editScore2 = _interopRequireDefault(_editScore);
 
@@ -446,7 +427,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 260:
+/***/ 254:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -456,11 +437,11 @@ webpackJsonp([0],{
 	});
 	exports.movieRatedByAudience = exports.movieRatedByCritics = exports.directorAddedToMovie = exports.movieDescribed = exports.movieTitled = exports.loadMovie = exports.loadMovies = undefined;
 
-	var _jquery = __webpack_require__(261);
+	var _jquery = __webpack_require__(255);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _constants = __webpack_require__(262);
+	var _constants = __webpack_require__(256);
 
 	var constants = _interopRequireWildcard(_constants);
 
@@ -550,7 +531,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 262:
+/***/ 256:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -568,7 +549,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 263:
+/***/ 257:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -578,11 +559,11 @@ webpackJsonp([0],{
 	});
 	exports.rateMovieByAudience = exports.rateMovieByCrictics = exports.addDirectorToMovie = exports.describeMovie = exports.titleMovie = undefined;
 
-	var _uuid = __webpack_require__(264);
+	var _uuid = __webpack_require__(258);
 
 	var _uuid2 = _interopRequireDefault(_uuid);
 
-	var _cedar = __webpack_require__(266);
+	var _cedar = __webpack_require__(260);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -646,7 +627,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 266:
+/***/ 260:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -656,7 +637,7 @@ webpackJsonp([0],{
 	});
 	exports.execute = undefined;
 
-	var _jquery = __webpack_require__(261);
+	var _jquery = __webpack_require__(255);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -684,7 +665,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 267:
+/***/ 261:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -846,7 +827,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 268:
+/***/ 262:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1106,7 +1087,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 269:
+/***/ 263:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1121,7 +1102,7 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactBootstrap = __webpack_require__(270);
+	var _reactBootstrap = __webpack_require__(264);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1281,7 +1262,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 533:
+/***/ 527:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1296,7 +1277,7 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactBootstrap = __webpack_require__(270);
+	var _reactBootstrap = __webpack_require__(264);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1462,7 +1443,65 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 534:
+/***/ 528:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.subscribe = undefined;
+
+	var _jquery = __webpack_require__(255);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _actions = __webpack_require__(254);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var subscribe = exports.subscribe = function subscribe(dispatch) {
+	  var moviesHub = _jquery2.default.connection.moviesHub;
+	  moviesHub.client.movieTitled = function (e) {
+	    dispatch((0, _actions.movieTitled)(e.MovieId, e.Title));
+	  };
+	  _jquery2.default.connection.hub.start();
+	};
+
+/***/ },
+
+/***/ 529:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.createMovieStore = undefined;
+
+	var _redux = __webpack_require__(237);
+
+	var _reduxThunk = __webpack_require__(530);
+
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+	var _reducers = __webpack_require__(531);
+
+	var reducers = _interopRequireWildcard(_reducers);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var createMovieStore = exports.createMovieStore = function createMovieStore() {
+	  return (0, _redux.createStore)((0, _redux.combineReducers)(reducers), (0, _redux.applyMiddleware)(_reduxThunk2.default));
+	};
+
+/***/ },
+
+/***/ 531:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1472,11 +1511,11 @@ webpackJsonp([0],{
 	});
 	exports.movie = exports.movies = undefined;
 
-	var _movies2 = __webpack_require__(535);
+	var _movies2 = __webpack_require__(532);
 
 	var _movies3 = _interopRequireDefault(_movies2);
 
-	var _movie2 = __webpack_require__(536);
+	var _movie2 = __webpack_require__(533);
 
 	var _movie3 = _interopRequireDefault(_movie2);
 
@@ -1487,7 +1526,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 535:
+/***/ 532:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1496,11 +1535,11 @@ webpackJsonp([0],{
 	  value: true
 	});
 
-	var _constants = __webpack_require__(262);
+	var _constants = __webpack_require__(256);
 
 	var constants = _interopRequireWildcard(_constants);
 
-	var _movie = __webpack_require__(536);
+	var _movie = __webpack_require__(533);
 
 	var _movie2 = _interopRequireDefault(_movie);
 
@@ -1532,7 +1571,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 536:
+/***/ 533:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1543,7 +1582,7 @@ webpackJsonp([0],{
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _constants = __webpack_require__(262);
+	var _constants = __webpack_require__(256);
 
 	var constants = _interopRequireWildcard(_constants);
 
@@ -1614,34 +1653,6 @@ webpackJsonp([0],{
 	};
 
 	exports.default = movie;
-
-/***/ },
-
-/***/ 537:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.subscribe = undefined;
-
-	var _jquery = __webpack_require__(261);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	var _actions = __webpack_require__(260);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var subscribe = exports.subscribe = function subscribe(dispatch) {
-	  var moviesHub = _jquery2.default.connection.moviesHub;
-	  moviesHub.client.movieTitled = function (e) {
-	    dispatch((0, _actions.movieTitled)(e.MovieId, e.Title));
-	  };
-	  _jquery2.default.connection.hub.start();
-	};
 
 /***/ }
 
