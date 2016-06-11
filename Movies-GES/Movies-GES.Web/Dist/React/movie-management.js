@@ -156,8 +156,6 @@ webpackJsonp([0],{
 	  value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -168,101 +166,79 @@ webpackJsonp([0],{
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var MovieList = function MovieList(_ref) {
+	  var movies = _ref.movies;
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var MovieList = function (_Component) {
-	  _inherits(MovieList, _Component);
-
-	  function MovieList() {
-	    _classCallCheck(this, MovieList);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(MovieList).apply(this, arguments));
-	  }
-
-	  _createClass(MovieList, [{
-	    key: 'render',
-	    value: function render() {
-	      var movies = this.props.movies;
-
-
-	      var rows = movies.map(function (movie) {
-	        return _react2.default.createElement(
-	          'tr',
-	          { key: movie.id },
-	          _react2.default.createElement(
-	            'td',
-	            null,
-	            movie.title
-	          ),
-	          _react2.default.createElement(
-	            'td',
-	            null,
-	            movie.abridgedDirectors.join(', ')
-	          ),
-	          _react2.default.createElement(
-	            'td',
-	            { style: { width: 1 } },
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              {
-	                to: 'details/' + movie.id,
-	                className: 'btn btn-default'
-	              },
-	              'Details'
-	            )
-	          )
-	        );
-	      });
-	      return _react2.default.createElement(
-	        'div',
+	  var rows = movies.map(function (movie) {
+	    return _react2.default.createElement(
+	      'tr',
+	      { key: movie.id },
+	      _react2.default.createElement(
+	        'td',
+	        null,
+	        movie.title
+	      ),
+	      _react2.default.createElement(
+	        'td',
+	        null,
+	        movie.abridgedDirectors.join(', ')
+	      ),
+	      _react2.default.createElement(
+	        'td',
+	        { style: { width: 1 } },
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          {
+	            to: 'details/' + movie.id,
+	            className: 'btn btn-default'
+	          },
+	          'Details'
+	        )
+	      )
+	    );
+	  });
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      _react2.default.createElement(
+	        'button',
+	        { className: 'btn btn-toolbar' },
+	        'Add movie'
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'table',
+	      { className: 'table table-bordered table-striped table-condensed' },
+	      _react2.default.createElement(
+	        'thead',
 	        null,
 	        _react2.default.createElement(
-	          'p',
+	          'tr',
 	          null,
 	          _react2.default.createElement(
-	            'button',
-	            { className: 'btn btn-toolbar' },
-	            'Add movie'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'table',
-	          { className: 'table table-bordered table-striped table-condensed' },
-	          _react2.default.createElement(
-	            'thead',
+	            'th',
 	            null,
-	            _react2.default.createElement(
-	              'tr',
-	              null,
-	              _react2.default.createElement(
-	                'th',
-	                null,
-	                'Title'
-	              ),
-	              _react2.default.createElement(
-	                'th',
-	                null,
-	                'Directed by'
-	              ),
-	              _react2.default.createElement('th', null)
-	            )
+	            'Title'
 	          ),
 	          _react2.default.createElement(
-	            'tbody',
+	            'th',
 	            null,
-	            rows
-	          )
+	            'Directed by'
+	          ),
+	          _react2.default.createElement('th', null)
 	        )
-	      );
-	    }
-	  }]);
-
-	  return MovieList;
-	}(_react.Component);
+	      ),
+	      _react2.default.createElement(
+	        'tbody',
+	        null,
+	        rows
+	      )
+	    )
+	  );
+	};
 
 	MovieList.propTypes = {
 	  movies: _react.PropTypes.array.isRequired
@@ -286,8 +262,6 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(2);
 
@@ -317,74 +291,53 @@ webpackJsonp([0],{
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var MovieDetails = function MovieDetails(props) {
+	  var movie = props.movie;
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var MovieDetails = function (_Component) {
-	  _inherits(MovieDetails, _Component);
-
-	  function MovieDetails() {
-	    _classCallCheck(this, MovieDetails);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(MovieDetails).apply(this, arguments));
+	  if (movie.status !== 'LOADED') {
+	    return _react2.default.createElement('div', null);
 	  }
 
-	  _createClass(MovieDetails, [{
-	    key: 'render',
-	    value: function render() {
-	      var movie = this.props.movie;
+	  var description = {
+	    synopsis: movie.synopsis,
+	    criticsConsensus: movie.criticsConsensus,
+	    year: movie.year || 0,
+	    mpaaRating: movie.mpaaRating
+	  };
 
-
-	      if (movie.status !== 'LOADED') {
-	        return _react2.default.createElement('div', null);
-	      }
-
-	      var description = {
-	        synopsis: movie.synopsis,
-	        criticsConsensus: movie.criticsConsensus,
-	        year: movie.year || 0,
-	        mpaaRating: movie.mpaaRating
-	      };
-
-	      return _react2.default.createElement(
-	        'form',
-	        null,
-	        _react2.default.createElement(_movieTitle2.default, {
-	          title: movie.title,
-	          id: movie.id,
-	          titleMovie: this.props.titleMovie
-	        }),
-	        _react2.default.createElement(_movieDescription2.default, {
-	          id: movie.id,
-	          description: description,
-	          updateDescription: this.props.updateDescription
-	        }),
-	        _react2.default.createElement(_movieDirectors2.default, {
-	          abridgedDirectors: movie.abridgedDirectors,
-	          id: movie.id,
-	          addDirectorToMovie: this.props.addDirectorToMovie
-	        }),
-	        _react2.default.createElement(_editScore2.default, {
-	          label: 'Critics Score:',
-	          id: movie.id,
-	          score: movie.criticsScore,
-	          updateScore: this.props.rateMovieByCrictics
-	        }),
-	        _react2.default.createElement(_editScore2.default, {
-	          label: 'Audience Score:',
-	          id: movie.id,
-	          score: movie.audienceScore,
-	          updateScore: this.props.rateMovieByAudience
-	        })
-	      );
-	    }
-	  }]);
-
-	  return MovieDetails;
-	}(_react.Component);
+	  return _react2.default.createElement(
+	    'form',
+	    null,
+	    _react2.default.createElement(_movieTitle2.default, {
+	      title: movie.title,
+	      id: movie.id,
+	      titleMovie: props.titleMovie
+	    }),
+	    _react2.default.createElement(_movieDescription2.default, {
+	      id: movie.id,
+	      description: description,
+	      updateDescription: props.updateDescription
+	    }),
+	    _react2.default.createElement(_movieDirectors2.default, {
+	      abridgedDirectors: movie.abridgedDirectors,
+	      id: movie.id,
+	      addDirectorToMovie: props.addDirectorToMovie
+	    }),
+	    _react2.default.createElement(_editScore2.default, {
+	      label: 'Critics Score:',
+	      id: movie.id,
+	      score: movie.criticsScore,
+	      updateScore: props.rateMovieByCrictics
+	    }),
+	    _react2.default.createElement(_editScore2.default, {
+	      label: 'Audience Score:',
+	      id: movie.id,
+	      score: movie.audienceScore,
+	      updateScore: props.rateMovieByAudience
+	    })
+	  );
+	};
 
 	MovieDetails.propTypes = {
 	  movie: _react.PropTypes.object.isRequired,

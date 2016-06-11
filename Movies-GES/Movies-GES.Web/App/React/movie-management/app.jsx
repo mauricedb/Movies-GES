@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { App, MovieList, MovieDetails } from './components';
 import { loadMovies, loadMovie } from './actions';
 import { subscribe } from './notifications';
-import {createMovieStore} from './store';
+import { createMovieStore } from './store';
 
 const store = createMovieStore();
 store.dispatch(loadMovies());

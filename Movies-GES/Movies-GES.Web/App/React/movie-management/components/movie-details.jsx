@@ -1,18 +1,18 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {
   movieTitled,
   movieDescribed,
   directorAddedToMovie,
   movieRatedByCritics,
-  movieRatedByAudience
+  movieRatedByAudience,
 } from '../actions';
 import {
   titleMovie,
   describeMovie,
   addDirectorToMovie,
   rateMovieByCrictics,
-  rateMovieByAudience
+  rateMovieByAudience,
 } from '../commands';
 
 
@@ -22,55 +22,52 @@ import MovieDirectors from './movie-directors.jsx';
 import EditScore from './edit-score.jsx';
 
 
-class MovieDetails extends Component {
-  render() {
-    const { movie } = this.props;
+const MovieDetails = (props) => {
+  const { movie } = props;
 
-    if (movie.status !== 'LOADED') {
-      return (<div />);
-    }
-
-    const description = {
-      synopsis: movie.synopsis,
-      criticsConsensus: movie.criticsConsensus,
-      year: movie.year || 0,
-      mpaaRating: movie.mpaaRating,
-    };
-
-    return (<form>
-      <MovieTitle
-        title={movie.title}
-        id={movie.id}
-        titleMovie={this.props.titleMovie}
-      />
-      <MovieDescription
-        id={movie.id}
-        description={description}
-        updateDescription={this.props.updateDescription}
-      />
-      <MovieDirectors
-        abridgedDirectors={movie.abridgedDirectors}
-        id={movie.id}
-        addDirectorToMovie={this.props.addDirectorToMovie}
-      />
-      <EditScore
-        label="Critics Score:"
-        id={movie.id}
-        score={movie.criticsScore}
-        updateScore={this.props.rateMovieByCrictics}
-      />
-
-      <EditScore
-        label="Audience Score:"
-        id={movie.id}
-        score={movie.audienceScore}
-        updateScore={this.props.rateMovieByAudience}
-      />
-
-    </form>);
+  if (movie.status !== 'LOADED') {
+    return (<div />);
   }
-}
 
+  const description = {
+    synopsis: movie.synopsis,
+    criticsConsensus: movie.criticsConsensus,
+    year: movie.year || 0,
+    mpaaRating: movie.mpaaRating,
+  };
+
+  return (<form>
+    <MovieTitle
+      title={movie.title}
+      id={movie.id}
+      titleMovie={props.titleMovie}
+    />
+    <MovieDescription
+      id={movie.id}
+      description={description}
+      updateDescription={props.updateDescription}
+    />
+    <MovieDirectors
+      abridgedDirectors={movie.abridgedDirectors}
+      id={movie.id}
+      addDirectorToMovie={props.addDirectorToMovie}
+    />
+    <EditScore
+      label="Critics Score:"
+      id={movie.id}
+      score={movie.criticsScore}
+      updateScore={props.rateMovieByCrictics}
+    />
+
+    <EditScore
+      label="Audience Score:"
+      id={movie.id}
+      score={movie.audienceScore}
+      updateScore={props.rateMovieByAudience}
+    />
+
+  </form>);
+};
 
 
 MovieDetails.propTypes = {
