@@ -11,7 +11,8 @@ export default class MovieDirectors extends Component {
       editMode: false,
     };
 
-    this.toEditMode = () => {
+    this.toEditMode = (e) => {
+      e.preventDefault();
       this.setState({
         editMode: true,
       });
