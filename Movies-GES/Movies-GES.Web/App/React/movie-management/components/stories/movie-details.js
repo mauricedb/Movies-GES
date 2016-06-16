@@ -2,15 +2,23 @@ import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 import MovieDetails from '../movie-details.jsx';
 
+const resolvedAction = (name, result) => {
+    const theAction = action(name); 
+    return (...args) => {
+        theAction(...args);
+        return Promise.resolve(result); 
+    }
+};
+
 const  getMovieDetails = movie => (
     <MovieDetails.WrappedComponent 
         movieId={movie.id}
         movie={movie} 
-        titleMovie={action('titleMovie')}
-        updateDescription={action('titleMovie')}
-        addDirectorToMovie={action('addDirectorToMovie')}
-        rateMovieByCrictics={action('rateMovieByCrictics')}
-        rateMovieByAudience={action('rateMovieByAudience')}
+        titleMovie={resolvedAction('titleMovie')}
+        updateDescription={resolvedAction('updateDescription')}
+        addDirectorToMovie={resolvedAction('addDirectorToMovie')}
+        rateMovieByCrictics={resolvedAction('rateMovieByCrictics')}
+        rateMovieByAudience={resolvedAction('rateMovieByAudience')}
     />
 );
 
