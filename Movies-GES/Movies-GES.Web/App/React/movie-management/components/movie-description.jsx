@@ -181,11 +181,3 @@ MovieDescription.propTypes = {
   description: PropTypes.object.isRequired,
   updateDescription: PropTypes.func.isRequired,
 };
-
-
-//    <div ng-controller="movie-description-controller">
-//
-//
-//
-//
-//    </div>
