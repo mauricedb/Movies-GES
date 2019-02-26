@@ -1,0 +1,10 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "Movies-GES/Movies-GES.Web/App/Angular1/package.json",
+        "Movies-GES/Movies-GES.Web/App/React/package.json"
+      ]
+    }
+  }
+}
