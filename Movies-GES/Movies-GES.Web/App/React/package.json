@@ -48,14 +48,14 @@
     "enzyme": "^3.9.0",
     "eslint": "^6.0.0",
     "eslint-config-airbnb": "^18.0.0",
-    "eslint-loader": "^2.1.2",
+    "eslint-loader": "^3.0.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
     "mocha": "^6.0.2",
     "raw-loader": "^3.0.0",
     "react-addons-test-utils": "^15.1.0",
-    "style-loader": "^0.23.1",
+    "style-loader": "^1.0.0",
     "webpack": "^4.29.5"
   }
 }
