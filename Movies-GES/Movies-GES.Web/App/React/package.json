@@ -52,7 +52,7 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
-    "mocha": "^6.0.2",
+    "mocha": "^7.0.1",
     "raw-loader": "^4.0.0",
     "react-addons-test-utils": "^15.1.0",
     "style-loader": "^1.0.0",
